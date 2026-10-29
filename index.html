@@ -29,7 +29,7 @@
   --bone:#A27427; --bone-fill:#EEE1C0; --muscle:#AF3F59; --organ:#744F88; --nv:#2A67AA;
   --artery:#BF402E; --vein:#3961AF; --nerve:#B5810D; --lymph:#3A8758;
   --good:#2C7848; --good-bg:#E1F0E5; --bad:#B23838; --bad-bg:#F6E1E0;
-  --c-bone:#8A7660; --c-joint:#5B7A2B; --c-muscle:#AF3F59; --c-organ:#744F88; --c-nerve:#B88600; --c-vessel:#2A67AA;
+  --c-move:#1E7F78; --c-bone:#8A7660; --c-joint:#5B7A2B; --c-muscle:#AF3F59; --c-organ:#744F88; --c-nerve:#B88600; --c-vessel:#2A67AA;
   --ligament:#6E8B3D; --cartilage:#6F9FB4; --fat:#D9BC5E; --tendon:#A9A28F; --brain:#C79AA3;
   --f-latin:"Cormorant Garamond","Iowan Old Style","Times New Roman",serif;
   --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic","Noto Sans JP",system-ui,sans-serif;
@@ -43,7 +43,7 @@
   --bone:#D6B068; --bone-fill:#3A3324; --muscle:#E07A90; --organ:#B48ACA; --nv:#76A6E5;
   --artery:#E86F5C; --vein:#7A9DE5; --nerve:#E2B646; --lymph:#6ABF8A;
   --good:#6BC48A; --good-bg:#16301F; --bad:#EE7B7B; --bad-bg:#3A1C1E;
-  --c-bone:#C2AE95; --c-joint:#A6C46A; --c-muscle:#E07A90; --c-organ:#B48ACA; --c-nerve:#E4B53A; --c-vessel:#76A6E5;
+  --c-move:#5EC4BA; --c-bone:#C2AE95; --c-joint:#A6C46A; --c-muscle:#E07A90; --c-organ:#B48ACA; --c-nerve:#E4B53A; --c-vessel:#76A6E5;
   --ligament:#A8C46F; --cartilage:#8DBBD0; --fat:#B79A45; --tendon:#8F887A; --brain:#A87882;
   color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -54,7 +54,7 @@
   --bone:#D6B068; --bone-fill:#3A3324; --muscle:#E07A90; --organ:#B48ACA; --nv:#76A6E5;
   --artery:#E86F5C; --vein:#7A9DE5; --nerve:#E2B646; --lymph:#6ABF8A;
   --good:#6BC48A; --good-bg:#16301F; --bad:#EE7B7B; --bad-bg:#3A1C1E;
-  --c-bone:#C2AE95; --c-joint:#A6C46A; --c-muscle:#E07A90; --c-organ:#B48ACA; --c-nerve:#E4B53A; --c-vessel:#76A6E5;
+  --c-move:#5EC4BA; --c-bone:#C2AE95; --c-joint:#A6C46A; --c-muscle:#E07A90; --c-organ:#B48ACA; --c-nerve:#E4B53A; --c-vessel:#76A6E5;
   --ligament:#A8C46F; --cartilage:#8DBBD0; --fat:#B79A45; --tendon:#8F887A; --brain:#A87882;
   color-scheme:dark}
 
@@ -161,6 +161,13 @@ h2.sect{font-size:19px;margin:0 0 4px;letter-spacing:.03em}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);font-weight:700;font-size:15px;padding:11px 20px;border-radius:8px;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--accent)}
 .btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.plate-acts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.btn.sm{padding:7px 14px;font-size:13.5px;border-radius:999px}
+.btn small{font-size:11px;font-weight:500;opacity:.8}
+.lvbar{margin-bottom:12px}
+.seg button small{margin-left:5px;font-size:11px;font-weight:400;opacity:.8}
+.range.phrase{border-color:var(--accent);color:var(--accent)}
+.range.phrase[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .qtop{display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .qbar{flex:1;height:4px;background:var(--sunk);border-radius:2px;overflow:hidden}
 .qbar i{display:block;height:100%;background:var(--accent)}
@@ -204,6 +211,7 @@ h2.sect{font-size:19px;margin:0 0 4px;letter-spacing:.03em}
 .flash .fl-box{position:absolute;top:12px;right:14px;font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .flash .fl-main{font-size:clamp(30px,9vw,44px);font-weight:700;line-height:1.15;overflow-wrap:anywhere}
 .flash .fl-main.latin{font-weight:600}
+.flash .fl-main.phrase{font-size:clamp(20px,5.8vw,26px);line-height:1.35;max-width:460px}
 .flash .fl-hint{font-size:12px;color:var(--ink-2);margin-top:10px}
 .flash .fl-back{width:100%;max-width:460px;margin-top:10px;padding-top:12px;border-top:1px dashed var(--rule);text-align:left;font-size:13.5px}
 .flash .fl-back .ex-en{font-size:17px}
@@ -262,6 +270,7 @@ h2.sect{font-size:19px;margin:0 0 4px;letter-spacing:.03em}
           <svg id="atlasSvg" role="img" aria-label="解剖図。点をタップすると英語名が出ます"></svg>
           <figcaption class="plate-cap"><em id="plateView"></em><span id="plateHint"></span></figcaption>
         </figure>
+        <div class="plate-acts" id="plateActs"></div>
       </div>
       <div style="min-width:0">
         <article class="panel" id="termPanel" aria-live="polite"></article>
@@ -318,6 +327,7 @@ h2.sect{font-size:19px;margin:0 0 4px;letter-spacing:.03em}
    ===================================================================== */
 
 var CAT = {
+  move:   {ja:'方向・動き', en:'Directions & Movement', c:'var(--c-move)'},
   bone:   {ja:'骨',         en:'Bones',              c:'var(--c-bone)'},
   joint:  {ja:'関節・靭帯', en:'Joints & Ligaments', c:'var(--c-joint)'},
   muscle: {ja:'筋肉',       en:'Muscles',            c:'var(--c-muscle)'},
@@ -325,7 +335,7 @@ var CAT = {
   nerve:  {ja:'脳・神経',   en:'Nervous system',     c:'var(--c-nerve)'},
   vessel: {ja:'血管・リンパ', en:'Vessels & Lymph',  c:'var(--c-vessel)'}
 };
-var CAT_ORDER = ['bone', 'joint', 'muscle', 'organ', 'nerve', 'vessel'];
+var CAT_ORDER = ['move', 'bone', 'joint', 'muscle', 'organ', 'nerve', 'vessel'];
 
 var TERMS = [], ROOTS = [], PLATES = [];
 function addTerms(list){ for(var i=0;i<list.length;i++) TERMS.push(list[i]); }
@@ -537,7 +547,7 @@ addTerms([
  tip:'左右の寛骨 hip bone と仙骨・尾骨でできている。形容詞は pelvic（pelvic floor＝骨盤底）。'},
 {id:'humerus',cat:'bone',en:'humerus',alt:'upper arm bone',ja:'上腕骨',yomi:'じょうわんこつ',kana:'[ヒュー]マラス',view:'f',x:68,y:155,roots:[],
  ety:'ラテン語 umerus「肩」から（h は後から付いた）。発音が humorous（おかしい）と同じなので、ひじをぶつけてしびれる所を funny bone と呼ぶしゃれがある。',
- ex:['The humerus connects your shoulder to your elbow.','上腕骨は肩とひじをつないでいます。'],
+ ex:['Let your upper arm go heavy; I\'ll support your humerus.','腕の力を抜いて重くしてください。上腕骨は私が支えます。'],
  tip:''},
 {id:'radius',cat:'bone',en:'radius',alt:'',ja:'橈骨',yomi:'とうこつ',kana:'[レ]イディアス',view:'f',x:53,y:245,roots:[],
  ety:'ラテン語 radius「車輪の輻（や）、光線」。棒状の骨を車輪の輻にたとえた。',
@@ -545,7 +555,7 @@ addTerms([
  tip:'前腕の親指側の骨。radial pulse（手首の脈）の radial はこの語。'},
 {id:'ulna',cat:'bone',en:'ulna',alt:'',ja:'尺骨',yomi:'しゃっこつ',kana:'[ア]ルナ',view:'f',x:181,y:245,roots:[],
  ety:'ラテン語 ulna「ひじ、前腕」。英語の古い長さの単位 ell（ひじから指先まで）と同じ語源。日本語でも長さの単位「尺」の字が使われている。',
- ex:['The ulna runs along the little-finger side of your forearm.','尺骨は前腕の小指側を通っています。'],
+ ex:['Run your finger along your ulna, on the little-finger side of your forearm.','前腕の小指側にある尺骨を、指でたどってみてください。'],
  tip:'前腕の小指側の骨。ひじの先の出っぱり（肘頭）は尺骨の一部。'},
 {id:'phalanges',cat:'bone',en:'phalanges',alt:'phalanx（単数）',ja:'指骨（指節骨）',yomi:'しこつ',kana:'ファ[ラ]ンジーズ',view:'f',x:192,y:320,roots:[],
  ety:'ギリシャ語 phalanx「（槍を持った）兵士の隊列」。指の骨が並ぶ様子を隊列にたとえた。',
@@ -553,7 +563,7 @@ addTerms([
  tip:'単数形は phalanx。指の骨は親指が2つ、ほかの指は3つ。'},
 {id:'femur',cat:'bone',en:'femur',alt:'thighbone',ja:'大腿骨',yomi:'だいたいこつ',kana:'[フィー]マー',view:'f',x:98,y:335,roots:['femor'],
  ety:'ラテン語 femur「もも」。形容詞は femoral（大腿の）。',
- ex:['The femur is the longest bone in your body.','大腿骨は体でいちばん長い骨です。'],
+ ex:['Let your leg roll outward, and feel your femur turn in your hip.','脚を外側に転がして、大腿骨が股関節の中で回るのを感じてください。'],
  tip:''},
 {id:'patella',cat:'bone',en:'patella',alt:'kneecap',ja:'膝蓋骨',yomi:'しつがいこつ',kana:'パ[テ]ラ',view:'f',x:100,y:391,roots:['cle'],
  ety:'ラテン語 patella「小さな皿」（patina 皿 + 指小辞）。日本語の「ひざのお皿」と同じ発想。',
@@ -565,7 +575,7 @@ addTerms([
  tip:'すねの内側の太い骨。体重の大部分を支える。'},
 {id:'fibula',cat:'bone',en:'fibula',alt:'',ja:'腓骨',yomi:'ひこつ',kana:'[フィ]ビュラ',view:'f',x:92,y:436,roots:[],
  ety:'ラテン語 fibula「留め金、ブローチのピン」。脛骨に沿う細い骨をピンにたとえた。',
- ex:['The fibula is the thin bone on the outer side of your lower leg.','腓骨はすねの外側にある細い骨です。'],
+ ex:['Feel for your fibula, the thin bone on the outside of your lower leg.','すねの外側にある細い骨、腓骨を探してみましょう。'],
  tip:'すねの外側の細い骨。'},
 {id:'scapula',cat:'bone',en:'scapula',alt:'shoulder blade',ja:'肩甲骨',yomi:'けんこうこつ',kana:'ス[キャ]ピュラ',view:'b',x:98,y:138,roots:[],
  ety:'ラテン語 scapulae「肩甲骨、肩」から。複数形は scapulae。',
@@ -587,7 +597,7 @@ addTerms([
  tip:'この下に、小さいほうの pectoralis minor（小胸筋）がある。'},
 {id:'scm',cat:'muscle',en:'sternocleidomastoid',alt:'SCM',ja:'胸鎖乳突筋',yomi:'きょうさにゅうとつきん',kana:'スターノクライドウ[マ]ストイド',view:'f',x:112,y:86,area:[111,85,3.6,16,-20],roots:['stern','oid'],
  ety:'sterno-（胸骨）+ cleido-（鎖骨。ギリシャ語 kleis「鍵」）+ mastoid（乳様突起。mastos「乳房」+ -oid）。付着する3か所を並べた名前で、日本語の「胸・鎖・乳突」も同じ並び。',
- ex:['Your SCM is the long muscle on the side of your neck.','SCM（胸鎖乳突筋）は首の横にある長い筋肉です。'],
+ ex:['Turn your head to the left, and your right sternocleidomastoid stands out.','頭を左に向けると、右の胸鎖乳突筋が浮き出ます。'],
  tip:'近くに頸動脈が通るので、施術では強く押さない。'},
 {id:'biceps',cat:'muscle',en:'biceps brachii',alt:'biceps',ja:'上腕二頭筋',yomi:'じょうわんにとうきん',kana:'[バ]イセプス [ブレ]イキアイ',view:'f',x:66,y:160,area:[67,160,8,22,8],roots:['bi','ceps','brachi'],
  ety:'bi-「2つの」+ -ceps「頭」（ラテン語 caput）+ brachii「腕の」。始まりの部分（頭）が2つある腕の筋。',
@@ -599,7 +609,7 @@ addTerms([
  tip:'割れて見える段は腱画 tendinous intersections による。'},
 {id:'oblique',cat:'muscle',en:'external oblique',alt:'obliques',ja:'外腹斜筋',yomi:'がいふくしゃきん',kana:'イクス[ター]ナル オブ[リー]ク',view:'f',x:94,y:218,area:[94,218,9,24,8],roots:[],
  ety:'ラテン語 obliquus「斜めの」。わき腹を斜めに走る。',
- ex:['Twisting your torso engages your obliques.','体をひねると腹斜筋が使われます。'],
+ ex:['Twist gently to the right and feel your obliques working.','ゆっくり右にひねって、腹斜筋が働くのを感じてください。'],
  tip:'その内側に internal oblique（内腹斜筋）がある。'},
 {id:'diaphragm',cat:'muscle',en:'diaphragm',alt:'',ja:'横隔膜',yomi:'おうかくまく',kana:'[ダ]イアフラム',view:'f',x:146,y:166,area:{d:'M86 176 C92 150 112 150 120 160 C128 150 148 150 154 176 C140 168 128 168 120 170 C112 168 100 168 86 176 Z',m:false},roots:[],
  ety:'ギリシャ語 dia「横切って」+ phragma「仕切り、垣根」。胸と腹を仕切るドーム形の筋。g は発音しない。',
@@ -607,7 +617,7 @@ addTerms([
  tip:'腹式呼吸の主役。息を吸うと下がり、吐くと上がる。'},
 {id:'iliopsoas',cat:'muscle',en:'iliopsoas',alt:'',ja:'腸腰筋',yomi:'ちょうようきん',kana:'イリオウ[ソウ]アス',view:'f',x:109,y:262,area:[110,258,6,25,6],roots:[],
  ety:'ilio-（腸骨 ilium）+ psoas（ギリシャ語 psoa「腰の筋」）。psoas の p は発音しない。',
- ex:['A tight iliopsoas can pull on your lower back.','腸腰筋が硬いと、腰が引っぱられることがあります。'],
+ ex:['Step one leg back to gently stretch the iliopsoas at the front of your hip.','片脚を後ろに引いて、股関節の前にある腸腰筋をやさしく伸ばしましょう。'],
  tip:'大腰筋 psoas major と腸骨筋 iliacus をまとめた呼び名。上半身と脚をつなぐ深い層の筋。'},
 {id:'adductors',cat:'muscle',en:'adductors',alt:'adductor muscles',ja:'内転筋群',yomi:'ないてんきんぐん',kana:'ア[ダ]クターズ',view:'f',x:113,y:326,area:[113,326,6,26,0],roots:['adab'],
  ety:'ラテン語 ad-「〜へ」+ ducere「導く」。脚を体の中心へ引き寄せる筋。',
@@ -635,7 +645,7 @@ addTerms([
  tip:'腕を後ろ下へ引く筋。懸垂で大きく働く。'},
 {id:'erector',cat:'muscle',en:'erector spinae',alt:'',ja:'脊柱起立筋',yomi:'せきちゅうきりつきん',kana:'イ[レ]クター ス[パ]イニー',view:'b',x:128,y:230,area:[128,214,5,50,0],roots:['spin'],
  ety:'ラテン語 erector「立たせるもの」（erigere 起こす）+ spinae「脊柱の」。背骨を立てて支える筋群。',
- ex:['Your erector spinae help keep your back upright.','脊柱起立筋は、背中をまっすぐに保つ働きをします。'],
+ ex:['I\'ll work along your erector spinae on both sides of your spine.','背骨の両側にある脊柱起立筋に沿って、ほぐしていきます。'],
  tip:'腸肋筋・最長筋・棘筋の3つからなる。'},
 {id:'triceps',cat:'muscle',en:'triceps brachii',alt:'triceps',ja:'上腕三頭筋',yomi:'じょうわんさんとうきん',kana:'ト[ラ]イセプス [ブレ]イキアイ',view:'b',x:67,y:160,area:[67,160,8,22,8],roots:['tri','ceps','brachi'],
  ety:'tri-「3つの」+ -ceps「頭」+ brachii「腕の」。3つの頭をもつ腕の裏の筋。',
@@ -665,7 +675,7 @@ addTerms([
  tip:'大脳 cerebrum・小脳 cerebellum（「小さな脳」）・脳幹 brainstem。'},
 {id:'thyroid',cat:'organ',en:'thyroid gland',alt:'thyroid',ja:'甲状腺',yomi:'こうじょうせん',kana:'[サ]イロイド グ[ラ]ンド',view:'f',x:120,y:94,roots:['oid'],
  ety:'ギリシャ語 thyreos「（大きな）盾」+ -oid「〜の形」。盾の形をした甲状軟骨のそばにあることから。日本語の「甲状」も鎧の形の意味。',
- ex:['The thyroid gland sits at the front of your neck.','甲状腺は首の前側にあります。'],
+ ex:['I\'ll avoid pressing on your thyroid gland at the front of your neck.','首の前にある甲状腺は、押さないようにしますね。'],
  tip:'のどぼとけの少し下にある。'},
 {id:'lungs',cat:'organ',en:'lungs',alt:'lung',ja:'肺',yomi:'はい',kana:'[ラ]ングズ',view:'f',x:99,y:140,roots:['pneum'],
  ety:'古英語 lungen。「軽い」と同じ語源とされる。形容詞は pulmonary（ラテン語 pulmo）。ギリシャ語 pneumon は pnein「息をする」から。',
@@ -677,7 +687,7 @@ addTerms([
  tip:'胸の中央からやや左にある。'},
 {id:'liver',cat:'organ',en:'liver',alt:'',ja:'肝臓',yomi:'かんぞう',kana:'[リ]ヴァー',view:'f',x:102,y:182,roots:['hepat','itis'],
  ety:'古英語 lifer。医学の語根はギリシャ語 hepar（hepat-）。',
- ex:['The liver sits on your right side, just under your ribs.','肝臓は右側、肋骨のすぐ下にあります。'],
+ ex:['I\'ll keep the pressure light over your liver, under your right ribs.','右の肋骨の下、肝臓のあたりは軽い圧にしますね。'],
  tip:'右上腹部にある最大の内臓。hepatitis は「肝炎」。'},
 {id:'stomach',cat:'organ',en:'stomach',alt:'',ja:'胃',yomi:'い',kana:'ス[タ]マック',view:'f',x:141,y:190,roots:['gastr'],
  ety:'ギリシャ語 stomachos（もとは「のど、口」。stoma「口」から）。医学の語根は gastr-（gaster「腹、胃」）。',
@@ -685,27 +695,27 @@ addTerms([
  tip:'日常英語の stomach は「お腹」全体を指すことも多い。stomachache＝腹痛。'},
 {id:'spleen',cat:'organ',en:'spleen',alt:'',ja:'脾臓',yomi:'ひぞう',kana:'スプ[リー]ン',view:'f',x:162,y:168,roots:[],
  ety:'ギリシャ語 splen。昔は不機嫌のもとと考えられ、英語の spleen には「不機嫌」の意味もある。',
- ex:['The spleen sits on your left side, behind your stomach.','脾臓は左側、胃の裏にあります。'],
+ ex:['Your spleen is under your left ribs, so I\'ll keep this area gentle.','脾臓は左の肋骨の下にあるので、ここはやさしく触れますね。'],
  tip:'左上腹部、肋骨の内側にある。'},
 {id:'pancreas',cat:'organ',en:'pancreas',alt:'',ja:'膵臓',yomi:'すいぞう',kana:'[パ]ンクリアス',view:'f',x:118,y:204,roots:[],
  ety:'ギリシャ語 pan「すべて」+ kreas「肉」。骨も軟骨もない「全部が肉」の臓器。',
- ex:['The pancreas helps control your blood sugar.','膵臓は血糖値の調節を助けます。'],
+ ex:['Your pancreas lies deep behind your stomach, so I\'ll stay gentle here.','膵臓は胃の奥にあるので、ここはやさしく触れますね。'],
  tip:'胃の裏側に横たわる。インスリンを出す臓器。'},
 {id:'smallint',cat:'organ',en:'small intestine',alt:'',ja:'小腸',yomi:'しょうちょう',kana:'ス[モー]ル イン[テ]スティン',view:'f',x:122,y:236,roots:['enter'],
  ety:'intestine はラテン語 intestinus「内側の」から。腸の語根は enter-（ギリシャ語 enteron）。',
- ex:['Most nutrients are absorbed in the small intestine.','栄養の多くは小腸で吸収されます。'],
+ ex:['I\'ll make slow circles around your navel, over your small intestine.','おへそのまわり、小腸の上でゆっくり円を描いていきます。'],
  tip:'十二指腸 duodenum・空腸 jejunum・回腸 ileum に分かれる。'},
 {id:'largeint',cat:'organ',en:'large intestine',alt:'colon',ja:'大腸',yomi:'だいちょう',kana:'[ラー]ジ イン[テ]スティン',view:'f',x:90,y:236,roots:[],
  ety:'大腸の大部分を占める結腸 colon は、ギリシャ語 kolon から。',
- ex:['Abdominal massage usually follows the colon in a clockwise direction.','お腹のマッサージは、大腸に沿って時計回りに行うのが一般的です。'],
+ ex:['I\'ll massage your belly clockwise, following your large intestine.','大腸の流れに沿って、お腹を時計回りにさすっていきます。'],
  tip:'結腸 colon と直腸 rectum など。rectum は rectus「まっすぐな」から。'},
 {id:'kidneys',cat:'organ',en:'kidneys',alt:'kidney',ja:'腎臓',yomi:'じんぞう',kana:'[キ]ドニーズ',view:'b',x:106,y:202,roots:['nephr'],
  ety:'語源がはっきりしない古い英語。医学ではギリシャ語 nephros（nephr-）とラテン語 renes（renal）を使う。',
- ex:['Your kidneys sit on either side of your spine, near the bottom of your ribs.','腎臓は背骨の両側、肋骨の下のあたりにあります。'],
+ ex:['I\'ll use only light pressure over your kidneys, below your back ribs.','背中側の肋骨の下、腎臓のあたりは軽い圧だけにします。'],
  tip:'adrenal（副腎の）は ad-「そばに」+ ren-「腎臓」。'},
 {id:'bladder',cat:'organ',en:'bladder',alt:'urinary bladder',ja:'膀胱',yomi:'ぼうこう',kana:'ブ[ラ]ダー',view:'f',x:120,y:276,roots:[],
  ety:'古英語 blædre「ふくらんだ袋」。医学の語根は cyst-（ギリシャ語 kystis）と vesic-（ラテン語 vesica）。',
- ex:['An empty bladder makes it easier to relax during the session.','膀胱が空だと、セッション中にリラックスしやすくなります。'],
+ ex:['Please empty your bladder before we start, so you can relax.','リラックスできるよう、始める前にお手洗いで膀胱を空にしておいてください。'],
  tip:'cystitis は「膀胱炎」。'},
 {id:'skin',cat:'organ',en:'skin',alt:'',ja:'皮膚',yomi:'ひふ',kana:'ス[キ]ン',view:'f',x:176,y:140,roots:['derm','sub'],
  ety:'古ノルド語 skinn「（動物の）皮」。語根は derm-（ギリシャ語 derma）。ラテン語では cutis で、subcutaneous（皮下の）に残る。',
@@ -715,31 +725,31 @@ addTerms([
 /* ---------- 神経 Nerves / 血管・リンパ Vessels ---------- */
 {id:'spinalcord',cat:'nerve',en:'spinal cord',alt:'',ja:'脊髄',yomi:'せきずい',kana:'ス[パ]イナル [コー]ド',view:'b',x:120,y:150,roots:['spin','myel'],
  ety:'spinal「脊柱の」（spina とげ）+ cord「ひも」。「髄」の語根は myel-（ギリシャ語 myelos）。',
- ex:['The spinal cord runs through the center of your spine.','脊髄は背骨の中心を通っています。'],
+ ex:['Imagine your spinal cord lengthening as your spine grows tall.','背骨が伸びるにつれて、脊髄もすっと伸びていくのをイメージしてください。'],
  tip:'脳と体をつなぐ神経の束。'},
 {id:'sciatic',cat:'nerve',en:'sciatic nerve',alt:'',ja:'坐骨神経',yomi:'ざこつしんけい',kana:'サイ[ア]ティック [ナー]ヴ',view:'b',x:100,y:330,roots:['neur'],
  ety:'ギリシャ語 ischion「股関節、坐骨」→ ラテン語 sciaticus。nerve はラテン語 nervus「腱、すじ」から。',
- ex:['Sciatic nerve pain can travel down the back of the leg.','坐骨神経の痛みは、脚の裏側に広がることがあります。'],
+ ex:['Does the pain travel down your leg, along your sciatic nerve?','痛みは、坐骨神経に沿って脚のほうへ広がりますか？'],
  tip:'体で最も太く長い神経。sciatica は「坐骨神経痛」。'},
 {id:'vagus',cat:'nerve',en:'vagus nerve',alt:'',ja:'迷走神経',yomi:'めいそうしんけい',kana:'[ヴェ]イガス [ナー]ヴ',view:'f',x:112,y:124,roots:['neur'],
  ety:'ラテン語 vagus「さまよう」（vague, vagabond と同じ）。脳から腹部まで広く枝分かれして走る。日本語の「迷走」も同じ発想。',
- ex:['Long, slow exhales are thought to calm the body through the vagus nerve.','長くゆっくり吐く呼吸は、迷走神経を通じて体を落ち着かせると考えられています。'],
+ ex:['Breathe out long and slow; this is thought to calm you through the vagus nerve.','長くゆっくり息を吐いてください。迷走神経を通じて、気持ちが落ち着くと考えられています。'],
  tip:'副交感神経の代表。'},
 {id:'median',cat:'nerve',en:'median nerve',alt:'',ja:'正中神経',yomi:'せいちゅうしんけい',kana:'[ミー]ディアン [ナー]ヴ',view:'f',x:63,y:240,roots:['medi','neur'],
  ety:'ラテン語 medianus「真ん中の」。前腕の中央を通る神経。',
- ex:['The median nerve passes through the carpal tunnel in your wrist.','正中神経は手首の手根管を通っています。'],
+ ex:['Does your thumb side tingle? That area is supplied by the median nerve.','親指側がしびれますか？ そこは正中神経が受けもつ場所です。'],
  tip:'手根管症候群 carpal tunnel syndrome で圧迫される神経。'},
 {id:'aorta',cat:'vessel',en:'aorta',alt:'',ja:'大動脈',yomi:'だいどうみゃく',kana:'エイ[オー]タ',view:'f',x:123,y:196,roots:[],
  ety:'ギリシャ語 aortē（aeirein「持ち上げる」から。「吊り下げられたもの」の意）。',
- ex:['The aorta carries blood from the heart to the rest of the body.','大動脈は心臓から全身へ血液を運びます。'],
+ ex:['I\'ll keep the pressure light near your navel, where your aorta runs.','おへその近くは大動脈が通るので、軽い圧にしますね。'],
  tip:'体でいちばん太い動脈。'},
 {id:'carotid',cat:'vessel',en:'carotid artery',alt:'common carotid artery',ja:'頸動脈',yomi:'けいどうみゃく',kana:'カ[ラ]ティッド [アー]テリー',view:'f',x:113,y:80,roots:['arter'],
  ety:'ギリシャ語 karōtides（karoun「眠らせる、気絶させる」から）。ここを圧迫すると意識を失うと考えられたため。',
- ex:['I avoid pressing on the front of the neck because of the carotid arteries.','首の前側は頸動脈があるので、押さないようにしています。'],
+ ex:['I won\'t press on the front of your neck, where your carotid arteries are.','頸動脈があるので、首の前側は押さないようにしますね。'],
  tip:'正式には総頸動脈。首の横で脈を感じられる。'},
 {id:'jugular',cat:'vessel',en:'jugular vein',alt:'',ja:'頸静脈',yomi:'けいじょうみゃく',kana:'[ジャ]ギュラー [ヴェ]イン',view:'f',x:130,y:104,roots:['ven'],
  ety:'ラテン語 jugulum「のど、鎖骨」（jugum「くびき」から）。vein はラテン語 vena。',
- ex:['The jugular veins carry blood from the head back to the heart.','頸静脈は頭の血液を心臓へ戻します。'],
+ ex:['I\'ll keep my strokes light on the side of your neck, over the jugular veins.','首の横の頸静脈の上は、軽いタッチにしますね。'],
  tip:'内頸静脈と外頸静脈がある。'},
 {id:'radialart',cat:'vessel',en:'radial artery',alt:'',ja:'橈骨動脈',yomi:'とうこつどうみゃく',kana:'[レ]イディアル [アー]テリー',view:'f',x:51,y:283,roots:['arter'],
  ety:'radial「橈骨の」+ artery。artery はギリシャ語 artēria から。昔は空気を運ぶ管と考えられていた。',
@@ -751,7 +761,7 @@ addTerms([
  tip:''},
 {id:'lymph',cat:'vessel',en:'lymph node',alt:'',ja:'リンパ節',yomi:'りんぱせつ',kana:'[リ]ンフ [ノウ]ド',view:'f',x:83,y:128,roots:[],
  ety:'ラテン語 lympha「澄んだ水」+ node（ラテン語 nodus「結び目」）。',
- ex:['There are many lymph nodes in the armpits, neck, and groin.','わきの下・首・脚の付け根には、リンパ節がたくさんあります。'],
+ ex:['I\'ll use very light strokes toward the lymph nodes in your armpit.','わきの下のリンパ節に向かって、ごく軽くなでていきます。'],
  tip:'リンパ液は最後に静脈に合流して心臓へ戻る。'}
 ]);
 
@@ -1350,7 +1360,7 @@ addTerms([
 /* ---------- 頭蓋骨（前） ---------- */
 {id:'frontal_bone',cat:'bone',en:'frontal bone',alt:'',ja:'前頭骨',yomi:'ぜんとうこつ',kana:'フ[ラ]ントル [ボウ]ン',roots:[],
  ety:'ラテン語 frons（frontis）「額（ひたい）」から。英語の front（前面）と同じ語源。',
- ex:['The frontal bone forms your forehead.','前頭骨は額をつくっています。'],
+ ex:['I\'ll rest my palm lightly on your forehead, over your frontal bone.','額の前頭骨に、手のひらを軽く当てますね。'],
  tip:'額の骨。生まれたときは左右2つに分かれていて、乳児期のうちに1つにつながる。'},
 {id:'parietal_bone',cat:'bone',en:'parietal bone',alt:'',ja:'頭頂骨',yomi:'とうちょうこつ',kana:'パ[ラ]イエトル [ボウ]ン',roots:[],
  ety:'ラテン語 paries（parietis）「壁」から。頭の上から側面をおおう「壁」の骨。',
@@ -1358,7 +1368,7 @@ addTerms([
  tip:'左右1対。parietal は「壁側の」の意味でも使う（壁側腹膜 parietal peritoneum など）。'},
 {id:'temporal_bone',cat:'bone',en:'temporal bone',alt:'',ja:'側頭骨',yomi:'そくとうこつ',kana:'[テ]ンポラル [ボウ]ン',roots:[],
  ety:'ラテン語 tempora「こめかみ」から。tempus「時」と同じ綴りで、白髪が最初に出て年齢（時）を示す場所だから、という説がある。',
- ex:['Your ear canal passes through the temporal bone.','耳の穴は側頭骨の中を通っています。'],
+ ex:['I\'ll gently hold the sides of your head, over your temporal bones.','頭の横、側頭骨のあたりをそっと包みますね。'],
  tip:'こめかみから耳のまわりの骨。顎関節 TMJ の temporo- はこの骨のこと。'},
 {id:'sphenoid_bone',cat:'bone',en:'sphenoid bone',alt:'',ja:'蝶形骨',yomi:'ちょうけいこつ',kana:'ス[フィー]ノイド [ボウ]ン',roots:['oid'],
  ety:'ギリシャ語 sphēn「くさび」+ -oid「〜の形」。頭蓋の中央にくさびのように入り込む骨。日本語の「蝶形」は、羽を広げたチョウの形から。',
@@ -1488,7 +1498,7 @@ addTerms([
  tip:'大後頭孔の両わきの1対の関節面。うなずく動きの関節（環椎後頭関節）をつくる。'},
 {id:'hyoid_bone',cat:'bone',en:'hyoid bone',alt:'hyoid',ja:'舌骨',yomi:'ぜっこつ',kana:'[ハ]イオイド [ボウ]ン',roots:['oid'],
  ety:'ギリシャ語 hyoeidēs「υ（ユプシロン）の形の」から。U字形の骨。日本語の「舌骨」は舌の根元を支えることから。',
- ex:['The hyoid bone sits in the neck without touching any other bone.','舌骨は首にあって、ほかのどの骨とも接していません。'],
+ ex:['Swallow, and you\'ll feel your hyoid bone move up and down.','つばを飲み込むと、舌骨が上下に動くのがわかります。'],
  tip:'あごの下、のどぼとけの上。筋と靭帯だけで吊られている珍しい骨。'},
 {id:'fontanelle',cat:'bone',en:'anterior fontanelle',alt:'soft spot',ja:'大泉門',yomi:'だいせんもん',kana:'アン[ティ]アリア ファンタ[ネ]ル',roots:['antepost'],
  ety:'フランス語 fontanelle「小さな泉」（fontaine「泉」+ 指小辞）から。脈打つやわらかい所を泉にたとえたとされる。日本語の「泉門」も同じ発想。',
@@ -1572,7 +1582,7 @@ addTerms([
 /* ---------- 椎骨 ---------- */
 {id:'vertebra',cat:'bone',en:'vertebra',alt:'vertebrae（複数）',ja:'椎骨',yomi:'ついこつ',kana:'[ヴァー]テブラ',roots:['vert'],
  ety:'ラテン語 vertebra「関節、回るもの」（vertere「回す」から）。複数形は vertebrae。',
- ex:['Each vertebra has a body in front and an arch behind.','椎骨はそれぞれ、前に椎体、後ろに椎弓があります。'],
+ ex:['Roll up slowly, one vertebra at a time.','背骨を一つずつ積み上げるように、ゆっくり起き上がってください。'],
  tip:'ふつう頸椎7・胸椎12・腰椎5個。その下に仙骨と尾骨が続く。'},
 {id:'vertebral_body',cat:'bone',en:'vertebral body',alt:'',ja:'椎体',yomi:'ついたい',kana:'[ヴァー]テブラル [バ]ディ',roots:['vert'],
  ety:'vertebral「椎骨の」+ body「体」。椎骨の前にある太い円柱の部分。',
@@ -1596,7 +1606,7 @@ addTerms([
  tip:'背骨を背中からさわったときの「ぽこぽこ」の正体。督脈のツボの多くはこの間にとる。'},
 {id:'transverse_process',cat:'bone',en:'transverse process',alt:'',ja:'横突起',yomi:'おうとっき',kana:'トランス[ヴァー]ス プ[ラ]セス',roots:['trans'],
  ety:'ラテン語 transversus「横向きの」（trans-「横切って」+ vertere「回す」）+ process「突起」。',
- ex:['Muscles and ligaments attach to the transverse processes.','横突起には筋肉や靭帯がつきます。'],
+ ex:['I\'ll press gently along your transverse processes, just beside your spine.','背骨のすぐ外側、横突起に沿ってやさしく押していきます。'],
  tip:'左右に張り出す突起。胸椎では肋骨と関節をつくる。'},
 {id:'superior_articular_process',cat:'bone',en:'superior articular process',alt:'',ja:'上関節突起',yomi:'じょうかんせつとっき',kana:'ス[ピ]アリア アー[ティ]キュラー プ[ラ]セス',roots:['supinf','articul'],
  ety:'superior「上の」+ articular「関節の」（ラテン語 articulus「小さな関節」）+ process「突起」。',
@@ -1622,23 +1632,23 @@ addTerms([
 /* ---------- 脊柱 ---------- */
 {id:'cervical_vertebrae',cat:'bone',en:'cervical vertebrae',alt:'C1–C7',ja:'頸椎',yomi:'けいつい',kana:'[サー]ヴィカル [ヴァー]テブレイ',roots:['cervic','vert'],
  ety:'ラテン語 cervix「首」から。vertebrae は vertebra の複数形。',
- ex:['There are seven cervical vertebrae in the neck.','首には7個の頸椎があります。'],
+ ex:['I\'ll gently lengthen your neck to make space between your cervical vertebrae.','首を長く伸ばして、頸椎のあいだにゆとりをつくっていきます。'],
  tip:'C1〜C7 と書く。cervix は子宮頸部にも使われる「首」の語。'},
 {id:'thoracic_vertebrae',cat:'bone',en:'thoracic vertebrae',alt:'T1–T12',ja:'胸椎',yomi:'きょうつい',kana:'ソ[ラ]シック [ヴァー]テブレイ',roots:['thorac','vert'],
  ety:'ギリシャ語 thōrax「胸当て、胸」から。',
- ex:['Each of the twelve thoracic vertebrae connects to a pair of ribs.','12個の胸椎は、それぞれ1対の肋骨とつながっています。'],
+ ex:['Round your upper back slowly and feel your thoracic vertebrae open.','背中の上のほうをゆっくり丸めて、胸椎が開いていくのを感じてください。'],
  tip:'T1〜T12（Th と書くことも）。肋骨と関節をつくるのが特徴。'},
 {id:'lumbar_vertebrae',cat:'bone',en:'lumbar vertebrae',alt:'L1–L5',ja:'腰椎',yomi:'ようつい',kana:'[ラ]ンバー [ヴァー]テブレイ',roots:['lumb','vert'],
  ety:'ラテン語 lumbus「腰」から。',
- ex:['The five lumbar vertebrae are the largest in the spine.','5個の腰椎は、背骨の中で最も大きな椎骨です。'],
+ ex:['Bend your knees so your lumbar vertebrae can rest on the table.','膝を立てると、腰椎が台に楽に乗ります。'],
  tip:'L1〜L5。体重を支えるので椎体が大きい。lumbago は「腰痛」。'},
 {id:'atlas',cat:'bone',en:'atlas',alt:'C1',ja:'環椎',yomi:'かんつい',kana:'[ア]トラス',roots:[],
  ety:'ギリシャ神話で天空を肩に担ぐ巨人アトラスから。頭を支える骨をアトラスにたとえた。',
- ex:['The atlas supports the skull and lets you nod.','環椎は頭蓋を支え、うなずく動きを可能にします。'],
+ ex:['Nod your head gently, a small \'yes\' that happens at your atlas.','小さく「うん」とうなずいてください。環椎のところで起こる動きです。'],
  tip:'椎体がなく、輪の形をしている。日本語の「環」も輪のこと。'},
 {id:'axis',cat:'bone',en:'axis',alt:'C2',ja:'軸椎',yomi:'じくつい',kana:'[ア]クシス',roots:[],
  ety:'ラテン語 axis「軸」。環椎がこの骨の歯突起を軸にして回ることから。',
- ex:['The atlas rotates around the axis when you turn your head.','首を回すと、環椎が軸椎のまわりを回ります。'],
+ ex:['Shake your head slowly, a \'no\' that turns around your axis.','ゆっくり首を横に振ってください。軸椎のまわりで起こる「いいえ」の動きです。'],
  tip:'首を左右に回す動きの約半分は、環椎と軸椎の間で起こるとされる。'},
 {id:'dens',cat:'bone',en:'dens',alt:'odontoid process',ja:'歯突起',yomi:'しとっき',kana:'[デ]ンズ',roots:['oid'],
  ety:'ラテン語 dens「歯」。歯のような形の突起。別名 odontoid もギリシャ語 odous「歯」+ -oid。',
@@ -1650,15 +1660,15 @@ addTerms([
  tip:'首を前に曲げたとき付け根でいちばん出る骨。ツボの大椎（だいつい）はこの下。'},
 {id:'cervical_lordosis',cat:'bone',en:'cervical lordosis',alt:'',ja:'頸椎前弯',yomi:'けいついぜんわん',kana:'[サー]ヴィカル ロー[ドウ]シス',roots:['cervic','osis'],
  ety:'cervical「首の」+ lordosis（ギリシャ語 lordos「後ろに反った」+ -osis「状態」）。',
- ex:['The neck normally has a gentle cervical lordosis.','首には本来、ゆるやかな頸椎前弯があります。'],
+ ex:['This small towel supports the natural cervical lordosis of your neck.','この小さなタオルで、首の自然な頸椎前弯を支えます。'],
  tip:'前に向かってふくらむカーブ。lordosis だけで「前弯」の意味。'},
 {id:'thoracic_kyphosis',cat:'bone',en:'thoracic kyphosis',alt:'',ja:'胸椎後弯',yomi:'きょうついこうわん',kana:'ソ[ラ]シック カイ[フォウ]シス',roots:['thorac','osis'],
  ety:'thoracic「胸の」+ kyphosis（ギリシャ語 kyphos「曲がった、背の丸い」+ -osis「状態」）。',
- ex:['Slouching can increase thoracic kyphosis.','猫背の姿勢は胸椎後弯を強めることがあります。'],
+ ex:['Slouching adds to your thoracic kyphosis, so let\'s sit tall.','猫背になると胸椎後弯が強まります。背すじを伸ばして座りましょう。'],
  tip:'後ろに向かってふくらむカーブ。強い猫背のことも kyphosis という。'},
 {id:'lumbar_lordosis',cat:'bone',en:'lumbar lordosis',alt:'',ja:'腰椎前弯',yomi:'ようついぜんわん',kana:'[ラ]ンバー ロー[ドウ]シス',roots:['lumb','osis'],
  ety:'lumbar「腰の」+ lordosis「前弯」（ギリシャ語 lordos「後ろに反った」）。',
- ex:['Tilting the pelvis forward increases lumbar lordosis.','骨盤を前に傾けると、腰椎前弯が強まります。'],
+ ex:['Bend your knees to soften your lumbar lordosis against the table.','膝を立てると、腰椎前弯がゆるんで腰が台につきます。'],
  tip:'腰の前向きのカーブ。いわゆる反り腰（swayback）は、これが強い状態。'},
 {id:'sacral_promontory',cat:'bone',en:'sacral promontory',alt:'',ja:'岬角',yomi:'こうかく',kana:'[セ]イクラル プ[ラ]モントーリー',roots:['sacr'],
  ety:'sacral「仙骨の」+ promontory「岬」（ラテン語 promontorium）。海に突き出た岬のように前へ出ていることから。',
@@ -1668,7 +1678,7 @@ addTerms([
 /* ---------- 胸郭 ---------- */
 {id:'thoracic_cage',cat:'bone',en:'thoracic cage',alt:'rib cage',ja:'胸郭',yomi:'きょうかく',kana:'ソ[ラ]シック [ケ]イジ',roots:['thorac'],
  ety:'thoracic「胸の」（ギリシャ語 thōrax「胸当て」）+ cage「かご」。',
- ex:['The thoracic cage expands as you breathe in.','息を吸うと胸郭が広がります。'],
+ ex:['Feel your whole thoracic cage expand as you breathe in.','息を吸うと、胸郭全体が広がるのを感じてください。'],
  tip:'胸骨・肋骨12対・胸椎12個でできたかご。心臓と肺を守る。'},
 {id:'manubrium',cat:'bone',en:'manubrium',alt:'manubrium of sternum',ja:'胸骨柄',yomi:'きょうこつへい',kana:'マ[ヌー]ブリアム',roots:[],
  ety:'ラテン語 manubrium「柄（え）、取っ手」（manus「手」から）。胸骨を剣に見立てたときの柄の部分。',
@@ -1680,7 +1690,7 @@ addTerms([
  tip:'胸骨で最も長い部分。左右の縁に第2〜第7肋軟骨がつく。'},
 {id:'xiphoid_process',cat:'bone',en:'xiphoid process',alt:'',ja:'剣状突起',yomi:'けんじょうとっき',kana:'[ザ]イフォイド プ[ラ]セス',roots:['oid'],
  ety:'ギリシャ語 xiphos「剣」+ -oid「〜の形」。胸骨の先の、剣先のような突起。',
- ex:['Avoid pressing hard on the xiphoid process.','剣状突起は強く押さないようにします。'],
+ ex:['I\'ll avoid pressing on your xiphoid process, the tip of your breastbone.','胸骨の先端にある剣状突起は、押さないようにしますね。'],
  tip:'みぞおちの上端の小さな突起。若いうちは軟骨で、年齢とともに骨になる。'},
 {id:'jugular_notch',cat:'bone',en:'jugular notch',alt:'suprasternal notch',ja:'頸切痕',yomi:'けいせっこん',kana:'[ジャ]ギュラー [ナ]ッチ',roots:['jugul'],
  ety:'jugular「のどの」（ラテン語 jugulum）+ notch「切れこみ」。',
@@ -2354,11 +2364,11 @@ addTerms([
 /* ---------- 骨盤 Pelvis ---------- */
 {id:'hip_bone',cat:'bone',en:'hip bone',alt:'coxal bone, os coxae',ja:'寛骨',yomi:'かんこつ',kana:'[ヒ]ップ [ボウ]ン',roots:[],
  ety:'英語 hip「腰、股関節」+ bone。ラテン語では os coxae（coxa「股関節、腰」）。日本語の「寛」は、もとの「髖（こしぼね）」の字を書きかえたものとされる。',
- ex:['Each hip bone is formed by the ilium, ischium, and pubis.','左右の寛骨は、それぞれ腸骨・坐骨・恥骨でできています。'],
+ ex:['Rock your pelvis gently and feel both hip bones move together.','骨盤をやさしく揺らして、左右の寛骨が一緒に動くのを感じてください。'],
  tip:'子どものうちは3つの骨に分かれ、成長とともに寛骨臼のところで1つに癒合する。'},
 {id:'ilium',cat:'bone',en:'ilium',alt:'',ja:'腸骨',yomi:'ちょうこつ',kana:'[イ]リアム',roots:['ili'],
  ety:'ラテン語 ilia「わき腹、下腹部」から。日本語の「腸骨」は、ドイツ語 Darmbein（腸の骨）と同じ発想の名。',
- ex:['The ilium is the large, wing-shaped upper part of the hip bone.','腸骨は、寛骨の上部にある大きな翼のような部分です。'],
+ ex:['I\'ll press gently along the outer surface of your ilium.','腸骨の外側の面に沿って、やさしく押していきます。'],
  tip:'腰に手を当てたときに触れる骨。小腸の回腸 ileum と発音が同じなので、つづりに注意。'},
 {id:'ischium',cat:'bone',en:'ischium',alt:'',ja:'坐骨',yomi:'ざこつ',kana:'[イ]スキアム',roots:['ischi'],
  ety:'ギリシャ語 ischion「股関節、腰」から。坐骨神経 sciatic nerve の sciatic も、この語がなまったもの。',
@@ -2366,7 +2376,7 @@ addTerms([
  tip:'寛骨の後ろ下の部分。ドイツ語でも Sitzbein（座る骨）と呼ぶ。'},
 {id:'pubis',cat:'bone',en:'pubis',alt:'pubic bone',ja:'恥骨',yomi:'ちこつ',kana:'[ピュー]ビス',roots:['pub'],
  ety:'ラテン語 os pubis（pubes「陰毛、成人」）から。puberty（思春期）と同じ語源。',
- ex:['The pubis forms the front part of each hip bone.','恥骨は、寛骨の前の部分をつくります。'],
+ ex:['I\'ll keep my hands well above your pubis, on your lower belly.','手は恥骨より十分上の、下腹部に置きますね。'],
  tip:'左右の恥骨は、前の正中で恥骨結合 pubic symphysis によってつながる。'},
 {id:'iliac_crest',cat:'bone',en:'iliac crest',alt:'',ja:'腸骨稜',yomi:'ちょうこつりょう',kana:'[イ]リアック ク[レ]スト',roots:['ili'],
  ety:'iliac「腸骨の」+ crest（ラテン語 crista「とさか、稜」）。腸骨の上縁の弓なりの盛り上がり。',
@@ -2382,7 +2392,7 @@ addTerms([
  tip:'大腿直筋（大腿四頭筋のひとつ）の起始。'},
 {id:'psis',cat:'bone',en:'posterior superior iliac spine',alt:'PSIS',ja:'上後腸骨棘',yomi:'じょうこうちょうこつきょく',kana:'パス[ティ]アリア ス[ピ]アリア [イ]リアック ス[パ]イン',roots:['antepost','supinf','ili','spin'],
  ety:'posterior「後ろの」+ superior「上の」+ iliac + spine。腸骨稜の後ろの端の出っぱり。',
- ex:['The two dimples above your buttocks lie over the PSIS.','お尻の上の左右のくぼみの下に、上後腸骨棘があります。'],
+ ex:['I\'ll press gently on your PSIS, under the dimples above your buttocks.','お尻の上のくぼみの下、上後腸骨棘（PSIS）をやさしく押しますね。'],
  tip:'仙腸関節を探す目印。左右を結ぶ線は、およそ第2仙椎の高さ。'},
 {id:'iliac_fossa',cat:'bone',en:'iliac fossa',alt:'',ja:'腸骨窩',yomi:'ちょうこつか',kana:'[イ]リアック [ファ]サ',roots:['ili','fossa'],
  ety:'iliac「腸骨の」+ fossa（ラテン語「溝、堀」。fodere「掘る」から）。腸骨の内側の、浅く広いくぼみ。',
@@ -2452,11 +2462,11 @@ addTerms([
  tip:'上腕の外側の、ほぼ真ん中の高さ。三角筋の停止部。'},
 {id:'medial_epicondyle_humerus',cat:'bone',en:'medial epicondyle of humerus',alt:'',ja:'上腕骨内側上顆',yomi:'じょうわんこつないそくじょうか',kana:'[ミー]ディアル エピ[カ]ンダイル アヴ [ヒュー]マラス',roots:['medi','epi','condyl'],
  ety:'medial「内側の」+ epicondyle（epi-「上に」+ condyle「顆」。ギリシャ語 kondylos「指の関節のこぶ」）。顆の上にある出っぱり。',
- ex:['The medial epicondyle is the bony bump on the inner side of your elbow.','ひじの内側の骨の出っぱりが、上腕骨内側上顆です。'],
+ ex:['Here\'s your medial epicondyle, the bump on the inner side of your elbow.','ここが上腕骨内側上顆、ひじの内側の出っぱりです。'],
  tip:'手首を曲げる筋（屈筋群）の起始。後ろの溝を尺骨神経が通り、ぶつけるとしびれる。'},
 {id:'lateral_epicondyle_humerus',cat:'bone',en:'lateral epicondyle of humerus',alt:'',ja:'上腕骨外側上顆',yomi:'じょうわんこつがいそくじょうか',kana:'[ラ]テラル エピ[カ]ンダイル アヴ [ヒュー]マラス',roots:['later','epi','condyl'],
  ety:'lateral「外側の」（ラテン語 latus「わき、側面」）+ epicondyle「上顆」。ひじの外側の出っぱり。',
- ex:['Tennis elbow causes pain near the lateral epicondyle.','テニス肘では、外側上顆のあたりが痛みます。'],
+ ex:['Does it feel tender here, near your lateral epicondyle?','外側上顆のあたり、ここは押すと痛みますか？'],
  tip:'手首や指を伸ばす筋（伸筋群）の起始。'},
 {id:'capitulum',cat:'bone',en:'capitulum',alt:'capitellum',ja:'上腕骨小頭',yomi:'じょうわんこつしょうとう',kana:'カ[ピ]チュラム',roots:['capit'],
  ety:'ラテン語 capitulum「小さな頭」（caput「頭」+ 指小辞）。上腕骨の下端の外側にある丸いふくらみ。',
@@ -2498,7 +2508,7 @@ addTerms([
 /* ---------- 肩甲骨 Scapula ---------- */
 {id:'acromion',cat:'bone',en:'acromion',alt:'',ja:'肩峰',yomi:'けんぽう',kana:'アク[ロウ]ミアン',roots:['acro'],
  ety:'ギリシャ語 akros「先端、いちばん高い」+ ōmos「肩」。「肩のてっぺん」で、日本語の「肩峰（肩の峰）」も同じ発想。',
- ex:['The acromion is the bony tip at the top of your shoulder.','肩のてっぺんにある骨の先端が、肩峰です。'],
+ ex:['Find your acromion, the bony point at the top of your shoulder.','肩のてっぺんの骨の先、肩峰を探してみてください。'],
  tip:'肩甲棘の外側の端。鎖骨と肩鎖関節をつくる。ツボの肩髃（けんぐう）はこの前下方。'},
 {id:'coracoid_process',cat:'bone',en:'coracoid process',alt:'',ja:'烏口突起',yomi:'うこうとっき',kana:'[コー]ラコイド プ[ラ]セス',roots:['oid'],
  ety:'ギリシャ語 korax「カラス」+ -oid「〜の形」。カラスのくちばしに似た突起で、日本語の「烏口」も「カラスの口」。',
@@ -2544,7 +2554,7 @@ addTerms([
 /* ---------- 手 Hand ---------- */
 {id:'carpal_bones',cat:'bone',en:'carpal bones',alt:'carpals, carpus',ja:'手根骨',yomi:'しゅこんこつ',kana:'[カー]パル [ボウ]ンズ',roots:['carp'],
  ety:'ギリシャ語 karpos「手首」から。手首にある8個の小さな骨の総称。',
- ex:['The eight carpal bones form the base of the hand.','8個の手根骨が、手の付け根をつくっています。'],
+ ex:['I\'ll gently move the small carpal bones in your wrist.','手首の小さな手根骨を、やさしく動かしていきます。'],
  tip:'近位列（舟状・月状・三角・豆状）と遠位列（大菱形・小菱形・有頭・有鉤）に4個ずつ。'},
 {id:'scaphoid',cat:'bone',en:'scaphoid',alt:'navicular of the hand',ja:'舟状骨',yomi:'しゅうじょうこつ',kana:'ス[キャ]フォイド',roots:['scaph','oid'],
  ety:'ギリシャ語 skaphē「小舟」+ -oid「〜の形」。舟の形に見えることから。',
@@ -2646,7 +2656,7 @@ addTerms([
  tip:'大腿四頭筋の力が、膝蓋靭帯を通してここに伝わる。ツボの足三里はこの近く。'},
 {id:'medial_malleolus',cat:'bone',en:'medial malleolus',alt:'inner ankle bone',ja:'内果',yomi:'ないか',kana:'[ミー]ディアル マ[リー]アラス',roots:['medi','malle'],
  ety:'medial「内側の」+ malleolus「小さな槌（つち）」（ラテン語 malleus「槌」+ 指小辞）。くるぶしを小槌の頭にたとえた。',
- ex:['The medial malleolus is the inner ankle bone, part of the tibia.','内果は内くるぶしのことで、脛骨の一部です。'],
+ ex:['I\'ll make small circles around your medial malleolus, the inner ankle bone.','内くるぶし（内果）のまわりを、小さく円を描くようにほぐします。'],
  tip:'内くるぶし。ツボの三陰交は内果の上方3寸（指4本分）。'},
 {id:'fibular_head',cat:'bone',en:'head of fibula',alt:'fibular head',ja:'腓骨頭',yomi:'ひこつとう',kana:'[ヘ]ッド アヴ [フィ]ビュラ',roots:[],
  ety:'head「頭」+ of fibula（腓骨。ラテン語 fibula「留め金、ブローチのピン」）。腓骨の上端のふくらみ。',
@@ -2654,13 +2664,13 @@ addTerms([
  tip:'大腿二頭筋がつき、すぐ下を総腓骨神経が回る。ツボの陽陵泉はこの前下方。'},
 {id:'lateral_malleolus',cat:'bone',en:'lateral malleolus',alt:'outer ankle bone',ja:'外果',yomi:'がいか',kana:'[ラ]テラル マ[リー]アラス',roots:['later','malle'],
  ety:'lateral「外側の」+ malleolus「小さな槌」。腓骨の下端で、外くるぶしをつくる。',
- ex:['The lateral malleolus sits lower than the medial malleolus.','外果は、内果より低い位置にあります。'],
+ ex:['Now I\'ll work around your lateral malleolus, the outer ankle bone.','次は外くるぶし（外果）のまわりをほぐします。'],
  tip:'外くるぶし。内果より低く後ろ寄り。足首の捻挫では、この前下方の靭帯を傷めやすい。'},
 
 /* ---------- 足 Foot ---------- */
 {id:'tarsal_bones',cat:'bone',en:'tarsal bones',alt:'tarsals, tarsus',ja:'足根骨',yomi:'そっこんこつ',kana:'[ター]サル [ボウ]ンズ',roots:['tars'],
  ety:'ギリシャ語 tarsos「平らな面、すのこ状の枠」から。足の後ろ半分をつくる7個の骨の総称。',
- ex:['The seven tarsal bones form the back half of the foot.','7個の足根骨が、足の後ろ半分をつくっています。'],
+ ex:['I\'ll gently loosen the tarsal bones in the middle of your foot.','足の中ほどにある足根骨を、やさしくほぐしていきます。'],
  tip:'距骨・踵骨・舟状骨・立方骨と3つの楔状骨。手根骨（8個）より1つ少ない。'},
 {id:'talus',cat:'bone',en:'talus',alt:'ankle bone, astragalus',ja:'距骨',yomi:'きょこつ',kana:'[テ]イラス',roots:[],
  ety:'ラテン語 talus「くるぶし、さいころ」。古代ローマでは動物の距骨をさいころとして使った。',
@@ -2708,7 +2718,7 @@ addTerms([
  tip:'母趾球の下で体重を受ける。膝蓋骨も、体で最大の種子骨。'},
 {id:'medial_longitudinal_arch',cat:'bone',en:'medial longitudinal arch',alt:'arch of the foot',ja:'内側縦アーチ（土踏まず）',yomi:'ないそくたてアーチ（つちふまず）',kana:'[ミー]ディアル ランジ[トゥー]ディナル [アー]チ',roots:['medi'],
  ety:'medial「内側の」+ longitudinal「縦の」（ラテン語 longitudo「長さ」）+ arch「弓」。かかとから母趾の付け根へ、足の内側を走るアーチ。',
- ex:['The medial longitudinal arch is what we usually call the arch of the foot.','内側縦アーチは、ふだん「土踏まず」と呼んでいるところです。'],
+ ex:['I\'ll press slowly along your medial longitudinal arch, the arch of your foot.','土踏まず（内側縦アーチ）に沿って、ゆっくり押していきます。'],
  tip:'踵骨・距骨・舟状骨・楔状骨・第1〜3中足骨でつくる。3つのアーチで最も高い。'},
 {id:'lateral_longitudinal_arch',cat:'bone',en:'lateral longitudinal arch',alt:'',ja:'外側縦アーチ',yomi:'がいそくたてアーチ',kana:'[ラ]テラル ランジ[トゥー]ディナル [アー]チ',roots:['later'],
  ety:'lateral「外側の」+ longitudinal「縦の」+ arch「弓」。かかとから小趾の付け根へ、足の外側を走る低いアーチ。',
@@ -3503,7 +3513,7 @@ addTerms([
  tip:'体で最も可動域が広い関節のひとつ。狭い意味では肩甲上腕関節 glenohumeral joint を指す。'},
 {id:'elbow_joint',cat:'joint',en:'elbow joint',alt:'',ja:'肘関節',yomi:'ちゅうかんせつ',kana:'[エ]ルボウ [ジョ]イント',roots:[],
  ety:'古英語 elnboga。eln「前腕（長さの単位 ell）」+ boga「曲がり（bow）」で、「腕の曲がるところ」。',
- ex:['The elbow joint connects the humerus, radius, and ulna.','肘関節は、上腕骨・橈骨・尺骨をつないでいます。'],
+ ex:['Let your elbow joint bend as I slowly lift your hand.','手をゆっくり持ち上げますので、肘関節が曲がるのに任せてください。'],
  tip:'腕尺関節・腕橈関節・上橈尺関節の3つが、1つの関節包に包まれている。'},
 {id:'wrist_joint',cat:'joint',en:'wrist joint',alt:'radiocarpal joint',ja:'手関節（橈骨手根関節）',yomi:'しゅかんせつ（とうこつしゅこんかんせつ）',kana:'[リ]スト [ジョ]イント',roots:['radi','carp'],
  ety:'wrist は古英語で、「ねじる」を意味する語（writhe など）と関係があるとされる。radiocarpal は radius（橈骨）+ carpus（手根。ギリシャ語 karpos「手首」）。',
@@ -3523,19 +3533,19 @@ addTerms([
  tip:'脛骨・腓骨の下端がほぞ穴のように距骨をはさむ。つま先を上げる背屈と、下げる底屈を行う。'},
 {id:'tmj',cat:'joint',en:'temporomandibular joint',alt:'TMJ',ja:'顎関節',yomi:'がくかんせつ',kana:'テンポロウマン[ディ]ビュラー [ジョ]イント',roots:[],
  ety:'temporo-（側頭骨の。ラテン語 tempora「こめかみ」）+ mandibular（下顎骨の。mandere「かむ」）。2つの骨の名前を並べた名前。',
- ex:['Your temporomandibular joint (TMJ) moves just in front of your ear.','顎関節（TMJ）は、耳のすぐ前で動きます。'],
+ ex:['Open and close your mouth slowly, and feel your temporomandibular joint move.','口をゆっくり開け閉めして、顎関節が動くのを感じてください。'],
  tip:'中に関節円板がある。口を大きく開けると下顎頭が前へすべり出るので、耳の穴の前に指を当てると動きがわかる。'},
 {id:'sternoclavicular_joint',cat:'joint',en:'sternoclavicular joint',alt:'SC joint',ja:'胸鎖関節',yomi:'きょうさかんせつ',kana:'スターノウクラ[ヴィ]キュラー [ジョ]イント',roots:['stern','clav'],
  ety:'sterno-（胸骨。ギリシャ語 sternon「胸」）+ clavicular（鎖骨の。ラテン語 clavicula「小さな鍵」）。',
- ex:['The sternoclavicular joint is the only bony link between your arm and trunk.','胸鎖関節は、腕と体幹を骨どうしでつなぐ唯一の関節です。'],
+ ex:['Shrug your shoulders and feel your sternoclavicular joint move under my finger.','肩をすくめてみてください。指の下で胸鎖関節が動くのがわかります。'],
  tip:'関節円板をもつ。鎖骨の内側の端、胸骨のすぐ横で触れられる。'},
 {id:'acromioclavicular_joint',cat:'joint',en:'acromioclavicular joint',alt:'AC joint',ja:'肩鎖関節',yomi:'けんさかんせつ',kana:'アクロウミオウクラ[ヴィ]キュラー [ジョ]イント',roots:['acro','clav'],
  ety:'acromio-（肩峰。ギリシャ語 akron「先端」+ ōmos「肩」）+ clavicular（鎖骨の）。肩の先で肩峰と鎖骨がつながる関節。',
- ex:['You can feel the acromioclavicular joint as a small bump on top of your shoulder.','肩の上の小さな出っぱりとして、肩鎖関節にさわれます。'],
+ ex:['Here\'s your acromioclavicular joint, the small bump on top of your shoulder.','ここが肩鎖関節です。肩の上の小さな出っぱりです。'],
  tip:'鎖骨を外側へたどった先、肩の頂点の少し内側にある。'},
 {id:'sacroiliac_joint',cat:'joint',en:'sacroiliac joint',alt:'SI joint',ja:'仙腸関節',yomi:'せんちょうかんせつ',kana:'セイクロウ[イ]リアック [ジョ]イント',roots:['sacr','ili'],
  ety:'sacro-（仙骨。ラテン語 os sacrum「聖なる骨」）+ iliac（腸骨の。ラテン語 ilia「わき腹」）。',
- ex:['The sacroiliac joints link the sacrum to the ilium on each side.','仙腸関節は、左右それぞれで仙骨と腸骨をつないでいます。'],
+ ex:['I\'ll rest my hands over your sacroiliac joints, on either side of your sacrum.','仙骨の両わきにある仙腸関節の上に、手を置きますね。'],
  tip:'強い靭帯に囲まれ、動きはわずか。背面では、お尻の上の左右のくぼみ（上後腸骨棘）のあたり。'},
 {id:'pubic_symphysis',cat:'joint',en:'pubic symphysis',alt:'',ja:'恥骨結合',yomi:'ちこつけつごう',kana:'[ピュー]ビック [シ]ンフィシス',roots:['pub','syn'],
  ety:'pubic は「恥骨の」（ラテン語 pubes「成人、陰毛」）。symphysis はギリシャ語で「共に育つこと」（syn-「共に」+ phyein「育つ」）。',
@@ -3613,11 +3623,11 @@ addTerms([
  tip:'少量の滑液が入った小さな袋。炎症は bursitis（滑液包炎）。'},
 {id:'ligament',cat:'joint',en:'ligament',alt:'',ja:'靭帯',yomi:'じんたい',kana:'[リ]ガメント',roots:['lig'],
  ety:'ラテン語 ligamentum「ひも、帯」（ligare「結ぶ」）。骨と骨を結ぶ組織。',
- ex:['Ligaments connect bone to bone and keep joints stable.','靭帯は骨と骨をつなぎ、関節を安定させます。'],
+ ex:['I\'ll move your knee gently so I don\'t strain the ligaments.','靭帯に負担をかけないよう、膝をやさしく動かします。'],
  tip:'骨と骨をつなぐのが靭帯、筋と骨をつなぐのが腱。'},
 {id:'tendon',cat:'joint',en:'tendon',alt:'',ja:'腱',yomi:'けん',kana:'[テ]ンドン',roots:[],
  ety:'中世ラテン語 tendo（ラテン語 tendere「伸ばす、張る」から）。ギリシャ語 tenōn「腱」の影響も受けたとされる。',
- ex:['A tendon attaches a muscle to a bone.','腱は筋肉を骨につなぎます。'],
+ ex:['Wiggle your fingers, and you can feel this tendon move.','指を動かすと、この腱が動くのがわかります。'],
  tip:'筋の力を骨に伝える丈夫なひも。形容詞は tendinous、炎症は tendinitis（腱炎）。'},
 {id:'hyaline_cartilage',cat:'joint',en:'hyaline cartilage',alt:'',ja:'硝子軟骨',yomi:'しょうしなんこつ',kana:'[ハ]イアリン [カー]ティリッジ',roots:[],
  ety:'hyaline はギリシャ語 hyalos「ガラス」から。半透明でガラスのように見えることから。日本語の「硝子」も同じ意味。',
@@ -3731,7 +3741,7 @@ addTerms([
  tip:'ひじをつく姿勢が続くとはれることがあり、英語では student\'s elbow とも呼ばれる。'},
 {id:'carpal_tunnel',cat:'joint',en:'carpal tunnel',alt:'',ja:'手根管',yomi:'しゅこんかん',kana:'[カー]パル [タ]ネル',roots:['carp'],
  ety:'carpal（手根の。ギリシャ語 karpos「手首」）+ tunnel（トンネル）。手根骨と屈筋支帯で囲まれた通り道。',
- ex:['The median nerve and nine tendons pass through the carpal tunnel.','正中神経と9本の腱が、手根管を通ります。'],
+ ex:['Do your fingers tingle when I press over your carpal tunnel?','手根管の上を押すと、指がしびれますか？'],
  tip:'ここで正中神経が圧迫されるのが手根管症候群。手のひらの付け根の奥にある。'},
 {id:'flexor_retinaculum',cat:'joint',en:'flexor retinaculum',alt:'transverse carpal ligament',ja:'屈筋支帯（横手根靭帯）',yomi:'くっきんしたい（おうしゅこんじんたい）',kana:'フ[レ]クサー レティ[ナ]キュラム',roots:['retinac','carp'],
  ety:'flexor（屈筋。ラテン語 flectere「曲げる」）+ retinaculum（ラテン語「つなぎ綱」、retinere「引き留める」）。屈筋の腱を押さえる帯。',
@@ -3853,7 +3863,7 @@ addTerms([
  tip:'足首の脛腓靭帯結合を前から支える。ここの捻挫は「高位足関節捻挫」と呼ばれる。'},
 {id:'plantar_fascia',cat:'joint',en:'plantar fascia',alt:'plantar aponeurosis',ja:'足底腱膜',yomi:'そくていけんまく',kana:'プ[ラ]ンター [ファ]シャ',roots:['plant'],
  ety:'plantar（足底の。ラテン語 planta「足の裏」）+ fascia（ラテン語「帯、包帯」）。',
- ex:['The plantar fascia runs from the heel to the base of the toes.','足底腱膜は、かかとから足指の付け根へ走っています。'],
+ ex:['Roll a ball under your foot to stretch your plantar fascia.','ボールを足の裏で転がして、足底腱膜を伸ばしましょう。'],
  tip:'土踏まずを弓の弦のように支える。足指を反らすと張る（巻き上げ機構）。'},
 {id:'spring_ligament',cat:'joint',en:'spring ligament',alt:'plantar calcaneonavicular ligament',ja:'底側踵舟靭帯（スプリング靭帯）',yomi:'ていそくしょうしゅうじんたい',kana:'スプ[リ]ング [リ]ガメント',roots:['plant','calc','lig'],
  ety:'正式名は plantar（足底の）+ calcaneo-（踵骨）+ navicular（舟状骨の。ラテン語 navis「船」）。ばねのように土踏まずを支えると考えられ spring と呼ばれたとされる。',
@@ -3867,11 +3877,11 @@ addTerms([
 /* ---------- 脊柱 Spine ---------- */
 {id:'facet_joint',cat:'joint',en:'facet joint',alt:'zygapophyseal joint',ja:'椎間関節',yomi:'ついかんかんせつ',kana:'[ファ]セット [ジョ]イント',roots:[],
  ety:'facet はフランス語 facette「小さな面」から。別名 zygapophyseal はギリシャ語 zygon「くびき」+ apophysis「突起」。',
- ex:['The facet joints guide how each part of the spine can move.','椎間関節は、背骨の各部分の動き方を方向づけています。'],
+ ex:['I\'ll gently mobilize your spine to help your facet joints move smoothly.','背骨をやさしく動かして、椎間関節の動きをなめらかにしていきます。'],
  tip:'上下の椎骨の関節突起どうしの小さな関節。左右1対ずつあり、平面関節に分類される。'},
 {id:'intervertebral_disc',cat:'joint',en:'intervertebral disc',alt:'',ja:'椎間板',yomi:'ついかんばん',kana:'インター[ヴァー]テブラル [ディ]スク',roots:['inter','vert'],
  ety:'inter-（〜の間）+ vertebral（椎骨の）+ disc（円板。ギリシャ語 diskos）。',
- ex:['Each intervertebral disc acts as a cushion between two vertebrae.','椎間板は、2つの椎骨の間でクッションの役目をしています。'],
+ ex:['Lying on your back takes some pressure off your intervertebral discs.','仰向けに寝ると、椎間板にかかる圧が軽くなります。'],
  tip:'中心の髄核と、それを囲む線維輪からなる。第1・第2頸椎の間にはない。'},
 {id:'nucleus_pulposus',cat:'joint',en:'nucleus pulposus',alt:'',ja:'髄核',yomi:'ずいかく',kana:'[ヌー]クリアス パル[ポ]ウサス',roots:[],
  ety:'nucleus（ラテン語「木の実の核」、nux「くるみ」から）+ pulposus（「果肉のような」。pulpa「果肉」）。',
@@ -4666,11 +4676,11 @@ addTerms([
  tip:'中斜角筋の後ろに隠れるように走る。'},
 {id:'levator_scapulae',cat:'muscle',en:'levator scapulae',alt:'',ja:'肩甲挙筋',yomi:'けんこうきょきん',kana:'リ[ヴェ]イター [ス]キャピュリー',roots:['levat'],
  ety:'levator「持ち上げるもの」+ scapulae「肩甲骨の」。肩甲骨を引き上げる筋。',
- ex:['A tight levator scapulae can make it hard to turn your head.','肩甲挙筋が硬いと、首を回しにくくなることがあります。'],
+ ex:['Look toward your left armpit to stretch your right levator scapulae.','左のわきの下をのぞき込むようにして、右の肩甲挙筋を伸ばしましょう。'],
  tip:'上位頸椎の横突起から肩甲骨の上角へ。肩こりでよく話題になる筋。'},
 {id:'splenius_capitis',cat:'muscle',en:'splenius capitis',alt:'',ja:'頭板状筋',yomi:'とうばんじょうきん',kana:'ス[プリー]ニアス [キャ]ピティス',roots:['capit'],
  ety:'ギリシャ語 splēnion「包帯」から。包帯のように首を斜めに巻く。capitis「頭の」（caput）。',
- ex:['The splenius capitis helps you turn and tilt your head.','頭板状筋は、頭を回したり傾けたりするのを助けます。'],
+ ex:['I\'ll press gently along your splenius capitis, at the back of your neck.','首の後ろの頭板状筋に沿って、やさしく押していきます。'],
  tip:'項靭帯・上位胸椎から乳様突起と後頭骨へ。僧帽筋の下の層にある。'},
 {id:'splenius_cervicis',cat:'muscle',en:'splenius cervicis',alt:'',ja:'頸板状筋',yomi:'けいばんじょうきん',kana:'ス[プリー]ニアス [サー]ヴィシス',roots:['cervic'],
  ety:'splenius「包帯のような筋」+ cervicis「首の」（ラテン語 cervix 首）。頸椎に付く板状筋。',
@@ -4728,7 +4738,7 @@ addTerms([
 /* ---------- 後頭下筋群 ---------- */
 {id:'suboccipital_muscles',cat:'muscle',en:'suboccipital muscles',alt:'suboccipitals',ja:'後頭下筋群',yomi:'こうとうかきんぐん',kana:'サブアク[シ]ピタル [マ]スルズ',roots:['sub','occipit'],
  ety:'ラテン語 sub「下に」+ occipital「後頭の」。後頭骨のすぐ下にある小さな筋の総称。',
- ex:['The suboccipital muscles lie just under the base of your skull.','後頭下筋群は頭蓋骨の付け根のすぐ下にあります。'],
+ ex:['Let your head rest in my hands to release your suboccipital muscles.','私の手に頭をあずけて、後頭下筋群をゆるめましょう。'],
  tip:'左右4対の小さな筋で、頭の細かな動きに関わる。頭蓋の付け根の施術で意識する層。'},
 {id:'rectus_capitis_posterior_major',cat:'muscle',en:'rectus capitis posterior major',alt:'',ja:'大後頭直筋',yomi:'だいこうとうちょくきん',kana:'[レ]クタス [キャ]ピティス パス[ティ]アリア [メ]イジャー',roots:['rect','capit','antepost','max'],
  ety:'rectus「まっすぐな」+ capitis「頭の」+ posterior「後ろの」+ major「大きいほうの」。軸椎から後頭骨へ。',
@@ -4754,7 +4764,7 @@ addTerms([
 /* ---------- 胸と腹の筋 ---------- */
 {id:'pectoralis_minor',cat:'muscle',en:'pectoralis minor',alt:'pec minor',ja:'小胸筋',yomi:'しょうきょうきん',kana:'ペクト[ラ]リス [マ]イナー',roots:['pector','min'],
  ety:'ラテン語 pectus「胸」+ minor「小さいほうの」。大胸筋の下にある小さな胸の筋。',
- ex:['A tight pectoralis minor can pull your shoulders forward.','小胸筋が硬いと、肩が前に引かれることがあります。'],
+ ex:['I\'ll press gently into your pectoralis minor, just below the front of your shoulder.','肩の前の少し下、小胸筋をやさしく押していきます。'],
  tip:'第3〜5肋骨から肩甲骨の烏口突起へ。巻き肩の話でよく出る。'},
 {id:'subclavius',cat:'muscle',en:'subclavius',alt:'',ja:'鎖骨下筋',yomi:'さこつかきん',kana:'サブク[レ]イヴィアス',roots:['sub','clav'],
  ety:'ラテン語 sub「下に」+ clavis「鍵」（clavicula 鎖骨）。鎖骨の下面にある小さな筋。',
@@ -4762,7 +4772,7 @@ addTerms([
  tip:'第1肋骨から鎖骨の下面へ。鎖骨を引き下げ、胸鎖関節を安定させる。'},
 {id:'serratus_anterior',cat:'muscle',en:'serratus anterior',alt:'',ja:'前鋸筋',yomi:'ぜんきょきん',kana:'セ[レ]イタス アン[ティ]アリア',roots:['serrat','antepost'],
  ety:'ラテン語 serratus「のこぎり歯状の」（serra のこぎり）+ anterior「前の」。肋骨に付く部分がのこぎりの歯のように並ぶ。',
- ex:['The serratus anterior holds your shoulder blade against your ribs.','前鋸筋は肩甲骨を肋骨に押しつけて安定させます。'],
+ ex:['Push your hands forward and feel your serratus anterior work along your side ribs.','両手を前に押し出すと、わきの肋骨のあたりで前鋸筋が働きます。'],
  tip:'わきの下の肋骨の上にギザギザに見える。肩甲骨を前へ出す（protraction）筋。'},
 {id:'external_intercostals',cat:'muscle',en:'external intercostal muscles',alt:'external intercostals',ja:'外肋間筋',yomi:'がいろっかんきん',kana:'イクス[ター]ナル インター[カ]スタル [マ]スルズ',roots:['intext','inter','cost'],
  ety:'external「外の」+ ラテン語 inter「間」+ costa「肋骨」。肋骨と肋骨の間の外側の層。',
@@ -4800,7 +4810,7 @@ addTerms([
 /* ---------- 腰の深い筋・横隔膜 ---------- */
 {id:'psoas_major',cat:'muscle',en:'psoas major',alt:'psoas',ja:'大腰筋',yomi:'だいようきん',kana:'[ソウ]アス [メ]イジャー',roots:['psoa','max'],
  ety:'ギリシャ語 psoa「腰の筋」+ major「大きいほうの」。腰椎の横から骨盤を越えて大腿骨へ。p は発音しない。',
- ex:['The psoas major connects your lower spine to your thighbone.','大腰筋は腰椎と大腿骨をつないでいます。'],
+ ex:['Bend your knees so your psoas major can soften.','膝を立てて、大腰筋がゆるむようにしましょう。'],
  tip:'腰椎から大腿骨の小転子へ。腸骨筋と合わせて腸腰筋。腹の奥深くを通る。'},
 {id:'psoas_minor',cat:'muscle',en:'psoas minor',alt:'',ja:'小腰筋',yomi:'しょうようきん',kana:'[ソウ]アス [マ]イナー',roots:['psoa','min'],
  ety:'psoas「腰の筋」+ minor「小さいほうの」。大腰筋の前に乗る細い筋。',
@@ -4812,7 +4822,7 @@ addTerms([
  tip:'腸骨窩から始まり、大腰筋と合流して小転子へ。'},
 {id:'quadratus_lumborum',cat:'muscle',en:'quadratus lumborum',alt:'QL',ja:'腰方形筋',yomi:'ようほうけいきん',kana:'クワド[レ]イタス ラム[ボー]ラム',roots:['quadrat','lumb'],
  ety:'ラテン語 quadratus「四角い」+ lumborum「腰の」（lumbus 腰）。腰にある四角形の筋。',
- ex:['The quadratus lumborum connects your lowest rib to your pelvis.','腰方形筋は最も下の肋骨と骨盤をつないでいます。'],
+ ex:['Please lie on your side, and I\'ll work on your quadratus lumborum.','横向きに寝てください。腰方形筋をほぐしていきます。'],
  tip:'第12肋骨・腰椎の横突起と腸骨稜の間。体を横に傾ける筋で、腰の疲れでよく話題になる。'},
 {id:'central_tendon',cat:'muscle',en:'central tendon of the diaphragm',alt:'central tendon',ja:'腱中心（横隔膜）',yomi:'けんちゅうしん',kana:'[セ]ントラル [テ]ンドン オヴ ザ [ダ]イアフラム',roots:['tens'],
  ety:'central「中心の」+ tendon「腱」。横隔膜の筋が四方から集まる、ドームの頂上にある腱の部分。',
@@ -4874,7 +4884,7 @@ addTerms([
  tip:'胸・頸・頭の3部に分けられ、頭の部分が頭半棘筋。'},
 {id:'multifidus',cat:'muscle',en:'multifidus',alt:'multifidi',ja:'多裂筋',yomi:'たれつきん',kana:'マル[ティ]フィダス',roots:[],
  ety:'ラテン語 multifidus「多くに裂けた」（multi 多くの + findere 裂く）。たくさんの小さな束に分かれている。',
- ex:['The multifidus helps stabilize each segment of your spine.','多裂筋は背骨の一つ一つの分節を安定させるのを助けます。'],
+ ex:['I\'ll press slowly into your multifidus, close beside your spine.','背骨のすぐわきの多裂筋を、ゆっくり押していきます。'],
  tip:'腰部で特に厚い。2〜4個の椎骨をまたぐ。'},
 {id:'rotatores',cat:'muscle',en:'rotatores',alt:'rotator muscles of the spine',ja:'回旋筋',yomi:'かいせんきん',kana:'ロウタ[トー]リーズ',roots:['rota'],
  ety:'ラテン語 rotator「回すもの」（rotare 回す）の複数形。横突起からすぐ上の椎骨の椎弓へ付く、最も深い筋。',
@@ -4890,13 +4900,13 @@ addTerms([
  tip:'首と腰でよく発達する。棘間筋と同じく、ごく短い分節の筋。'},
 {id:'thoracolumbar_fascia',cat:'muscle',en:'thoracolumbar fascia',alt:'lumbodorsal fascia',ja:'胸腰筋膜',yomi:'きょうようきんまく',kana:'ソーラコウ[ラ]ムバー [ファ]シャ',roots:['thorac','lumb','fasci'],
  ety:'thoraco-「胸の」（ギリシャ語 thōrax）+ lumbar「腰の」（ラテン語 lumbus）+ fascia「帯」。腰背部を覆う厚い筋膜。',
- ex:['The thoracolumbar fascia links your back, hips, and abdominal muscles.','胸腰筋膜は背中・お尻・お腹の筋をつないでいます。'],
+ ex:['I\'ll stretch the thoracolumbar fascia across your lower back.','腰の胸腰筋膜を、横に広げるように伸ばしていきます。'],
  tip:'広背筋・大殿筋・腹横筋などが付く。腰の施術でよく意識する膜。'},
 
 /* ---------- 骨盤底 ---------- */
 {id:'pelvic_floor',cat:'muscle',en:'pelvic floor muscles',alt:'pelvic floor',ja:'骨盤底筋群',yomi:'こつばんていきんぐん',kana:'[ペ]ルヴィック [フ]ロア [マ]スルズ',roots:[],
  ety:'pelvic「骨盤の」（ラテン語 pelvis たらい）+ floor「床」。骨盤の底をハンモックのように支える筋の総称。',
- ex:['The pelvic floor muscles support the bladder and other pelvic organs.','骨盤底筋群は膀胱などの骨盤内の臓器を支えます。'],
+ ex:['As you exhale, let your pelvic floor muscles gently lift.','息を吐きながら、骨盤底筋群をやさしく引き上げましょう。'],
  tip:'呼吸に合わせて横隔膜と連動して動く。気功でいう会陰のあたり。'},
 {id:'levator_ani',cat:'muscle',en:'levator ani',alt:'',ja:'肛門挙筋',yomi:'こうもんきょきん',kana:'リ[ヴェ]イター [エ]イナイ',roots:['levat'],
  ety:'levator「持ち上げるもの」+ ani「肛門の」（ラテン語 anus）。骨盤底の大部分をつくる漏斗形の筋。',
@@ -4950,7 +4960,7 @@ addTerms([
 /* ---------- 筋のつくり・働き ---------- */
 {id:'skeletal_muscle',cat:'muscle',en:'skeletal muscle',alt:'striated muscle',ja:'骨格筋',yomi:'こっかくきん',kana:'[ス]ケレタル [マ]スル',roots:[],
  ety:'skeletal「骨格の」（ギリシャ語 skeletos「干からびた（体）」）+ muscle（ラテン語 musculus「小さなネズミ」）。骨に付いて体を動かす筋。',
- ex:['Skeletal muscle moves your bones under voluntary control.','骨格筋は自分の意思で骨を動かします。'],
+ ex:['Let every skeletal muscle in your body soften as you breathe out.','息を吐きながら、全身の骨格筋をゆるめていきましょう。'],
  tip:'横じま（横紋）があり、意思で動かせる随意筋。施術でふれる筋肉の大部分。'},
 {id:'smooth_muscle',cat:'muscle',en:'smooth muscle',alt:'',ja:'平滑筋',yomi:'へいかつきん',kana:'ス[ムー]ズ [マ]スル',roots:[],
  ety:'smooth「なめらかな」+ muscle。顕微鏡で横紋が見えず、なめらかに見えることから。',
@@ -4998,7 +5008,7 @@ addTerms([
  tip:'毛細血管が通り、筋線維に栄養を届ける。'},
 {id:'fascia',cat:'muscle',en:'fascia',alt:'fasciae（複数）',ja:'筋膜',yomi:'きんまく',kana:'[ファ]シャ',roots:['fasci'],
  ety:'ラテン語 fascia「帯、包帯」。筋や臓器を包み、つないでいる結合組織の膜。',
- ex:['Fascia connects muscles throughout the body.','筋膜は体じゅうの筋をつないでいます。'],
+ ex:['I\'ll use slow, gentle pressure to release the fascia.','筋膜をゆるめるため、ゆっくりやさしく圧をかけていきます。'],
  tip:'筋膜リリース myofascial release の fascial はこの語。'},
 {id:'aponeurosis',cat:'muscle',en:'aponeurosis',alt:'aponeuroses（複数）',ja:'腱膜',yomi:'けんまく',kana:'アポヌ[ロウ]シス',roots:['apo','neur'],
  ety:'ギリシャ語 apo「離れて」+ neuron「腱、すじ」。筋から続く、薄く平たい膜状の腱。昔は腱と神経を同じ語でよんだ名残。',
@@ -5006,11 +5016,11 @@ addTerms([
  tip:'ひも状でなく膜状の腱。帽状腱膜・上腕二頭筋腱膜・手掌腱膜など。'},
 {id:'origin_muscle',cat:'muscle',en:'origin (of a muscle)',alt:'',ja:'起始',yomi:'きし',kana:'[オー]リジン',roots:[],
  ety:'ラテン語 origo「始まり、源」（oriri 起こる）。筋の両端のうち、動きの少ないほう（多くは体の中心寄り）の付着部。',
- ex:['The origin of the biceps is on the shoulder blade.','上腕二頭筋の起始は肩甲骨にあります。'],
+ ex:['I\'ll press near the origin of your biceps, at the front of your shoulder.','肩の前、上腕二頭筋の起始の近くを押していきます。'],
  tip:'起始・停止は動きの基準で決めた約束ごと。動き方によって役割が入れかわることもある。'},
 {id:'insertion_muscle',cat:'muscle',en:'insertion (of a muscle)',alt:'',ja:'停止',yomi:'ていし',kana:'イン[サー]ション',roots:[],
  ety:'ラテン語 insertio「差し込むこと」（inserere 差し込む）。筋の付着部のうち、よく動くほう（多くは体の末端寄り）。',
- ex:['The insertion of the biceps is on the radius.','上腕二頭筋の停止は橈骨にあります。'],
+ ex:['Now I\'ll work near the insertion of your biceps, just below your elbow.','次は、ひじのすぐ下の上腕二頭筋の停止のあたりをほぐします。'],
  tip:'筋が縮むと、ふつう停止が起始に近づく。'},
 {id:'agonist',cat:'muscle',en:'agonist',alt:'prime mover',ja:'主動筋',yomi:'しゅどうきん',kana:'[ア]ゴニスト',roots:['agon'],
  ety:'ギリシャ語 agōnistēs「競技者、戦う人」（agōn 競技）。ある動きの中心となって働く筋。',
@@ -5018,7 +5028,7 @@ addTerms([
  tip:'動筋ともいう。反対の働きをする筋が拮抗筋。'},
 {id:'antagonist',cat:'muscle',en:'antagonist',alt:'',ja:'拮抗筋',yomi:'きっこうきん',kana:'アン[タ]ゴニスト',roots:['agon'],
  ety:'ギリシャ語 anti「反対に」+ agōnistēs「競技者」。主動筋と反対の動きをする筋。',
- ex:['The triceps is the antagonist of the biceps.','上腕三頭筋は上腕二頭筋の拮抗筋です。'],
+ ex:['Relax your triceps, the antagonist, as you bend your elbow.','ひじを曲げるときは、拮抗筋である上腕三頭筋の力を抜いてください。'],
  tip:'主動筋が縮むとき、拮抗筋はゆるんで動きをなめらかにする。'},
 {id:'synergist',cat:'muscle',en:'synergist',alt:'',ja:'協力筋',yomi:'きょうりょくきん',kana:'[シ]ナジスト',roots:['syn'],
  ety:'ギリシャ語 syn「一緒に」+ ergon「仕事」（synergos 協力する）。主動筋の働きを助ける筋。',
@@ -5939,15 +5949,15 @@ addTerms([
 /* ---------- 肩と回旋筋腱板 ---------- */
 {id:'rotator_cuff',cat:'muscle',en:'rotator cuff',alt:'',ja:'回旋筋腱板（ローテーターカフ）',yomi:'かいせんきんけんばん',kana:'[ロ]ウテイター [カ]フ',roots:['rota'],
  ety:'rotator はラテン語 rotare「回す」（rota 車輪）から。4つの筋の腱が上腕骨頭を袖口（cuff）のように包むことから。',
- ex:['The rotator cuff keeps the head of the humerus centered in the joint.','回旋筋腱板は、上腕骨頭を関節の中心に保ちます。'],
+ ex:['Let\'s check your rotator cuff by turning your arm in and out.','腕を内と外にひねって、回旋筋腱板の具合を確かめましょう。'],
  tip:'棘上筋・棘下筋・小円筋・肩甲下筋の4つ。英語の頭文字から SITS と覚える。'},
 {id:'supraspinatus',cat:'muscle',en:'supraspinatus',alt:'',ja:'棘上筋',yomi:'きょくじょうきん',kana:'スープラスパイ[ネ]イタス',roots:['supra','spin'],
  ety:'ラテン語 supra「上に」+ spina「とげ」。肩甲骨の肩甲棘より上のくぼみ（棘上窩）にある筋。',
- ex:['The supraspinatus helps start lifting your arm out to the side.','棘上筋は、腕を横に上げ始める動きを助けます。'],
+ ex:['I\'ll work on your supraspinatus, just above the spine of your shoulder blade.','肩甲棘のすぐ上にある棘上筋をほぐしていきます。'],
  tip:'腱は肩峰の下をくぐって大結節につく。腱板の中でも傷みやすいことで知られる。'},
 {id:'infraspinatus',cat:'muscle',en:'infraspinatus',alt:'',ja:'棘下筋',yomi:'きょくかきん',kana:'インフラスパイ[ネ]イタス',roots:['infra','spin'],
  ety:'ラテン語 infra「下に」+ spina「とげ」。肩甲棘より下のくぼみ（棘下窩）を広く占める筋。',
- ex:['The infraspinatus rotates your arm outward.','棘下筋は腕を外側にひねります（外旋）。'],
+ ex:['Here is your infraspinatus, on the back of your shoulder blade.','ここが肩甲骨の裏側にある棘下筋です。'],
  tip:'肩甲骨の背面、肩甲棘の下に手のひらを当てると触れやすい。ツボの天宗はこの上にある。'},
 {id:'teres_minor',cat:'muscle',en:'teres minor',alt:'',ja:'小円筋',yomi:'しょうえんきん',kana:'[テ]リーズ [マ]イナー',roots:['teres','min'],
  ety:'ラテン語 teres「丸く細長い」+ minor「小さいほうの」。肩甲骨の外側縁に沿う細長い筋。',
@@ -6159,7 +6169,7 @@ addTerms([
 /* ---------- 殿部の筋 ---------- */
 {id:'gluteus_medius',cat:'muscle',en:'gluteus medius',alt:'',ja:'中殿筋',yomi:'ちゅうでんきん',kana:'[グルー]ティアス [ミー]ディアス',roots:['glute','medi'],
  ety:'ギリシャ語 gloutos「尻」+ ラテン語 medius「中間の」。3つの殿筋のうち中くらいの大きさのもの。',
- ex:['The gluteus medius keeps your pelvis level when you stand on one leg.','中殿筋は、片脚で立つときに骨盤を水平に保ちます。'],
+ ex:['Stand on one leg and feel your gluteus medius keep your pelvis level.','片脚で立って、中殿筋が骨盤を水平に保つのを感じてください。'],
  tip:'腸骨の外側から大転子へつく。骨盤の横、腸骨稜のすぐ下で触れやすい。'},
 {id:'gluteus_minimus',cat:'muscle',en:'gluteus minimus',alt:'',ja:'小殿筋',yomi:'しょうでんきん',kana:'[グルー]ティアス [ミ]ニマス',roots:['glute','min'],
  ety:'ギリシャ語 gloutos「尻」+ ラテン語 minimus「最小の」。殿筋の中で最も小さく、最も深い。',
@@ -6167,11 +6177,11 @@ addTerms([
  tip:'中殿筋とともに脚を外へ開き（外転）、内へひねる（内旋）。'},
 {id:'tensor_fasciae_latae',cat:'muscle',en:'tensor fasciae latae',alt:'TFL',ja:'大腿筋膜張筋',yomi:'だいたいきんまくちょうきん',kana:'[テ]ンサー [ファ]シイー [レ]イティー',roots:['tens','fasci','lat'],
  ety:'ラテン語 tensor「張るもの」（tendere 張る）+ fasciae「筋膜の」（fascia 帯）+ latae「広い」。広い大腿筋膜を張る筋。',
- ex:['The tensor fasciae latae lies at the front and side of the hip.','大腿筋膜張筋は、股関節の前外側にあります。'],
+ ex:['I\'ll press along your tensor fasciae latae, at the front of your hip.','股関節の前外側、大腿筋膜張筋に沿って押していきます。'],
  tip:'上前腸骨棘のすぐ下外側で触れる。腸脛靭帯に続き、股関節を曲げ、内へひねる。'},
 {id:'piriformis',cat:'muscle',en:'piriformis',alt:'',ja:'梨状筋',yomi:'りじょうきん',kana:'ピリ[フォー]ミス',roots:['form'],
  ety:'ラテン語 pirum「洋ナシ」+ forma「形」。洋ナシのような形から。日本語の「梨状」も同じ。',
- ex:['The sciatic nerve usually passes just below the piriformis.','坐骨神経は、ふつう梨状筋のすぐ下を通ります。'],
+ ex:['Cross your ankle over your other knee to stretch your piriformis.','足首を反対の膝にかけて、梨状筋を伸ばしましょう。'],
  tip:'仙骨の前面から大転子へ。股関節を外旋する。坐骨神経が筋の中を貫く人もいる。'},
 {id:'superior_gemellus',cat:'muscle',en:'superior gemellus',alt:'',ja:'上双子筋',yomi:'じょうそうしきん',kana:'ス[ピ]アリア ジェ[メ]ラス',roots:['supinf','gemell'],
  ety:'superior「上の」+ ラテン語 gemellus「双子」（geminus の指小形）。内閉鎖筋の腱をはさむ双子の筋の上のほう。',
@@ -6199,17 +6209,17 @@ addTerms([
  tip:'梨状筋・上双子筋・内閉鎖筋・下双子筋・大腿方形筋・外閉鎖筋の6つ。'},
 {id:'iliotibial_tract',cat:'muscle',en:'iliotibial tract',alt:'IT band',ja:'腸脛靭帯',yomi:'ちょうけいじんたい',kana:'イリオウ[ティ]ビアル [トラ]クト',roots:['ili','tibi'],
  ety:'ilio-「腸骨の」+ tibial「脛骨の」+ tract「帯、通り道」（ラテン語 tractus）。腸骨から脛骨まで太ももの外側を走る帯。',
- ex:['The iliotibial tract runs down the outside of your thigh.','腸脛靭帯は太ももの外側を下へ走っています。'],
+ ex:['I\'ll work slowly down your iliotibial tract, on the outside of your thigh.','太ももの外側の腸脛靭帯に沿って、ゆっくりほぐしていきます。'],
  tip:'名前は靭帯だが、実は大腿筋膜が厚くなった帯。大腿筋膜張筋と大殿筋が引っぱる。'},
 
 /* ---------- 大腿の筋（前・内側） ---------- */
 {id:'sartorius',cat:'muscle',en:'sartorius',alt:'',ja:'縫工筋',yomi:'ほうこうきん',kana:'サー[トー]リアス',roots:[],
  ety:'ラテン語 sartor「仕立て屋」から。仕立て屋があぐらをかいて縫う姿勢をつくる筋とされる。日本語の「縫工」も同じ発想。',
- ex:['The sartorius is the longest muscle in the body.','縫工筋は体でいちばん長い筋です。'],
+ ex:['I\'ll follow your sartorius diagonally from your hip to your inner knee.','縫工筋に沿って、股関節から膝の内側へ斜めにたどっていきます。'],
  tip:'上前腸骨棘から太ももの前を斜めに横切り、脛骨の内側（鵞足）につく。'},
 {id:'rectus_femoris',cat:'muscle',en:'rectus femoris',alt:'',ja:'大腿直筋',yomi:'だいたいちょっきん',kana:'[レ]クタス [フェ]モリス',roots:['rect','femor'],
  ety:'ラテン語 rectus「まっすぐな」+ femoris「大腿の」。太ももの前をまっすぐ縦に走る筋。',
- ex:['The rectus femoris crosses both the hip and the knee.','大腿直筋は股関節とひざの両方をまたぎます。'],
+ ex:['Bend your knee behind you to stretch your rectus femoris.','膝を後ろに曲げて、大腿直筋を伸ばしましょう。'],
  tip:'大腿四頭筋のうち唯一股関節をまたぎ、脚を前に上げる動きにも働く。'},
 {id:'vastus_lateralis',cat:'muscle',en:'vastus lateralis',alt:'',ja:'外側広筋',yomi:'がいそくこうきん',kana:'[ヴァ]スタス ラタ[レ]イリス',roots:['vast','later'],
  ety:'ラテン語 vastus「広大な」+ lateralis「外側の」。太ももの外側を広く占める。',
@@ -6297,7 +6307,7 @@ addTerms([
  tip:'前脛骨筋と長趾伸筋の間の深くから起こる。足の甲で親指へ向かう腱が浮く。'},
 {id:'fibularis_longus',cat:'muscle',en:'fibularis longus',alt:'peroneus longus',ja:'長腓骨筋',yomi:'ちょうひこつきん',kana:'フィビュ[レ]アリス [ロ]ンガス',roots:['fibul','longbrev'],
  ety:'fibularis「腓骨の」（fibula 留め金）+ longus「長い」。別名の peroneus はギリシャ語 peronē「留め金、ピン」（腓骨の古い名）から。',
- ex:['The fibularis longus tendon runs under the sole of the foot.','長腓骨筋の腱は足の裏を横切っています。'],
+ ex:['I\'ll press along your fibularis longus, on the outside of your lower leg.','すねの外側の長腓骨筋に沿って、押していきます。'],
  tip:'外くるぶしの後ろを回って足の裏を横切り、親指側の骨につく。足を外へ返す（外反）。'},
 {id:'fibularis_brevis',cat:'muscle',en:'fibularis brevis',alt:'peroneus brevis',ja:'短腓骨筋',yomi:'たんひこつきん',kana:'フィビュ[レ]アリス [ブレ]ヴィス',roots:['fibul','longbrev'],
  ety:'fibularis「腓骨の」+ brevis「短い」。長腓骨筋の下で、腓骨の下半分から起こる。',
@@ -6325,7 +6335,7 @@ addTerms([
  tip:'内側頭とともに、膝窩の下の縁をつくる。'},
 {id:'soleus',cat:'muscle',en:'soleus',alt:'',ja:'ヒラメ筋',yomi:'ひらめきん',kana:'[ソ]ウリアス',roots:[],
  ety:'ラテン語 solea「サンダル、靴底」から。平たい形を魚の sole（シタビラメ）にたとえたとされる。日本語では「ヒラメ」。',
- ex:['The soleus lies beneath the gastrocnemius.','ヒラメ筋は腓腹筋の下にあります。'],
+ ex:['Bend your knee slightly to stretch your soleus, deep in your calf.','膝を少し曲げると、ふくらはぎの奥のヒラメ筋が伸びます。'],
  tip:'ひざをまたがないので、ひざを曲げて座ったままでもかかとを上げられる。立つ姿勢を支える持久力のある筋。'},
 {id:'plantaris',cat:'muscle',en:'plantaris',alt:'',ja:'足底筋',yomi:'そくていきん',kana:'プラン[テ]アリス',roots:['plant'],
  ety:'ラテン語 plantaris「足の裏の」（planta）。動物では足底の腱膜に続くことからの名とされる。人では踵骨につく。',
@@ -7309,7 +7319,7 @@ addTerms([
 /* ---------- 気管と肺 Trachea, bronchi & lungs ---------- */
 {id:'trachea', cat:'organ', en:'trachea', alt:'windpipe', ja:'気管', yomi:'きかん', kana:'[ト]レイキア', roots:[],
  ety:'ギリシャ語 artēria tracheia「ざらざらした管」から。軟骨の輪が並び、表面がでこぼこしていることから。',
- ex:['The trachea carries air down to the lungs.','気管は、空気を肺まで運びます。'],
+ ex:['Breathe in through your nose and feel the air pass down your trachea.','鼻から息を吸って、空気が気管を通っていくのを感じてください。'],
  tip:'16〜20個ほどのC字形の軟骨が並ぶ。後ろの壁には軟骨がなく、食道に接する。'},
 {id:'carina', cat:'organ', en:'carina', alt:'carina of trachea', ja:'気管分岐部（気管竜骨）', yomi:'きかんぶんきぶ（きかんりゅうこつ）', kana:'カ[ラ]イナ', roots:[],
  ety:'ラテン語 carina「船の竜骨」。分かれ目の内側の隆起を、船底の竜骨にたとえた。「気管竜骨」はその直訳。',
@@ -7429,7 +7439,7 @@ addTerms([
 /* ---------- 食道と胃 Esophagus & stomach ---------- */
 {id:'esophagus', cat:'organ', en:'esophagus', alt:'gullet', ja:'食道', yomi:'しょくどう', kana:'イ[サ]ファガス', roots:['phag'],
  ety:'ギリシャ語 oisophagos。phagein「食べる」を含み、「食べ物を運ぶもの」の意とされる。英国式の綴りは oesophagus。',
- ex:['Food moves down the esophagus by waves of muscle contraction.','食べ物は、筋肉の波のような収縮で食道を下っていきます。'],
+ ex:['Swallow some water and feel it travel down your esophagus.','水を飲み込んで、食道を下っていくのを感じてみましょう。'],
  tip:'長さ約25cm。気管の後ろを下り、横隔膜を貫いて胃につながる。'},
 {id:'lower_esophageal_sphincter', cat:'organ', en:'lower esophageal sphincter', alt:'LES', ja:'下部食道括約筋', yomi:'かぶしょくどうかつやくきん', kana:'[ロ]ウアー イサファ[ジー]アル ス[フィ]ンクター', roots:['phag','sphinct'],
  ety:'sphincter はギリシャ語 sphinktēr「締めるもの」（sphingein「締める」）。食道の下端を締める部分。',
@@ -7473,7 +7483,7 @@ addTerms([
  tip:'胃の内側の粘膜のしわ。胃が大きく広がるための「のびしろ」。'},
 {id:'duodenum', cat:'organ', en:'duodenum', alt:'', ja:'十二指腸', yomi:'じゅうにしちょう', kana:'ドゥーア[ディー]ナム', roots:[],
  ety:'中世ラテン語 duodenum digitorum「指12本分」の略。長さが指の幅12本分ほどであることから。「十二指腸」はその直訳。',
- ex:['Bile and pancreatic juice flow into the duodenum.','胆汁と膵液は、十二指腸に流れ込みます。'],
+ ex:['I\'ll work gently above and to the right of your navel, over your duodenum.','おへその右上、十二指腸のあたりをやさしくほぐします。'],
  tip:'長さ約25cm。C字形に曲がって膵頭を囲む。'},
 
 /* ---------- 肝臓・胆のう・膵臓 Liver, gallbladder, bile ducts & pancreas ---------- */
@@ -7503,7 +7513,7 @@ addTerms([
  tip:'門脈と固有肝動脈が入り、左右の肝管が出る。門脈 portal vein の portal も porta から。'},
 {id:'gallbladder', cat:'organ', en:'gallbladder', alt:'', ja:'胆のう', yomi:'たんのう', kana:'[ゴー]ルブラダー', roots:[],
  ety:'gall「胆汁」（古英語 gealla）+ bladder「袋」。胆汁をためて濃くする袋。',
- ex:['The gallbladder stores bile made by the liver.','胆のうは、肝臓でつくられた胆汁をためておきます。'],
+ ex:['I\'ll avoid pressing hard under your right ribs, over your gallbladder.','右の肋骨の下、胆のうのあたりは強く押さないようにします。'],
  tip:'肝臓の下面にある洋梨形の袋。医学の語根は chole-（胆汁）+ cyst-（袋）。'},
 {id:'cystic_duct', cat:'organ', en:'cystic duct', alt:'', ja:'胆のう管', yomi:'たんのうかん', kana:'[シ]スティック [ダ]クト', roots:['duct'],
  ety:'cystic「袋の」（ギリシャ語 kystis「袋、膀胱」）+ duct「管」（ラテン語 ducere「導く」）。ここでの袋は胆のう。',
@@ -7589,7 +7599,7 @@ addTerms([
  tip:'左下腹部にある。腸間膜をもち、よく動く。'},
 {id:'rectum', cat:'organ', en:'rectum', alt:'', ja:'直腸', yomi:'ちょくちょう', kana:'[レ]クタム', roots:['rect'],
  ety:'ラテン語 intestinum rectum「まっすぐな腸」（rectus まっすぐな）。動物の解剖でまっすぐに見えたことから。',
- ex:['The rectum stores stool until it is passed.','直腸は、排出されるまで便をためておきます。'],
+ ex:['Belly work can stimulate your rectum, so feel free to take a break.','お腹の施術で直腸が刺激されることがあるので、遠慮なく休憩してくださいね。'],
  tip:'長さ約12〜15cm。実際の人では、仙骨の前のカーブに沿って曲がっている。'},
 {id:'anal_canal', cat:'organ', en:'anal canal', alt:'', ja:'肛門管', yomi:'こうもんかん', kana:'[エ]イナル カ[ナ]ル', roots:[],
  ety:'anal「肛門の」（ラテン語 anus「輪」）+ canal「水路、管」（ラテン語 canalis）。直腸から肛門までの短い管。',
@@ -7895,7 +7905,7 @@ addTerms([
 /* ---------- 女性生殖器 Female reproductive organs ---------- */
 {id:'uterus',cat:'organ',en:'uterus',alt:'womb',ja:'子宮',yomi:'しきゅう',kana:'[ユー]テラス',roots:[],
  ety:'ラテン語 uterus「腹、子宮」。ギリシャ語では hystera や mētra といい、hysterectomy（子宮摘出）や endometrium に残る。',
- ex:['The uterus sits between the bladder and the rectum.','子宮は膀胱と直腸のあいだにあります。'],
+ ex:['I\'ll keep my touch light on your lower belly, over your uterus.','子宮のある下腹部は、軽いタッチにしますね。'],
  tip:'鶏卵ほどの大きさで、洋なしを逆さにしたような形。'},
 {id:'fundus_of_uterus',cat:'organ',en:'fundus of the uterus',alt:'uterine fundus',ja:'子宮底',yomi:'しきゅうてい',kana:'[ファ]ンダス オヴ ザ [ユー]テラス',roots:[],
  ety:'ラテン語 fundus「底」。器官の入口から最も遠い部分を指し、子宮では卵管の付け根より上の丸い部分。',
@@ -8257,7 +8267,7 @@ addTerms([
  tip:'基底層で生まれた細胞が、約4週間かけて表面へ押し上げられるといわれる。'},
 {id:'dermis',cat:'organ',en:'dermis',alt:'',ja:'真皮',yomi:'しんぴ',kana:'[ダー]ミス',roots:['derm'],
  ety:'ギリシャ語 derma「皮膚」から。表皮の下の、コラーゲン線維に富む丈夫な層。',
- ex:['The dermis contains blood vessels, nerves, and glands.','真皮には血管・神経・腺があります。'],
+ ex:['Pinch and roll your skin gently to feel the thickness of the dermis.','皮膚をやさしくつまんで転がすと、真皮の厚みがわかります。'],
  tip:'革製品の「革」は、動物の皮のおもにこの層を加工したもの。'},
 {id:'hypodermis',cat:'organ',en:'hypodermis',alt:'subcutaneous tissue, subcutis',ja:'皮下組織',yomi:'ひかそしき',kana:'ハイポウ[ダー]ミス',roots:['hypo','derm','sub'],
  ety:'ギリシャ語 hypo「下に」+ derma「皮膚」。真皮の下の、脂肪の多いやわらかい層。ラテン語系の subcutis も同じ「皮の下」の意味。',
@@ -9673,11 +9683,11 @@ addTerms([
  tip:'複数形は sulci（サルサイ）。とくに深い溝は fissure（裂）とも呼ぶ。'},
 {id:'cerebellum',cat:'nerve',en:'cerebellum',alt:'',ja:'小脳',yomi:'しょうのう',kana:'セリ[ベ]ラム',roots:['cerebr'],
  ety:'ラテン語 cerebellum「小さな脳」（cerebrum に指小辞が付いた形）。大脳の後ろ下にある。',
- ex:['The cerebellum helps you keep your balance.','小脳は、体のバランスを保つのを助けます。'],
+ ex:['Close your eyes and balance on one leg; your cerebellum is working hard.','目を閉じて片脚で立ってみてください。小脳がしっかり働いています。'],
  tip:'運動の細かな調整やバランスにかかわる。脳の神経細胞の半分以上がここにある。'},
 {id:'brainstem',cat:'nerve',en:'brainstem',alt:'brain stem',ja:'脳幹',yomi:'のうかん',kana:'ブ[レ]インステム',roots:[],
  ety:'brain「脳」+ stem「幹、茎」。大脳を支える茎のように、脊髄へと続く部分。',
- ex:['The brainstem controls breathing and heart rate.','脳幹は、呼吸や心拍を調節しています。'],
+ ex:['Even as you relax, your brainstem keeps your breathing going.','リラックスしているあいだも、脳幹が呼吸を続けてくれます。'],
  tip:'中脳・橋・延髄からなる（間脳を含める考え方もある）。下は脊髄に続く。'},
 
 /* ---------- 脳（正中断面） ---------- */
@@ -10038,15 +10048,15 @@ addTerms([
  tip:'意思で動かす筋と、皮膚などの感覚を担当。内臓を担当する自律神経系と対になる。'},
 {id:'autonomic_nervous_system',cat:'nerve',en:'autonomic nervous system',alt:'ANS',ja:'自律神経系',yomi:'じりつしんけいけい',kana:'オート[ナ]ミック [ナー]ヴァス [シ]ステム',roots:[],
  ety:'ギリシャ語 autos「自分」+ nomos「決まり、法」。意思と関係なく「自分の決まりで」働く神経。英国の生理学者ラングリーが広めた語とされる。',
- ex:['The autonomic nervous system controls your heartbeat and digestion.','自律神経系は、心拍や消化を調節しています。'],
+ ex:['As you relax, your autonomic nervous system slows your heartbeat.','リラックスすると、自律神経系の働きで心拍がゆっくりになります。'],
  tip:'交感・副交感の2つに分けるのが基本。腸管神経系を加えて3つとすることもある。'},
 {id:'sympathetic_nervous_system',cat:'nerve',en:'sympathetic nervous system',alt:'sympathetic division',ja:'交感神経系',yomi:'こうかんしんけいけい',kana:'シンパ[セ]ティック [ナー]ヴァス [シ]ステム',roots:['syn','path'],
  ety:'ギリシャ語 sympatheia「共に感じること」（syn「一緒に」+ pathos「感じること」）。内臓どうしの「共感」を伝える神経と考えられたことから。',
- ex:['Stress activates the sympathetic nervous system.','ストレスは交感神経系を活発にします。'],
+ ex:['When you feel tense, your sympathetic nervous system is more active.','緊張しているときは、交感神経系が活発になっています。'],
  tip:'「闘争か逃走か fight or flight」の神経。脊髄の胸・腰の部分（T1〜L2）から出る。'},
 {id:'parasympathetic_nervous_system',cat:'nerve',en:'parasympathetic nervous system',alt:'parasympathetic division',ja:'副交感神経系',yomi:'ふくこうかんしんけいけい',kana:'パラシンパ[セ]ティック [ナー]ヴァス [シ]ステム',roots:['syn','path'],
  ety:'ギリシャ語 para「そばに、並んで」+ sympathetic。交感神経と並ぶもう一方の系統として、ラングリーが名づけたとされる。',
- ex:['The parasympathetic nervous system helps the body rest and digest.','副交感神経系は、体を休めて消化を進める働きをします。'],
+ ex:['Breathe slowly and let your parasympathetic nervous system take over.','ゆっくり呼吸して、副交感神経系が優位になるのに任せましょう。'],
  tip:'「休息と消化 rest and digest」の神経。脳幹（迷走神経など）と仙髄（S2〜S4）から出る。'},
 {id:'enteric_nervous_system',cat:'nerve',en:'enteric nervous system',alt:'ENS',ja:'腸管神経系',yomi:'ちょうかんしんけいけい',kana:'エン[テ]リック [ナー]ヴァス [シ]ステム',roots:['enter'],
  ety:'ギリシャ語 enteron「腸」から。消化管の壁の中に網のように広がる神経の集まり。',
@@ -10180,13 +10190,13 @@ addTerms([
  tip:'胸神経（T1〜T11）の前枝。胸やお腹の皮膚と筋に帯状に分布する。'},
 {id:'dermatome',cat:'nerve',en:'dermatome',alt:'',ja:'デルマトーム（皮膚分節）',yomi:'ひふぶんせつ',kana:'[ダー]マトウム',roots:['derm'],
  ety:'ギリシャ語 derma「皮膚」+ tomē「切ること、区切り」。1本の脊髄神経が感覚を受けもつ、帯状の皮膚の区域。',
- ex:['Each dermatome is supplied by a single spinal nerve.','それぞれのデルマトームは、1本の脊髄神経が受けもっています。'],
+ ex:['Show me where it feels numb; it may follow a dermatome.','しびれる範囲を教えてください。デルマトームに沿っているかもしれません。'],
  tip:'目安は、乳頭がT4、へそがT10の高さ。'},
 
 /* ---------- 上肢 ---------- */
 {id:'brachial_plexus',cat:'nerve',en:'brachial plexus',alt:'',ja:'腕神経叢',yomi:'わんしんけいそう',kana:'[ブレ]イキアル プ[レ]クサス',roots:['brachi','plex'],
  ety:'ラテン語 brachium「腕」+ plexus「編んだもの」。C5〜T1の前枝が編み合わさり、腕の神経をつくる。',
- ex:['The brachial plexus runs from the neck into the armpit.','腕神経叢は、首からわきの下へと続いています。'],
+ ex:['If your arm tingles when I press here, it may be your brachial plexus.','ここを押して腕がしびれたら、腕神経叢かもしれません。'],
  tip:'根・幹・部・束と組み替わり、筋皮・腋窩・橈骨・正中・尺骨神経になる。'},
 {id:'musculocutaneous_nerve',cat:'nerve',en:'musculocutaneous nerve',alt:'',ja:'筋皮神経',yomi:'きんぴしんけい',kana:'マスキュロウキュ[テ]イニアス [ナー]ヴ',roots:['cutane'],
  ety:'ラテン語 musculus「筋」+ cutaneus「皮膚の」（cutis「皮膚」）。筋（上腕の前の筋）と皮膚（前腕の外側）の両方に分布する。',
@@ -10198,7 +10208,7 @@ addTerms([
  tip:'三角筋と小円筋を支配。上腕骨の外科頸のすぐそばを通る。'},
 {id:'radial_nerve',cat:'nerve',en:'radial nerve',alt:'',ja:'橈骨神経',yomi:'とうこつしんけい',kana:'[レ]イディアル [ナー]ヴ',roots:[],
  ety:'radial「橈骨の」（ラテン語 radius「車輪の輻、光線」）。上腕骨の後ろをらせん状に回り、前腕の橈骨側（親指側）へ向かう。',
- ex:['The radial nerve supplies the muscles that straighten the elbow and wrist.','橈骨神経は、ひじと手首を伸ばす筋を支配します。'],
+ ex:['Tell me if the back of your hand tingles; that\'s the radial nerve area.','手の甲側がしびれたら教えてください。橈骨神経の領域です。'],
  tip:'腕の伸筋を受けもつ。上腕で圧迫されると手首が垂れる（下垂手）ことがある。'},
 {id:'superficial_radial_nerve',cat:'nerve',en:'superficial branch of radial nerve',alt:'superficial radial nerve',ja:'橈骨神経浅枝',yomi:'とうこつしんけいせんし',kana:'スーパー[フィ]シャル [ブラ]ンチ オブ [レ]イディアル [ナー]ヴ',roots:[],
  ety:'superficial「表面の」（ラテン語 super「上」+ facies「面」）。橈骨神経がひじの外側で分かれた、皮膚の感覚を受けもつ枝。',
@@ -10240,7 +10250,7 @@ addTerms([
  tip:'梨状筋の前にある。殿部の神経・坐骨神経・陰部神経を出す。'},
 {id:'femoral_nerve',cat:'nerve',en:'femoral nerve',alt:'',ja:'大腿神経',yomi:'だいたいしんけい',kana:'[フェ]モラル [ナー]ヴ',roots:['femor'],
  ety:'femoral「大腿の」（ラテン語 femur「もも」）。鼠径靭帯の下をくぐって太ももの前へ出る。',
- ex:['The femoral nerve supplies the muscles that straighten the knee.','大腿神経は、ひざを伸ばす筋を支配します。'],
+ ex:['I\'ll avoid deep pressure in your groin, where the femoral nerve passes.','脚の付け根は大腿神経が通るので、深く押さないようにしますね。'],
  tip:'大腿四頭筋を支配。脚の付け根では大腿動脈のすぐ外側を通る。'},
 {id:'obturator_nerve',cat:'nerve',en:'obturator nerve',alt:'',ja:'閉鎖神経',yomi:'へいさしんけい',kana:'[ア]ブチュレイター [ナー]ヴ',roots:[],
  ety:'ラテン語 obturare「ふさぐ」から。膜でほぼふさがれた骨盤の穴（閉鎖孔）を通ることから。日本語の「閉鎖」も同じ。',
@@ -10322,7 +10332,7 @@ addTerms([
  tip:'左右1対。大内臓神経がここで乗り換え、胃・肝臓などへ向かう。'},
 {id:'celiac_plexus',cat:'nerve',en:'celiac plexus',alt:'solar plexus',ja:'腹腔神経叢（太陽神経叢）',yomi:'ふくくうしんけいそう',kana:'[シー]リアック プ[レ]クサス',roots:['celi','plex'],
  ety:'celiac「腹腔の」（ギリシャ語 koilia）+ plexus。神経が放射状に広がる様子から solar plexus（太陽神経叢）とも呼ぶ。',
- ex:['The celiac plexus is also called the solar plexus.','腹腔神経叢は、太陽神経叢とも呼ばれます。'],
+ ex:['Rest your hands on your solar plexus, the area of your celiac plexus.','みぞおちの太陽神経叢、つまり腹腔神経叢のあたりに手を置いてください。'],
  tip:'みぞおちの奥、胃の後ろにある。ボクシングの「みぞおち打ち」は英語で solar plexus punch。'},
 {id:'superior_mesenteric_ganglion',cat:'nerve',en:'superior mesenteric ganglion',alt:'',ja:'上腸間膜動脈神経節',yomi:'じょうちょうかんまくどうみゃくしんけいせつ',kana:'ス[ピ]アリア メゼン[テ]リック [ギャ]ングリアン',roots:['enter','gangli'],
  ety:'ギリシャ語 mesos「中間」+ enteron「腸」→ mesentery「腸間膜」。上腸間膜動脈の根もとにある神経節。',
@@ -11564,7 +11574,7 @@ addTerms([
  tip:'鎖骨下動脈の続き。大円筋の下の縁をこえると上腕動脈になる。'},
 {id:'brachial_artery',cat:'vessel',en:'brachial artery',alt:'',ja:'上腕動脈',yomi:'じょうわんどうみゃく',kana:'[ブレ]イキアル [アー]テリー',roots:['brachi'],
  ety:'brachial「上腕の」（ラテン語 brachium「腕」）。上腕の内側を、上腕二頭筋に沿って下る。',
- ex:['Blood pressure is usually measured over the brachial artery.','血圧は、ふつう上腕動脈の上で測ります。'],
+ ex:['You can feel your brachial artery pulse just inside your elbow.','ひじの内側で、上腕動脈の脈を感じられます。'],
  tip:'ひじの内側のくぼみ（肘窩）で脈がとれ、ここで橈骨動脈と尺骨動脈に分かれる。'},
 {id:'ulnar_artery',cat:'vessel',en:'ulnar artery',alt:'',ja:'尺骨動脈',yomi:'しゃっこつどうみゃく',kana:'[ア]ルナー [アー]テリー',roots:['uln'],
  ety:'ulnar「尺骨の」（ラテン語 ulna「ひじ、前腕」）。前腕の小指側を走る。',
@@ -11644,7 +11654,7 @@ addTerms([
 /* ---------- リンパ系 ---------- */
 {id:'lymphatic_vessel',cat:'vessel',en:'lymphatic vessel',alt:'lymph vessel',ja:'リンパ管',yomi:'りんぱかん',kana:'リム[ファ]ティック [ヴェ]セル',roots:['lymph'],
  ety:'lymphatic「リンパの」（ラテン語 lympha「澄んだ水」）+ vessel「管」（ラテン語 vascellum「小さな器」）。',
- ex:['Lymphatic vessels carry lymph toward the heart.','リンパ管は、リンパを心臓の方へ運びます。'],
+ ex:['I\'ll use slow, light strokes to follow your lymphatic vessels.','リンパ管に沿って、ゆっくり軽くなでていきます。'],
  tip:'静脈と同じく弁があり、一方向に流れる。途中でいくつものリンパ節を通る。'},
 {id:'lymph_fluid',cat:'vessel',en:'lymph',alt:'lymph fluid',ja:'リンパ（リンパ液）',yomi:'りんぱ（りんぱえき）',kana:'[リ]ンフ',roots:['lymph'],
  ety:'ラテン語 lympha「澄んだ水」から。組織のすき間の液（組織液）がリンパ管に入ったもの。',
@@ -11668,7 +11678,7 @@ addTerms([
  tip:'鎖骨の内側の端の奥に左右1つずつある。リンパの最後の出口。'},
 {id:'cervical_lymph_nodes',cat:'vessel',en:'cervical lymph nodes',alt:'',ja:'頸部リンパ節',yomi:'けいぶりんぱせつ',kana:'[サー]ヴィカル [リ]ンフ [ノウ]ズ',roots:['cervic','lymph'],
  ety:'cervical「頸の」（ラテン語 cervix「首」）。首に並ぶリンパ節。',
- ex:['Cervical lymph nodes may swell when you have a cold.','風邪をひくと、頸部リンパ節がはれることがあります。'],
+ ex:['I\'ll stroke very lightly down your neck, over your cervical lymph nodes.','首の横の頸部リンパ節の上を、ごく軽く下へなでていきます。'],
  tip:'首の前と横、胸鎖乳突筋と内頸静脈に沿って多く並ぶ。'},
 {id:'supraclavicular_lymph_nodes',cat:'vessel',en:'supraclavicular lymph nodes',alt:'',ja:'鎖骨上リンパ節',yomi:'さこつじょうりんぱせつ',kana:'スープラクラ[ヴィ]キュラー [リ]ンフ [ノウ]ズ',roots:['supra','clav','lymph'],
  ety:'supra-「上」+ clavicular「鎖骨の」（ラテン語 clavicula「小さな鍵」）。鎖骨のすぐ上のくぼみにあるリンパ節。',
@@ -11676,11 +11686,11 @@ addTerms([
  tip:'鎖骨の上のくぼみ（鎖骨上窩）にあり、静脈角のすぐ近く。'},
 {id:'axillary_lymph_nodes',cat:'vessel',en:'axillary lymph nodes',alt:'',ja:'腋窩リンパ節',yomi:'えきかりんぱせつ',kana:'[ア]クシレリー [リ]ンフ [ノウ]ズ',roots:['axill','lymph'],
  ety:'axillary「わきの下の」（ラテン語 axilla）。わきの下に集まるリンパ節。',
- ex:['Axillary lymph nodes drain the arm and the chest wall.','腋窩リンパ節は、腕と胸の壁からのリンパを受けます。'],
+ ex:['Raise your arm a little so I can reach your axillary lymph nodes.','腋窩リンパ節に届くように、腕を少し上げてください。'],
  tip:'乳房のリンパの多くもここへ流れる。'},
 {id:'inguinal_lymph_nodes',cat:'vessel',en:'inguinal lymph nodes',alt:'',ja:'鼠径リンパ節',yomi:'そけいりんぱせつ',kana:'[イ]ングウィナル [リ]ンフ [ノウ]ズ',roots:['lymph'],
  ety:'inguinal「鼠径（脚の付け根）の」（ラテン語 inguen「鼠径部」）。脚の付け根に並ぶリンパ節。',
- ex:['Inguinal lymph nodes sit in the crease of the groin.','鼠径リンパ節は、脚の付け根のしわのあたりにあります。'],
+ ex:['I\'ll work lightly toward the inguinal lymph nodes at the top of your thigh.','太ももの付け根の鼠径リンパ節に向かって、軽く流していきます。'],
  tip:'脚・下腹部・お尻からのリンパを受ける。'},
 {id:'popliteal_lymph_nodes',cat:'vessel',en:'popliteal lymph nodes',alt:'',ja:'膝窩リンパ節',yomi:'しっかりんぱせつ',kana:'パプリ[ティー]アル [リ]ンフ [ノウ]ズ',roots:['poplit','lymph'],
  ety:'popliteal「ひざの裏の」（ラテン語 poples）。ひざ裏のくぼみの脂肪の中にある小さなリンパ節。',
@@ -11702,15 +11712,15 @@ addTerms([
 /* ---------- 血管と血液 ---------- */
 {id:'artery',cat:'vessel',en:'artery',alt:'arteries（複数）',ja:'動脈',yomi:'どうみゃく',kana:'[アー]テリー',roots:['arter'],
  ety:'ギリシャ語 artēria から。死体では動脈が空になっていたため、昔は空気を運ぶ管と考えられていた。',
- ex:['An artery carries blood away from the heart.','動脈は、血液を心臓から送り出す血管です。'],
+ ex:['If I feel a pulse under my fingers, that\'s an artery, so I\'ll move.','指の下で脈を感じたら動脈なので、場所をずらしますね。'],
  tip:'心臓から出ていく血管が動脈。壁が厚く、弾力がある。脈を感じるのは動脈。'},
 {id:'vein',cat:'vessel',en:'vein',alt:'',ja:'静脈',yomi:'じょうみゃく',kana:'[ヴェ]イン',roots:['ven'],
  ety:'ラテン語 vena「静脈、血管」から。形容詞は venous（静脈の）。',
- ex:['A vein carries blood back to the heart.','静脈は、血液を心臓へ戻す血管です。'],
+ ex:['I\'ll stroke toward your heart, following the flow in your veins.','静脈の流れに沿って、心臓のほうへさすっていきます。'],
  tip:'心臓へ戻る血管が静脈。動脈より壁がうすく、中が広い。手足の静脈には弁がある。'},
 {id:'capillary',cat:'vessel',en:'capillary',alt:'capillaries（複数）',ja:'毛細血管',yomi:'もうさいけっかん',kana:'[キャ]ピレリー',roots:[],
  ety:'ラテン語 capillaris「髪の毛の」（capillus「髪」）から。髪の毛のように細い血管。日本語の「毛細」も同じ発想。',
- ex:['Oxygen passes from the capillaries into the tissues.','酸素は、毛細血管から組織へ移ります。'],
+ ex:['Your skin turns pink as the capillaries fill with blood.','毛細血管に血液が満ちて、肌がほんのり赤くなります。'],
  tip:'壁は細胞1層だけ。赤血球が1列になってやっと通れるほど細い。'},
 {id:'arteriole',cat:'vessel',en:'arteriole',alt:'',ja:'細動脈',yomi:'さいどうみゃく',kana:'アー[ティ]アリオウル',roots:['arter','ule'],
  ety:'artery + -ole（ラテン語由来の「小さな」をあらわす接尾辞）。「小さな動脈」の意味。',
@@ -12084,6 +12094,676 @@ moveAfter('muscle-hyoid-a', 'muscle-neck-a');
 moveAfter('muscle-hyoid-l', 'muscle-hyoid-a');
 })();
 
+/* ---- src/cat/motion.js ---- */
+/* 方向・動き（基礎）— 方向・面・関節の動き・姿勢 */
+(function(){
+
+/* ---------- 共通の描き方 ---------- */
+var MV = 'var(--c-move)', SKIN = 'var(--body)', EDGE = 'var(--body-edge)';
+var R = Math.PI / 180;
+function cell(h, x, y){ return h.group({transform:'translate('+x+' '+y+')'}); }
+/* 区切りの枠 */
+function frame(h, x, y, w, hh){ h.rect(x, y, w, hh, 8, h.S('var(--rule)', 1, {'stroke-opacity':0.8})); }
+/* 矢じり（px指定なので図の大きさが変わっても同じ見た目） */
+function head(h, x, y, deg, id, g){
+  var on = h.on(id), a = deg * R, s = (on ? 9 : 7.5) * h.px, w = (on ? 5 : 4.2) * h.px;
+  var bx = x - Math.cos(a) * s, by = y - Math.sin(a) * s, px = -Math.sin(a) * w, py = Math.cos(a) * w;
+  h.path('M'+x.toFixed(2)+' '+y.toFixed(2)+' L'+(bx+px).toFixed(2)+' '+(by+py).toFixed(2)+' L'+(bx-px).toFixed(2)+' '+(by-py).toFixed(2)+' Z', {fill: on ? 'var(--ink)' : MV, stroke:'none'}, g);
+}
+/* まっすぐな矢印 */
+function arrow(h, id, x1, y1, x2, y2, g, wpx){
+  h.path('M'+x1+' '+y1+' L'+x2+' '+y2, h.L(id, MV, wpx || 2), g);
+  head(h, x2, y2, Math.atan2(y2 - y1, x2 - x1) / R, id, g);
+}
+/* 円弧の矢印：中心(cx,cy)、半径r、角度a0→a1（度。0=右、90=下） */
+function arc(h, id, cx, cy, r, a0, a1, g, wpx){
+  var p0 = [cx + r * Math.cos(a0 * R), cy + r * Math.sin(a0 * R)], p1 = [cx + r * Math.cos(a1 * R), cy + r * Math.sin(a1 * R)];
+  var cw = a1 > a0, large = Math.abs(a1 - a0) > 180 ? 1 : 0;
+  h.path('M'+p0[0].toFixed(2)+' '+p0[1].toFixed(2)+' A'+r+' '+r+' 0 '+large+' '+(cw ? 1 : 0)+' '+p1[0].toFixed(2)+' '+p1[1].toFixed(2), h.L(id, MV, wpx || 2), g);
+  head(h, p1[0], p1[1], a1 + (cw ? 90 : -90), id, g);
+}
+/* からだの部品：線を太くして肌色で塗る（輪郭→中身の順に描くと継ぎ目が消える） */
+function capsules(h, list, g){
+  list.forEach(function(s){ h.path(s[0], {fill:'none', stroke:EDGE, 'stroke-width':s[1] + 2.4 * h.px, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g); });
+  list.forEach(function(s){ h.path(s[0], {fill:'none', stroke:SKIN, 'stroke-width':s[1], 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g); });
+}
+/* 小さな注記（グループの中に置く） */
+function tx(h, x, y, str, g, a){ var t = svgEl('text', ext({x:x, y:y, 'font-size':10 * h.px, fill:'var(--ink-2)', 'font-family':'var(--f-jp)', 'text-anchor':'middle'}, a || {}), g); t.textContent = str; return t; }
+function SK(h, extra){ var o = {fill:SKIN, stroke:EDGE, 'stroke-width':1.2 * h.px, 'stroke-linejoin':'round'}; for(var k in extra) o[k] = extra[k]; return o; }
+function L(p){ return p[0].toFixed(1)+' '+p[1].toFixed(1); }
+/* 横から見た人（関節の位置を指定して姿勢を作る）。face = 顔の向き（度） */
+function person(h, P, g, sc){
+  sc = sc || 1;
+  var list = [
+    ['M'+L(P.neck)+' L'+L(P.hip), 24 * sc],
+    ['M'+L(P.neck)+' L'+L(P.head), 9 * sc],
+    ['M'+L(P.hip)+' L'+L(P.kn)+' L'+L(P.an), 12 * sc],
+    ['M'+L(P.an)+' L'+L(P.to), 6.5 * sc],
+    ['M'+L(P.sh)+' L'+L(P.el)+' L'+L(P.ha), 8 * sc]
+  ];
+  capsules(h, list, g);
+  var f = P.face * R, hx = P.head[0], hy = P.head[1], r = 12 * sc;
+  h.circle(hx, hy, r, SK(h), g);
+  h.circle(hx + Math.cos(f) * r * 0.92, hy + Math.sin(f) * r * 0.92, 3 * sc, SK(h), g);   /* 鼻 */
+  h.circle(hx + Math.cos(f) * r * 0.4 + Math.cos(f - 90 * R) * r * 0.32, hy + Math.sin(f) * r * 0.4 + Math.sin(f - 90 * R) * r * 0.32, 1.3 * sc, {fill:EDGE}, g);  /* 目 */
+}
+/* 施術台（横から） */
+function table(h, x, y, w, g){
+  h.rect(x, y, w, 6, 2, h.Fill('var(--ink-2)', 0.16, {'stroke-opacity':0.5}), g);
+  h.path('M'+(x+12)+' '+(y+6)+' L'+(x+12)+' '+(y+26)+' M'+(x+w-12)+' '+(y+6)+' L'+(x+w-12)+' '+(y+26), h.S('var(--ink-2)', 1.4, {'stroke-opacity':0.5}), g);
+}
+/* 手（手のひら側／手の甲側）。x,y = 手首の中心、上向き。thumbLeft = 親指が画面の左 */
+function hand(h, x, y, s, thumbLeft, back, g, opts){
+  opts = opts || {};
+  var side = thumbLeft ? -1 : 1;   /* 親指のある側 */
+  var F = [[9, 50], [3, 54], [-3, 52], [-9, 45]];   /* 人差し指→小指：親指側からの位置と長さ */
+  var list = [];
+  if(opts.arm) list.push([opts.arm, 13 * s]);
+  F.forEach(function(f, i){ var fx = x + f[0] * s * side; list.push([(i === 3 && opts.little) || ('M'+fx.toFixed(1)+' '+(y - 24 * s).toFixed(1)+' L'+fx.toFixed(1)+' '+(y - f[1] * s).toFixed(1)), 4.9 * s]); });
+  if(!opts.thumb) list.push(['M'+(x + 10 * s * side).toFixed(1)+' '+(y - 8 * s).toFixed(1)+' L'+(x + 21 * s * side).toFixed(1)+' '+(y - 25 * s).toFixed(1), 6.2 * s]);
+  list.push(['M'+x+' '+(y - 5 * s).toFixed(1)+' L'+x+' '+(y - 22 * s).toFixed(1), 22 * s]);
+  capsules(h, list, g);
+  if(opts.thumb) capsules(h, [[opts.thumb, 6.4 * s]], g);
+  if(back){ /* 爪 */
+    F.forEach(function(f){ var fx = x + f[0] * s * side; h.rect(fx - 1.7 * s, y - (f[1] - 0.5) * s, 3.4 * s, 4.2 * s, 1.2 * s, {fill:'none', stroke:EDGE, 'stroke-width':0.9 * h.px}, g); });
+  } else { /* 手のひらのしわ */
+    h.path('M'+(x - 8 * s).toFixed(1)+' '+(y - 18 * s).toFixed(1)+' Q'+x+' '+(y - 13 * s).toFixed(1)+' '+(x + 8 * s).toFixed(1)+' '+(y - 19 * s).toFixed(1), h.S(EDGE, 0.9), g);
+  }
+}
+
+/* ---------- 単語 ---------- */
+addTerms([
+{id:'anatomical_position',cat:'move',en:'anatomical position',alt:'',ja:'解剖学的正位',yomi:'かいぼうがくてきせいい',kana:'アナ[タ]ミカル ポ[ジ]ション',roots:['tom','pos'],
+ ety:'anatomical はギリシャ語 anatomē「切り開くこと」、position はラテン語 positio「置くこと」から。方向を言うときの基準になる姿勢。',
+ ex:['Please stand in anatomical position, with your palms facing forward.','手のひらを前に向けて、解剖学的正位で立ってください。'],
+ tip:'まっすぐ立って腕を下ろし、顔と手のひらを前に向けた姿勢。上下・内外などの方向はすべてこの姿勢が基準。'},
+{id:'superior',cat:'move',en:'superior',alt:'cranial',ja:'上（上方）',yomi:'じょう（じょうほう）',kana:'ス[ピ]アリア',roots:['supinf'],
+ ety:'ラテン語 superior「より上の」（super「上に」の比較級）。頭に近い側を指す。',
+ ex:["I'm moving slightly superior now, toward your head.",'少し上（頭のほう）へ移っていきますね。'],
+ tip:'頭のほう。cranial（頭側）とも言う。からだのどこにいても「頭に近いほう」が superior。'},
+{id:'inferior',cat:'move',en:'inferior',alt:'caudal',ja:'下（下方）',yomi:'か（かほう）',kana:'イン[フィ]アリア',roots:['supinf'],
+ ety:'ラテン語 inferior「より下の」（inferus「下の」の比較級）。足に近い側を指す。',
+ ex:["Now I'll move inferior, toward your feet.",'次は下（足のほう）へ移ります。'],
+ tip:'足のほう。caudal（尾側）とも言う。'},
+{id:'anterior',cat:'move',en:'anterior',alt:'ventral',ja:'前（前方）',yomi:'ぜん（ぜんぽう）',kana:'アン[ティ]アリア',roots:['antepost','ventr'],
+ ety:'ラテン語 anterior「より前の」（ante「前に」から）。からだの前面の側。',
+ ex:["I'm going to work on the anterior side of your hip.",'股関節の前側をほぐしていきます。'],
+ tip:'顔・お腹の側。ventral（腹側）とも言う。'},
+{id:'posterior',cat:'move',en:'posterior',alt:'dorsal',ja:'後（後方）',yomi:'こう（こうほう）',kana:'パス[ティ]アリア',roots:['antepost','dors'],
+ ety:'ラテン語 posterior「より後ろの」（post「後に」から）。からだの背面の側。',
+ ex:["Let's release the posterior side of your neck.",'首の後ろ側をゆるめていきましょう。'],
+ tip:'背中の側。dorsal（背側）とも言う。'},
+{id:'medial',cat:'move',en:'medial',alt:'',ja:'内側',yomi:'ないそく',kana:'[ミー]ディアル',roots:['medi'],
+ ety:'ラテン語 medialis「真ん中の」（medius「中央」から）。正中線に近い側。',
+ ex:['Can you feel this on the medial side of your knee?','膝の内側に、これを感じますか？'],
+ tip:'からだの中心線に近いほう。膝なら「内側（うちがわ）」。'},
+{id:'lateral',cat:'move',en:'lateral',alt:'',ja:'外側',yomi:'がいそく',kana:'[ラ]テラル',roots:['later'],
+ ety:'ラテン語 lateralis「わきの」（latus「側面」から）。正中線から遠い側。',
+ ex:["I'll press along the lateral side of your thigh.",'太ももの外側に沿って押していきます。'],
+ tip:'中心線から遠いほう。語源の latus は「わき腹」。'},
+{id:'midline',cat:'move',en:'midline',alt:'median line',ja:'正中線',yomi:'せいちゅうせん',kana:'[ミッ]ドライン',roots:[],
+ ety:'英語 mid「真ん中」+ line「線」。からだを左右に等しく分ける縦の線。',
+ ex:['Let your weight rest evenly on both sides of your midline.','正中線をはさんで、左右均等に体重をあずけてください。'],
+ tip:'眉間・鼻・へそを通る縦の線。任脈（前）と督脈（後ろ）もこの線上を通る。'},
+{id:'proximal',cat:'move',en:'proximal',alt:'',ja:'近位',yomi:'きんい',kana:'[プラ]クシマル',roots:['proxdist'],
+ ety:'ラテン語 proximus「最も近い」から。手足で、体幹（付け根）に近い側。',
+ ex:["I'll start proximal, near your shoulder, and work down the arm.",'肩に近いほう（近位）から始めて、腕を下っていきます。'],
+ tip:'手足の付け根に近いほう。肘は手首より近位。'},
+{id:'distal',cat:'move',en:'distal',alt:'',ja:'遠位',yomi:'えんい',kana:'[ディ]スタル',roots:['proxdist'],
+ ety:'ラテン語 distare「離れている」から。手足で、体幹から遠い側。',
+ ex:["Now I'm working distal, toward your fingertips.",'今度は指先に向かって遠位へ進みます。'],
+ tip:'手足の先に近いほう。手首は肘より遠位。'},
+{id:'superficial',cat:'move',en:'superficial',alt:'',ja:'浅（浅層）',yomi:'せん（せんそう）',kana:'スーパー[フィ]シャル',roots:['supinf'],
+ ety:'ラテン語 superficialis「表面の」（super「上に」+ facies「面」）。からだの表面に近いこと。',
+ ex:["First I'll work on the superficial layer with light pressure.",'まずは軽い圧で、浅い層からほぐしていきます。'],
+ tip:'皮膚に近い層。反対は deep（深層）。'},
+{id:'deep',cat:'move',en:'deep',alt:'profundus',ja:'深（深層）',yomi:'しん（しんそう）',kana:'[ディー]プ',roots:[],
+ ety:'古英語 dēop「深い」から。からだの表面から遠い（奥にある）こと。解剖学名ではラテン語 profundus もよく使う。',
+ ex:["This muscle is deep, so I'll press slowly as you breathe out.",'この筋肉は深いところにあるので、息を吐くのに合わせてゆっくり押します。'],
+ tip:'表面から遠い層。深指屈筋（flexor digitorum profundus）の profundus も「深い」。'},
+{id:'ipsilateral',cat:'move',en:'ipsilateral',alt:'',ja:'同側',yomi:'どうそく',kana:'イプシ[ラ]テラル',roots:['ipsicontra','later'],
+ ety:'ラテン語 ipse「同じ」+ latus「側面」。からだの同じ側。',
+ ex:['Turn your head to the ipsilateral side, toward your raised arm.','上げた腕と同じ側（同側）に顔を向けてください。'],
+ tip:'同じ側。右手と右足は同側。'},
+{id:'contralateral',cat:'move',en:'contralateral',alt:'',ja:'対側（反対側）',yomi:'たいそく（はんたいがわ）',kana:'カントラ[ラ]テラル',roots:['ipsicontra','later'],
+ ety:'ラテン語 contra「反対に」+ latus「側面」。からだの反対の側。',
+ ex:['Reach your right hand toward your contralateral knee.','右手を反対側（左）の膝のほうへ伸ばしてください。'],
+ tip:'反対の側。右の大脳は左半身（対側）を動かす。'},
+{id:'sagittal_plane',cat:'move',en:'sagittal plane',alt:'',ja:'矢状面',yomi:'しじょうめん',kana:'[サ]ジタル プ[レ]イン',roots:['sagitt'],
+ ety:'ラテン語 sagitta「矢」から。正面から矢が貫く向きの、からだを左右に分ける縦の面。',
+ ex:['Swing your arm forward and back in the sagittal plane.','腕を矢状面で前後に振ってください。'],
+ tip:'からだを左右に分ける面。真ん中を通るものは正中矢状面（median plane）。お辞儀は矢状面の動き。'},
+{id:'frontal_plane',cat:'move',en:'frontal plane',alt:'coronal plane',ja:'前額面',yomi:'ぜんがくめん',kana:'[フラ]ンタル プ[レ]イン',roots:['front'],
+ ety:'ラテン語 frons「ひたい」から。ひたいと平行で、からだを前と後ろに分ける縦の面。',
+ ex:['Raise your arms out to the sides, in the frontal plane.','腕を横に、前額面で上げてください。'],
+ tip:'からだを前後に分ける面。coronal plane（冠状面）とも言う。腕を横に上げる動きはこの面の動き。'},
+{id:'transverse_plane',cat:'move',en:'transverse plane',alt:'horizontal plane',ja:'水平面',yomi:'すいへいめん',kana:'トランス[ヴァー]ス プ[レ]イン',roots:['trans','vers'],
+ ety:'ラテン語 transversus「横向きの」（trans「横切って」+ vertere「向ける」）。からだを上と下に分ける横の面。',
+ ex:['Gently twist your trunk, turning in the transverse plane.','体幹をやさしくひねって、水平面で回してください。'],
+ tip:'からだを上下に分ける面。ひねる動きはこの面の動き。CTやMRIの横断像（axial）もこの面。'},
+{id:'flexion',cat:'move',en:'flexion',alt:'',ja:'屈曲',yomi:'くっきょく',kana:'[フレ]クション',roots:['flex'],
+ ety:'ラテン語 flectere「曲げる」から。関節を曲げて、骨どうしの角度を小さくする動き。',
+ ex:['Slowly bring your knee toward your chest, into hip flexion.','膝をゆっくり胸に近づけて、股関節を屈曲させてください。'],
+ tip:'曲げる動き。肘を曲げる、前かがみになる、など。'},
+{id:'extension',cat:'move',en:'extension',alt:'',ja:'伸展',yomi:'しんてん',kana:'イクス[テ]ンション',roots:['tens'],
+ ety:'ラテン語 extendere「外へ伸ばす」（ex「外へ」+ tendere「張る」）。曲げた関節を伸ばす動き。',
+ ex:['Now straighten your elbow into full extension.','では肘をまっすぐ伸ばして、伸展させてください。'],
+ tip:'伸ばす動き。屈曲の反対。'},
+{id:'hyperextension',cat:'move',en:'hyperextension',alt:'',ja:'過伸展',yomi:'かしんてん',kana:'ハイパーイクス[テ]ンション',roots:['hyper','tens'],
+ ety:'ギリシャ語 hyper「越えて」+ extension「伸展」。ふつうの範囲を越えて伸びること。',
+ ex:['Try not to lock your knees into hyperextension when you stand.','立つとき、膝を過伸展させてロックしないようにしましょう。'],
+ tip:'伸びすぎ。膝の反張膝（はんちょうひざ）も過伸展の一種。'},
+{id:'abduction',cat:'move',en:'abduction',alt:'',ja:'外転',yomi:'がいてん',kana:'アブ[ダ]クション',roots:['adab','duct'],
+ ety:'ラテン語 abducere「引き離す」（ab「離れて」+ ducere「導く」）。からだの中心線から遠ざける動き。',
+ ex:['Lift your arm out to the side, into abduction.','腕を横に上げて、外転させてください。'],
+ tip:'中心線から離す動き。腕を横に上げる、脚を横に開く。'},
+{id:'adduction',cat:'move',en:'adduction',alt:'',ja:'内転',yomi:'ないてん',kana:'ア[ダ]クション',roots:['adab','duct'],
+ ety:'ラテン語 adducere「引き寄せる」（ad「〜へ」+ ducere「導く」）。からだの中心線に近づける動き。',
+ ex:['Gently squeeze your knees together, into adduction.','膝をやさしく閉じて、内転させてください。'],
+ tip:'中心線に近づける動き。abduction と1文字違いなので、口頭では「エー・ビー」「エー・ディー」と言い分けることもある。'},
+{id:'lateral_flexion',cat:'move',en:'lateral flexion',alt:'side bending',ja:'側屈',yomi:'そっくつ',kana:'[ラ]テラル [フレ]クション',roots:['later','flex'],
+ ety:'lateral「わきの」+ flexion「曲げること」。首や体幹を横に曲げる動き。',
+ ex:['Let your head tip into lateral flexion, ear toward shoulder.','耳を肩に近づけるように、頭を横に倒してください（側屈）。'],
+ tip:'横に倒す動き。首と体幹で使う。'},
+{id:'rotation',cat:'move',en:'rotation',alt:'',ja:'回旋',yomi:'かいせん',kana:'ロウ[テ]イション',roots:['rota'],
+ ety:'ラテン語 rotare「回す」（rota「車輪」から）。骨の長い軸のまわりで回る動き。',
+ ex:['Turn your head slowly to the right, into rotation.','頭をゆっくり右に向けてください（回旋）。'],
+ tip:'ひねる・振り向く動き。首や体幹の回旋は水平面の動き。'},
+{id:'internal_rotation',cat:'move',en:'internal rotation',alt:'medial rotation',ja:'内旋',yomi:'ないせん',kana:'イン[ター]ナル ロウ[テ]イション',roots:['intext','rota'],
+ ety:'internal「内の」+ rotation「回旋」。前面を中心線のほうへ向ける回旋。',
+ ex:['Let your foot roll inward as I move your hip into internal rotation.','股関節を内旋させるので、足先が内に倒れるのに任せてください。'],
+ tip:'内向きにひねる。medial rotation とも言う。'},
+{id:'external_rotation',cat:'move',en:'external rotation',alt:'lateral rotation',ja:'外旋',yomi:'がいせん',kana:'イクス[ター]ナル ロウ[テ]イション',roots:['intext','rota'],
+ ety:'external「外の」+ rotation「回旋」。前面を外側へ向ける回旋。',
+ ex:['Keep your elbow at your side and turn your forearm out, into external rotation.','肘をわきにつけたまま、前腕を外へ開いてください（外旋）。'],
+ tip:'外向きにひねる。lateral rotation とも言う。'},
+{id:'circumduction',cat:'move',en:'circumduction',alt:'',ja:'分回し運動',yomi:'ぶんまわしうんどう',kana:'サーカム[ダ]クション',roots:['circ','duct'],
+ ety:'ラテン語 circumducere「まわりを導く」（circum「まわりに」+ ducere「導く」）。手足の先で円を描く動き。',
+ ex:['Draw slow circles with your arm, in circumduction.','腕でゆっくり円を描いてください（分回し運動）。'],
+ tip:'屈曲・外転・伸展・内転を続けて円を描く動き。肩や股関節でできる。'},
+{id:'pronation',cat:'move',en:'pronation',alt:'',ja:'回内',yomi:'かいない',kana:'プロウ[ネ]イション',roots:['pron'],
+ ety:'ラテン語 pronare「前に傾ける」（pronus「うつ伏せの」から）。前腕では手のひらを下に向ける動き。',
+ ex:['Turn your palm down toward the table, into pronation.','手のひらを下（台のほう）に向けてください（回内）。'],
+ tip:'手のひらを下に向ける。足では、かかとが内に倒れて土踏まずが低くなる動きも回内（プロネーション）と呼ぶ。'},
+{id:'supination',cat:'move',en:'supination',alt:'',ja:'回外',yomi:'かいがい',kana:'スーピ[ネ]イション',roots:['supin'],
+ ety:'ラテン語 supinare「仰向けにする」（supinus「仰向けの」から）。前腕では手のひらを上に向ける動き。',
+ ex:['Now turn your palm up, as if holding soup, into supination.','スープを持つように、手のひらを上に向けてください（回外）。'],
+ tip:'手のひらを上に向ける。「スープ（soup）を持つ」で supination と覚える。'},
+{id:'opposition',cat:'move',en:'opposition',alt:'',ja:'対立',yomi:'たいりつ',kana:'アポ[ジ]ション',roots:['oppon'],
+ ety:'ラテン語 opponere「向かい合わせる」（ob「〜に向かって」+ ponere「置く」）。親指の腹をほかの指先に向ける動き。',
+ ex:['Touch your thumb to your little finger, in opposition.','親指と小指の先を合わせてください（対立）。'],
+ tip:'親指をほかの指と向かい合わせる。つまむ・握る動作のかなめ。'},
+{id:'radial_deviation',cat:'move',en:'radial deviation',alt:'',ja:'橈屈',yomi:'とうくつ',kana:'[レ]イディアル ディヴィ[エ]イション',roots:['radi'],
+ ety:'radial「橈骨の」+ deviation（ラテン語 deviare「道をそれる」）。手首を親指側に曲げる動き。',
+ ex:['Bend your wrist toward your thumb, into radial deviation.','手首を親指側に曲げてください（橈屈）。'],
+ tip:'親指（橈骨）側へ曲げる。'},
+{id:'ulnar_deviation',cat:'move',en:'ulnar deviation',alt:'',ja:'尺屈',yomi:'しゃっくつ',kana:'[ア]ルナー ディヴィ[エ]イション',roots:['uln'],
+ ety:'ulnar「尺骨の」+ deviation「それること」。手首を小指側に曲げる動き。',
+ ex:['Now bend your wrist toward your little finger, into ulnar deviation.','次は手首を小指側に曲げてください（尺屈）。'],
+ tip:'小指（尺骨）側へ曲げる。'},
+{id:'dorsiflexion',cat:'move',en:'dorsiflexion',alt:'',ja:'背屈',yomi:'はいくつ',kana:'ドーシ[フレ]クション',roots:['dors','flex'],
+ ety:'ラテン語 dorsum「背」+ flexion「曲げること」。足首では、つま先をすねのほうへ上げる動き。',
+ ex:['Pull your toes up toward your shin, into dorsiflexion.','つま先をすねのほうへ引き上げてください（背屈）。'],
+ tip:'足の甲（足背）側へ曲げる。手首では手の甲側へ反らす動き。'},
+{id:'plantar_flexion',cat:'move',en:'plantar flexion',alt:'',ja:'底屈',yomi:'ていくつ',kana:'[プラ]ンター [フレ]クション',roots:['plant','flex'],
+ ety:'ラテン語 planta「足の裏」+ flexion「曲げること」。つま先を下へ伸ばす動き。',
+ ex:['Point your toes away from you, into plantar flexion.','つま先を遠くへ伸ばしてください（底屈）。'],
+ tip:'足の裏側へ曲げる。つま先立ちのときの足首の向き。'},
+{id:'inversion',cat:'move',en:'inversion',alt:'',ja:'内がえし',yomi:'うちがえし',kana:'イン[ヴァー]ジョン',roots:['vers'],
+ ety:'ラテン語 invertere「内へ向ける」（in「中へ」+ vertere「向ける」）。足の裏を内側へ向ける動き。',
+ ex:['Turn the soles of your feet in to face each other, into inversion.','足の裏を内側へ、向かい合うように返してください（内がえし）。'],
+ tip:'足の裏を内へ。足首の捻挫は、この向きに強くひねって起こることが多い。'},
+{id:'eversion',cat:'move',en:'eversion',alt:'',ja:'外がえし',yomi:'そとがえし',kana:'イ[ヴァー]ジョン',roots:['vers'],
+ ety:'ラテン語 evertere「外へ向ける」（e-「外へ」+ vertere「向ける」）。足の裏を外側へ向ける動き。',
+ ex:['Turn the soles of your feet out, into eversion.','足の裏を外側へ返してください（外がえし）。'],
+ tip:'足の裏を外へ。おもに腓骨筋が働く。'},
+{id:'elevation',cat:'move',en:'elevation',alt:'',ja:'挙上',yomi:'きょじょう',kana:'エレ[ヴェ]イション',roots:['levat'],
+ ety:'ラテン語 elevare「持ち上げる」（e-「上へ」+ levare「軽くする・上げる」）。肩甲骨や下あごを上へ動かす。',
+ ex:['Shrug your shoulders up toward your ears, into elevation.','肩を耳のほうへすくめてください（挙上）。'],
+ tip:'肩をすくめる動き。僧帽筋上部と肩甲挙筋が働く。'},
+{id:'depression',cat:'move',en:'depression',alt:'',ja:'下制',yomi:'かせい',kana:'ディプ[レ]ション',roots:['depress'],
+ ety:'ラテン語 deprimere「押し下げる」（de「下へ」+ premere「押す」）。肩甲骨や下あごを下へ動かす。',
+ ex:['Let your shoulders slide down, into depression.','肩を下へすべらせるように下げてください（下制）。'],
+ tip:'肩を下へ下ろす動き。英語では「うつ」と同じ単語なので、文脈で区別する。'},
+{id:'protraction',cat:'move',en:'protraction',alt:'',ja:'前方突出（前突）',yomi:'ぜんぽうとっしゅつ（ぜんとつ）',kana:'プロウ[トラ]クション',roots:['tract'],
+ ety:'ラテン語 protrahere「前へ引き出す」（pro「前へ」+ trahere「引く」）。肩甲骨や下あごを前へ出す動き。',
+ ex:['Reach your arms forward and let your shoulder blades slide into protraction.','腕を前に伸ばして、肩甲骨が前へすべる（前方突出）のを感じてください。'],
+ tip:'前へ出す。肩甲骨では「外転」と呼ぶこともある。'},
+{id:'retraction',cat:'move',en:'retraction',alt:'',ja:'後退',yomi:'こうたい',kana:'リ[トラ]クション',roots:['tract'],
+ ety:'ラテン語 retrahere「後ろへ引き戻す」（re「後ろへ」+ trahere「引く」）。肩甲骨や下あごを後ろへ引く動き。',
+ ex:['Gently draw your shoulder blades together, into retraction.','肩甲骨をやさしく寄せてください（後退）。'],
+ tip:'後ろへ引く。肩甲骨では「内転」と呼ぶこともある。菱形筋と僧帽筋中部が働く。'},
+{id:'range_of_motion',cat:'move',en:'range of motion',alt:'ROM',ja:'可動域',yomi:'かどういき',kana:'[レ]インジ オヴ [モ]ウション',roots:[],
+ ety:'英語 range「範囲」+ motion（ラテン語 movere「動かす」から）。関節が動かせる角度の範囲。',
+ ex:["Let's check the range of motion in your shoulder first.",'まず、肩の可動域を確かめましょう。'],
+ tip:'関節が動く範囲。ROM（アール・オー・エム）と略す。'},
+{id:'supine',cat:'move',en:'supine',alt:'face up',ja:'背臥位（仰向け）',yomi:'はいがい（あおむけ）',kana:'スー[パイ]ン',roots:['supin'],
+ ety:'ラテン語 supinus「仰向けの」から。顔とお腹を上に向けて寝た姿勢。',
+ ex:['Please lie supine, face up, with a pillow under your knees.','膝の下に枕を入れて、仰向け（背臥位）に寝てください。'],
+ tip:'仰向け。手のひらを上に向ける supination と同じ語源。'},
+{id:'prone',cat:'move',en:'prone',alt:'face down',ja:'腹臥位（うつ伏せ）',yomi:'ふくがい（うつぶせ）',kana:'プ[ロウ]ン',roots:['pron'],
+ ety:'ラテン語 pronus「前かがみの・うつ伏せの」から。お腹を下に向けて寝た姿勢。',
+ ex:['Please turn over and lie prone, face down.','うつ伏せ（腹臥位）になってください。'],
+ tip:'うつ伏せ。手のひらを下に向ける pronation と同じ語源。'},
+{id:'side_lying',cat:'move',en:'side-lying',alt:'lateral decubitus',ja:'側臥位（横向き）',yomi:'そくがい（よこむき）',kana:'[サ]イド [ラ]イイング',roots:[],
+ ety:'英語 side「わき」+ lying「横たわっていること」。からだを横向きにして寝た姿勢。',
+ ex:['Please lie on your left side, in a side-lying position.','左を下にして、横向き（側臥位）に寝てください。'],
+ tip:'横向き。医療では lateral decubitus（側臥位）とも言う。'},
+{id:'seated',cat:'move',en:'seated position',alt:'sitting',ja:'座位',yomi:'ざい',kana:'[シー]ティッド ポ[ジ]ション',roots:['pos'],
+ ety:'英語 seat「座らせる・席」+ position「姿勢」。座った姿勢。',
+ ex:["We'll start in a seated position on the edge of the table.",'施術台のはしに座った姿勢（座位）から始めます。'],
+ tip:'座った姿勢。'},
+{id:'standing',cat:'move',en:'standing position',alt:'upright',ja:'立位',yomi:'りつい',kana:'[ス]タンディング ポ[ジ]ション',roots:['pos'],
+ ety:'英語 stand「立つ」+ position「姿勢」。立った姿勢。',
+ ex:['Let me look at your body in a standing position first.','まず立った姿勢（立位）で、からだを見せてください。'],
+ tip:'立った姿勢。'},
+{id:'posture',cat:'move',en:'posture',alt:'',ja:'姿勢',yomi:'しせい',kana:'[パ]スチャー',roots:['pos'],
+ ety:'ラテン語 positura「置き方」（ponere「置く」から）。からだの構え方。',
+ ex:['Your posture shows me where your body is holding tension.','姿勢を見ると、からだのどこに力が入っているかがわかります。'],
+ tip:'からだの構え方。立位・座位などの「体位」は position と言う。'},
+{id:'palpation',cat:'move',en:'palpation',alt:'',ja:'触診',yomi:'しょくしん',kana:'パル[ペ]イション',roots:['palp'],
+ ety:'ラテン語 palpare「やさしく触れる」から。手で触れてからだの状態を確かめること。',
+ ex:["I'll begin with gentle palpation of your lower back.",'まず腰を、やさしく触って確かめていきます（触診）。'],
+ tip:'手で触れて確かめること。触れてわかる骨の出っぱりは palpable landmark（触診できる目印）。'}
+]);
+
+/* ---------- 語根 ---------- */
+addRoots([
+{id:'vers',r:'vers- / vert-',m:'向ける・回す',o:'ラテン語 vertere / versus',k:['vers'],w:[['inversion','内がえし'],['eversion','外がえし'],['transverse','横の']]},
+{id:'tract',r:'tract-',m:'引く',o:'ラテン語 trahere / tractus',k:['tract'],w:[['protraction','前方突出'],['retraction','後退'],['traction','牽引']]},
+{id:'sagitt',r:'sagitt-',m:'矢',o:'ラテン語 sagitta',k:['sagitt'],w:[['sagittal plane','矢状面'],['sagittal suture','矢状縫合']]},
+{id:'ipsicontra',r:'ipsi- / contra-',m:'同じ／反対の',o:'ラテン語 ipse / contra',k:['ipsi','contra'],w:[['ipsilateral','同側の'],['contralateral','対側の'],['contraindication','禁忌']]},
+{id:'palp',r:'palp-',m:'触れる',o:'ラテン語 palpare',k:['palp'],w:[['palpation','触診'],['palpable','触れてわかる']]},
+{id:'hyper',r:'hyper-',m:'過剰に・越えて',o:'ギリシャ語 hyper',k:['hyper'],w:[['hyperextension','過伸展'],['hypertension','高血圧'],['hypermobility','過可動性']]},
+{id:'pos',r:'pos- / posit-',m:'置く',o:'ラテン語 ponere / positus',k:['posit','postur'],w:[['position','位置・体位'],['posture','姿勢'],['opposition','対立']]},
+{id:'tom',r:'tom- / -tomy',m:'切る',o:'ギリシャ語 temnein / tomē',k:['tom'],w:[['anatomy','解剖学（切り開くこと）'],['tomography','断層撮影']]}
+]);
+
+/* ---------- 図版 ---------- */
+function artDirections(h){
+  var A = function(id, x1, y1, x2, y2){ arrow(h, id, x1, y1, x2, y2); };
+  /* 正中線 */
+  h.path('M120 -10 L120 520', ext(h.L('midline', MV, h.on('midline') ? 1.6 : 1.2), {'stroke-dasharray': (5 * h.px)+' '+(4 * h.px)}));
+  /* 正位：手のひらを前に向けた印 */
+  h.pairEllipse(50, 303, 4.5, 9, 7, h.Fill(EDGE, h.on('anatomical_position') ? 0.55 : 0.18));
+  h.path('M120 92 C140 92 158 96 166 106 C172 116 168 140 164 160 C160 190 154 210 154 232 C156 250 164 268 164 286 C164 300 150 306 120 306 C90 306 76 300 76 286 C76 268 84 250 86 232 C86 210 80 190 76 160 C72 140 68 116 74 106 C82 96 100 92 120 92 Z',
+    {fill: h.on('anatomical_position') ? MV : 'none', 'fill-opacity':0.18, stroke:'none'});
+  A('superior', 120, 0, 120, -30);
+  A('inferior', 120, 506, 120, 540);
+  A('lateral', 112, 392, 22, 392);
+  A('medial', 22, 436, 113, 436);
+  A('proximal', 214, 232, 199, 124);
+  A('distal', 214, 232, 226, 326);
+  h.text(-22, -24, 'R', {'font-size':13 * h.px});
+  h.text(250, -24, 'L', {'font-size':13 * h.px, 'text-anchor':'end'});
+}
+function artPlanes(h){
+  frame(h, 4, 4, 200, 262); frame(h, 212, 4, 104, 262); frame(h, 4, 276, 150, 160); frame(h, 162, 276, 154, 160);
+  /* 3つの面（斜めから見た図）：奥行きは右上へ */
+  var g = h.group({});
+  var DX = 34, DY = -22;
+  var fx = 30, fy = 34, fw = 140, fh = 214;   /* 前額面（奥の中央に置く） */
+  h.path('M'+(fx+DX/2)+' '+(fy+DY/2)+' L'+(fx+fw+DX/2)+' '+(fy+DY/2)+' L'+(fx+fw+DX/2)+' '+(fy+fh+DY/2)+' L'+(fx+DX/2)+' '+(fy+fh+DY/2)+' Z', h.F('frontal_plane', MV, 0.07), g);
+  var fig = h.group({transform:'translate(54 32) scale(0.4)'}, g);
+  drawSilhouette(fig, 'var(--body-edge)', 2.2);
+  var cx = 54 + 120 * 0.4;  /* 正中 x */
+  h.path('M'+cx+' '+(fy-4)+' L'+(cx+DX)+' '+(fy-4+DY)+' L'+(cx+DX)+' '+(fy+fh+DY)+' L'+cx+' '+(fy+fh)+' Z', h.F('sagittal_plane', MV, 0.12), g);
+  var ty = 32 + 236 * 0.4;  /* 腰の高さ */
+  h.path('M'+(fx-4)+' '+ty+' L'+(fx+fw)+' '+ty+' L'+(fx+fw+DX)+' '+(ty+DY)+' L'+(fx-4+DX)+' '+(ty+DY)+' Z', h.F('transverse_plane', MV, 0.12), g);
+
+  /* 同側・対側 */
+  var g2 = h.group({transform:'translate(222 18)'});
+  var f2 = h.group({transform:'scale(0.35)'}, g2);
+  drawSilhouette(f2, 'var(--body-edge)', 2.4);
+  /* 右手（画面の左）→右足（同側）／左足（対側） */
+  var hx = 50 * 0.35, hy = 303 * 0.35, rfx = 100 * 0.35, rfy = 490 * 0.35, lfx = 140 * 0.35, lfy = 490 * 0.35;
+  h.path('M'+(hx-6)+' '+(hy+6)+' C'+(hx-16)+' '+(hy+40)+' '+(rfx-40)+' '+(rfy+20)+' '+(rfx-8)+' '+(rfy+20), h.L('ipsilateral', MV, 2), g2);
+  head(h, rfx-8, rfy+20, 0, 'ipsilateral', g2);
+  h.path('M'+(hx+4)+' '+(hy+2)+' C'+(hx+40)+' '+(hy+10)+' '+(lfx-10)+' '+(lfy-60)+' '+(lfx+2)+' '+(lfy-6), h.L('contralateral', MV, 2), g2);
+  head(h, lfx+2, lfy-6, 70, 'contralateral', g2);
+  tx(h, 0, 10, 'R', g2, {'font-family':'var(--f-latin)', 'font-size':11 * h.px}); tx(h, 84, 10, 'L', g2, {'font-family':'var(--f-latin)', 'font-size':11 * h.px});
+
+  /* 前・後（横から） */
+  var g3 = h.group({transform:'translate(0 276)'});
+  person(h, {head:[78, 30], face:180, neck:[80, 46], hip:[82, 110], kn:[80, 136], an:[82, 158], to:[70, 160], sh:[80, 52], el:[84, 82], ha:[84, 108]}, g3, 0.95);
+  arrow(h, 'anterior', 60, 80, 18, 80, g3);
+  arrow(h, 'posterior', 102, 80, 142, 80, g3);
+
+  /* 浅・深（太ももの断面） */
+  var g4 = h.group({transform:'translate(162 276)'});
+  var c = [77, 82];
+  h.circle(c[0], c[1], 58, h.Fill(EDGE, 0.5), g4);          /* 皮膚 */
+  h.circle(c[0], c[1], 55, h.Fill('var(--fat)', 0.35), g4);  /* 皮下脂肪 */
+  h.circle(c[0], c[1], 46, h.Fill('var(--muscle)', 0.22), g4); /* 筋 */
+  h.path('M'+c[0]+' '+(c[1]-46)+' L'+c[0]+' '+(c[1]+46)+' M'+(c[0]-46)+' '+c[1]+' L'+(c[0]+46)+' '+c[1], h.S('var(--muscle)', 0.8, {'stroke-opacity':0.4}), g4);
+  h.circle(c[0], c[1], 13, h.Fill('var(--bone)', 0.35), g4); /* 骨 */
+  arrow(h, 'superficial', c[0]+14, c[1]-14, c[0]+50, c[1]-50, g4);
+  arrow(h, 'deep', c[0]-52, c[1]+40, c[0]-16, c[1]+12, g4);
+}
+function artMove1(h){
+  var W = 110, Hh = 146;
+  for(var i = 0; i < 9; i++) if(i !== 8) frame(h, (i % 3) * W + 3, Math.floor(i / 3) * Hh + 3, W - 6, Hh - 6);
+  var g;
+  /* 1 屈曲・伸展（肘を横から） */
+  g = cell(h, 0, 0);
+  capsules(h, [['M40 22 L42 84', 13], ['M42 84 L86 54', 11]], g);
+  arc(h, 'flexion', 42, 84, 52, -24, -66, g);
+  arc(h, 'extension', 42, 84, 52, 6, 62, g);
+  /* 2 過伸展（膝を横から） */
+  g = cell(h, W, 0);
+  h.path('M58 16 L56 76 L54 134', h.S(EDGE, 1, {'stroke-dasharray':(3*h.px)+' '+(3*h.px)}), g);
+  capsules(h, [['M58 16 L56 74', 15], ['M56 74 L42 128', 12], ['M42 128 L28 132', 7]], g);
+  arc(h, 'hyperextension', 56, 74, 46, 112, 136, g);
+  /* 3 外転・内転（前から） */
+  g = cell(h, 2 * W, 0);
+  capsules(h, [['M44 40 L44 98', 30], ['M33 106 L31 134', 10], ['M55 106 L57 134', 10], ['M58 44 L86 30', 8], ['M30 44 L24 94', 8]], g);
+  h.circle(44, 22, 10, SK(h), g);
+  arc(h, 'abduction', 58, 44, 38, -6, -56, g);
+  arc(h, 'adduction', 58, 44, 38, 6, 56, g);
+  /* 4 側屈（前から） */
+  g = cell(h, 0, Hh);
+  capsules(h, [['M56 120 L54 92', 28], ['M54 92 C54 70 62 54 72 42', 26], ['M44 124 L42 134', 10], ['M66 124 L68 134', 10]], g);
+  h.circle(80, 26, 10, SK(h), g);
+  arc(h, 'lateral_flexion', 54, 104, 64, -88, -52, g);
+  /* 5 回旋（頭を上から） */
+  g = cell(h, W, Hh);
+  h.ellipse(55, 76, 40, 16, 0, SK(h), g);
+  h.circle(55, 70, 16, SK(h), g);
+  h.circle(55, 53, 4, SK(h), g);
+  arc(h, 'rotation', 55, 70, 30, -150, -30, g);
+  tx(h, 55, 132, '上から', g);
+  /* 6 内旋・外旋（肩を上から：肘を90度に曲げた前腕） */
+  g = cell(h, 2 * W, Hh);
+  h.ellipse(55, 92, 42, 15, 0, SK(h), g);
+  h.circle(55, 92, 13, SK(h), g);
+  h.circle(55, 79, 3.5, SK(h), g);
+  capsules(h, [['M22 92 L22 50', 9]], g);
+  h.path('M22 50 L58 40', h.S(EDGE, 1, {'stroke-dasharray':(3*h.px)+' '+(3*h.px)}), g);
+  arc(h, 'internal_rotation', 22, 92, 44, -84, -44, g);
+  arc(h, 'external_rotation', 22, 92, 44, -100, -148, g);
+  tx(h, 55, 132, '上から', g);
+  /* 7 分回し運動（前から） */
+  g = cell(h, 0, 2 * Hh);
+  capsules(h, [['M40 36 L40 100', 28], ['M50 40 L80 96', 8]], g);
+  h.circle(40, 20, 10, SK(h), g);
+  h.ellipse(82, 100, 18, 9, 0, h.L('circumduction', MV, 1.8), g);
+  head(h, 64, 98, -95, 'circumduction', g);
+  /* 8 可動域（分度器） */
+  g = cell(h, W, 2 * Hh);
+  var sc = [60, 112];
+  h.path('M'+sc[0]+' '+sc[1]+' L'+(sc[0]+50)+' '+sc[1]+' A50 50 0 0 0 '+(sc[0]+50*Math.cos(-135*R)).toFixed(1)+' '+(sc[1]+50*Math.sin(-135*R)).toFixed(1)+' Z', h.F('range_of_motion', MV, 0.1), g);
+  for(var a = 0; a <= 135; a += 15){ var ca = Math.cos(-a * R), sa = Math.sin(-a * R); h.path('M'+(sc[0]+45*ca).toFixed(1)+' '+(sc[1]+45*sa).toFixed(1)+' L'+(sc[0]+50*ca).toFixed(1)+' '+(sc[1]+50*sa).toFixed(1), h.S('var(--ink-2)', 0.8), g); }
+  capsules(h, [['M'+sc[0]+' '+sc[1]+' L'+(sc[0]+42)+' '+sc[1], 9], ['M'+sc[0]+' '+sc[1]+' L'+(sc[0]+42*Math.cos(-135*R)).toFixed(1)+' '+(sc[1]+42*Math.sin(-135*R)).toFixed(1), 9]], g);
+}
+function artMove2(h){
+  var W = 110, Hh = 146;
+  for(var i = 0; i < 7; i++) frame(h, (i % 3) * W + 3, Math.floor(i / 3) * Hh + 3, W - 6, Hh - 6);
+  var g;
+  /* 1 回内・回外（右手を前から：手の甲と手のひら） */
+  g = cell(h, 0, 0);
+  hand(h, 30, 104, 0.75, true, true, g, {arm:'M30 104 L30 124'});
+  hand(h, 80, 104, 0.75, false, false, g, {arm:'M80 104 L80 124'});
+  arc(h, 'pronation', 55, 40, 24, -30, -150, g);
+  arc(h, 'supination', 55, 124, 22, 160, 20, g);
+  /* 2 対立（親指と小指） */
+  g = cell(h, W, 0);
+  hand(h, 55, 120, 1.15, true, false, g, {thumb:'M43 111 Q34 86 59 79', little:'M65.4 92.4 Q66 84 61 78', arm:'M55 120 L55 140'});
+  h.circle(60, 78, 5, h.F('opposition', MV, 0.3), g);
+  /* 3 橈屈・尺屈（右手を手のひら側から：左が親指） */
+  g = cell(h, 2 * W, 0);
+  hand(h, 55, 92, 0.9, true, false, g, {arm:'M55 92 L55 140'});
+  arc(h, 'radial_deviation', 55, 96, 56, -100, -136, g);
+  arc(h, 'ulnar_deviation', 55, 96, 56, -80, -44, g);
+  /* 4 背屈・底屈（右足を外側から：左が前） */
+  g = cell(h, 0, Hh);
+  capsules(h, [['M74 12 L74 92', 14], ['M80 100 L30 104', 11]], g);
+  h.ellipse(76, 98, 10, 8, 0, SK(h), g);
+  arc(h, 'dorsiflexion', 76, 100, 48, -170, -136, g);
+  arc(h, 'plantar_flexion', 76, 100, 48, 168, 140, g);
+  /* 5 内がえし・外がえし（右足を後ろから） */
+  g = cell(h, W, Hh);
+  capsules(h, [['M55 12 L55 82', 14]], g);
+  h.path('M40 90 Q55 80 70 90 L74 104 Q55 112 36 104 Z', SK(h), g);
+  h.path('M36 106 L74 106', h.S(EDGE, 1, {'stroke-dasharray':(3*h.px)+' '+(3*h.px)}), g);
+  arc(h, 'inversion', 55, 96, 34, 168, 132, g);
+  arc(h, 'eversion', 55, 96, 34, 12, 48, g);
+  tx(h, 55, 134, '後ろから', g);
+  /* 6 挙上・下制（肩を後ろから） */
+  g = cell(h, 2 * W, Hh);
+  capsules(h, [['M55 30 L55 46', 10]], g);
+  h.circle(55, 24, 11, SK(h), g);
+  h.path('M20 60 Q20 49 34 47 L76 47 Q90 49 90 60 L80 130 L30 130 Z', SK(h), g);
+  h.path('M36 57 L50 59 L44 92 Z', h.Fill('var(--bone)', h.on(['elevation','depression']) ? 0.45 : 0.25), g);
+  h.path('M74 57 L60 59 L66 92 Z', h.Fill('var(--bone)', h.on(['elevation','depression']) ? 0.45 : 0.25), g);
+  arrow(h, 'elevation', 98, 54, 98, 26, g);
+  arrow(h, 'depression', 98, 66, 98, 96, g);
+  /* 7 前方突出・後退（肩甲骨を上から：上が前） */
+  g = cell(h, 0, 2 * Hh);
+  h.ellipse(55, 72, 44, 16, 0, SK(h), g);
+  h.circle(55, 70, 13, SK(h), g);
+  h.circle(55, 57, 3.5, SK(h), g);
+  h.path('M30 84 Q36 92 44 84', h.S('var(--bone)', 2.4), g);
+  h.path('M80 84 Q74 92 66 84', h.S('var(--bone)', 2.4), g);
+  arrow(h, 'protraction', 92, 70, 92, 36, g);
+  arrow(h, 'retraction', 92, 80, 92, 116, g);
+  tx(h, 55, 134, '上から（上が前）', g);
+}
+function artPositions(h){
+  frame(h, 4, 4, 312, 96); frame(h, 4, 108, 312, 96); frame(h, 4, 212, 312, 96); frame(h, 4, 316, 312, 150);
+  var g;
+  /* 背臥位：頭が右、鼻が上 */
+  g = h.group({});
+  table(h, 30, 66, 260, g);
+  person(h, {head:[254, 52], face:-90, neck:[238, 54], hip:[150, 56], kn:[100, 50], an:[52, 56], to:[50, 40], sh:[230, 56], el:[196, 58], ha:[164, 58]}, g, 0.9);
+  h.path('M262 64 L276 64', h.L('supine', MV, 4), g);
+  /* 腹臥位：頭が左、鼻が下＋触診の手 */
+  g = h.group({transform:'translate(0 104)'});
+  table(h, 30, 66, 260, g);
+  person(h, {head:[66, 50], face:90, neck:[82, 52], hip:[170, 52], kn:[222, 54], an:[270, 52], to:[276, 64], sh:[90, 52], el:[124, 56], ha:[152, 58]}, g, 0.9);
+  h.path('M44 62 L58 62', h.L('prone', MV, 4), g);
+  /* 触診の手（背中の上） */
+  capsules(h, [['M126 6 L132 26', 7], ['M132 26 L140 36', 11]], g);
+  h.path('M136 38 Q142 44 150 38', h.L('palpation', MV, 2), g);
+  /* 側臥位：上から見た横向き（膝を曲げる） */
+  g = h.group({transform:'translate(0 208)'});
+  h.rect(30, 12, 260, 72, 6, h.Fill('var(--ink-2)', 0.08, {'stroke-opacity':0.4}), g);
+  h.rect(40, 30, 34, 36, 8, h.Fill('var(--panel)', 1, {'stroke-opacity':0.6}), g);
+  person(h, {head:[60, 46], face:90, neck:[76, 46], hip:[160, 46], kn:[200, 66], an:[244, 54], to:[248, 66], sh:[84, 48], el:[110, 66], ha:[136, 70]}, g, 0.9);
+  h.path('M196 22 L230 22', h.L('side_lying', MV, 4), g);
+  tx(h, 160, 98, '上から', g);
+  /* 座位・立位・姿勢 */
+  g = h.group({transform:'translate(0 316)'});
+  h.rect(24, 92, 44, 8, 2, h.Fill('var(--ink-2)', 0.16, {'stroke-opacity':0.5}), g);
+  h.path('M30 100 L30 136 M62 100 L62 136', h.S('var(--ink-2)', 1.4, {'stroke-opacity':0.5}), g);
+  person(h, {head:[50, 36], face:180, neck:[50, 50], hip:[52, 92], kn:[18, 92], an:[18, 128], to:[6, 132], sh:[50, 56], el:[44, 78], ha:[26, 86]}, g, 0.85);
+  var f = h.group({transform:'translate(110 10) scale(0.27)'}, g);
+  drawSilhouette(f, 'var(--body-edge)', 3.2);
+  person(h, {head:[248, 26], face:180, neck:[250, 40], hip:[252, 82], kn:[252, 112], an:[254, 138], to:[242, 140], sh:[250, 46], el:[252, 66], ha:[252, 86]}, g, 0.8);
+  h.path('M254 6 L254 144', ext(h.L('posture', MV, 1.4), {'stroke-dasharray':(4*h.px)+' '+(3*h.px)}), g);
+  h.path('M114 144 L176 144', h.L('standing', MV, 3), g);
+  h.path('M14 144 L74 144', h.L('seated', MV, 3), g);
+}
+
+addPlates([
+  {id:'move-directions', cat:'move', name:'方向', sub:'Directions · anatomical position', note:'解剖学的正位を前から（画面の左がからだの右）', vb:[-34,-44,308,600], base:'f',
+   art:artDirections,
+   pins:[['anatomical_position',146,200],['superior',120,-24],['inferior',120,532],['midline',120,440],
+         ['lateral',30,392],['medial',66,432],['proximal',202,136],['distal',224,316]]},
+  {id:'move-planes', cat:'move', name:'面・前後・浅深', sub:'Body planes · anterior/posterior · superficial/deep', note:'左上：3つの面（奥行きを右上に描いた図）。右上：右手から見た同側と対側。左下：横から（左が前）。右下：太ももの断面', vb:[0,0,320,440], base:null,
+   art:artPlanes,
+   pins:[['frontal_plane',40,60],['sagittal_plane',112,40],['transverse_plane',182,120],
+         ['ipsilateral',226,170],['contralateral',268,150],
+         ['anterior',22,356],['posterior',138,356],['superficial',232,316],['deep',190,388]]},
+  {id:'move-limbs', cat:'move', name:'関節の動き', sub:'Joint movements · flexion, abduction, rotation', note:'1段目：肘を横から／膝を横から／腕を前から。2段目：体幹を前から／頭を上から／肩を上から。3段目：腕の分回し／可動域', vb:[0,0,330,440], base:null,
+   art:artMove1,
+   pins:[['flexion',76,40],['extension',72,132],['hyperextension',130,126],['abduction',311,24],['adduction',311,64],
+         ['lateral_flexion',58,186],['rotation',152,182],['internal_rotation',260,188],['external_rotation',216,196],
+         ['circumduction',82,384],['range_of_motion',150,368]]},
+  {id:'move-hand-foot', cat:'move', name:'手足と肩甲骨の動き', sub:'Movements of the forearm, wrist, ankle & shoulder blade', note:'1段目：右手（前から）／親指と小指／手首（左が親指）。2段目：右足を外側から（左が前）／後ろから／肩を後ろから。3段目：肩を上から', vb:[0,0,330,440], base:null,
+   art:artMove2,
+   pins:[['pronation',30,74],['supination',80,74],['opposition',152,56],['radial_deviation',244,30],['ulnar_deviation',300,30],
+         ['dorsiflexion',34,236],['plantar_flexion',34,278],['inversion',134,252],['eversion',196,252],
+         ['elevation',318,178],['depression',318,246],['protraction',102,330],['retraction',102,406]]},
+  {id:'move-positions', cat:'move', name:'姿勢と触診', sub:'Positions (supine, prone, side-lying, seated, standing)', note:'上から：仰向け／うつ伏せと触診の手／横向き（上から見た図）／座位・立位・姿勢（点線は重心線）', vb:[0,0,320,470], base:null,
+   art:artPositions,
+   pins:[['supine',270,64],['prone',50,166],['palpation',143,134],['side_lying',214,230],
+         ['seated',44,460],['standing',146,460],['posture',254,330]]}
+]);
+})();
+
+/* ---- src/levels.js ---- */
+/* =====================================================================
+   学ぶレベル（基礎・標準・専門）
+   ・LEVEL_BASIC  … 基礎。施術者がまず覚えたい語。並び順＝単語カードで新しく出る順
+   ・LEVEL_EXPERT … 専門。医学部レベルの細かい語
+   ・どちらにも入っていない語はすべて「標準」
+   ===================================================================== */
+var LEVEL_NAMES = {1:'基礎', 2:'標準', 3:'専門'};
+
+var LEVEL_BASIC = [
+  /* 方向 */
+  'anatomical_position','superior','inferior','anterior','posterior','medial','lateral','midline','proximal','distal','superficial','deep',
+  /* 全身の骨 */
+  'skull','spine','rib','sternum','clavicle','scapula','pelvis','sacrum','coccyx','humerus','radius','ulna','femur','patella','tibia','fibula','calcaneus','mandible','phalanges',
+  /* 姿勢 */
+  'supine','prone','side_lying','seated','standing','posture',
+  /* 全身の筋 */
+  'trapezius','deltoid','pec','lats','rhomboids','erector','scm','biceps','triceps','rectus','oblique','diaphragm','iliopsoas','glute','quads','hamstrings','adductors','gastroc','tibialis','achilles',
+  /* 関節の動き① */
+  'flexion','extension','abduction','adduction','rotation','internal_rotation','external_rotation','range_of_motion',
+  /* 関節 */
+  'shoulder_joint','elbow_joint','wrist_joint','hip_joint','knee_joint','ankle_joint','tmj','sacroiliac_joint','sternoclavicular_joint','acromioclavicular_joint','facet_joint','intervertebral_disc','ligament','tendon',
+  /* 関節の動き②・触診 */
+  'lateral_flexion','hyperextension','circumduction','pronation','supination','dorsiflexion','plantar_flexion','inversion','eversion','elevation','depression','palpation',
+  /* 背骨と頭・胸の目印 */
+  'vertebra','cervical_vertebrae','thoracic_vertebrae','lumbar_vertebrae','atlas','axis','vertebra_prominens','spinous_process','transverse_process',
+  'cervical_lordosis','thoracic_kyphosis','lumbar_lordosis','occipital_bone','external_occipital_protuberance','mastoid_process','temporal_bone','frontal_bone','hyoid_bone',
+  'thoracic_cage','xiphoid_process','costal_margin',
+  /* 全身の臓器 */
+  'brain','heart','lungs','liver','stomach','smallint','largeint','kidneys','bladder','spleen','pancreas','thyroid','skin',
+  /* 骨盤・手足の目印 */
+  'hip_bone','ilium','iliac_crest','asis','psis','ischial_tuberosity','pubis','greater_trochanter','acromion','spine_of_scapula','inferior_angle_scapula','medial_border_scapula',
+  'olecranon','medial_epicondyle_humerus','lateral_epicondyle_humerus','medial_malleolus','lateral_malleolus',
+  /* 面・肩甲骨と手の動き */
+  'sagittal_plane','frontal_plane','transverse_plane','protraction','retraction','opposition','radial_deviation','ulnar_deviation','ipsilateral','contralateral',
+  /* 施術でよく触れる筋 */
+  'levator_scapulae','splenius_capitis','suboccipital_muscles','masseter','temporalis','pectoralis_minor','serratus_anterior','transversus_abdominis','quadratus_lumborum',
+  'psoas_major','multifidus','rotator_cuff','supraspinatus','infraspinatus','gluteus_medius','piriformis','tensor_fasciae_latae','iliotibial_tract','sartorius',
+  'rectus_femoris','soleus','fibularis_longus','pelvic_floor','thoracolumbar_fascia','fascia',
+  /* 手と足 */
+  'carpal_bones','metacarpals','tarsal_bones','metatarsals','medial_longitudinal_arch','plantar_fascia','carpal_tunnel',
+  /* 筋のはたらき */
+  'origin_muscle','insertion_muscle','agonist','antagonist','skeletal_muscle',
+  /* 全身の神経・血管 */
+  'spinalcord','sciatic','vagus','median','aorta','carotid','jugular','radialart','femoralart','lymph',
+  /* 神経 */
+  'brachial_plexus','radial_nerve','ulnar_nerve','femoral_nerve','cerebellum','brainstem','autonomic_nervous_system','sympathetic_nervous_system','parasympathetic_nervous_system','dermatome','celiac_plexus',
+  /* 血管・リンパ */
+  'artery','vein','capillary','lymphatic_vessel','cervical_lymph_nodes','axillary_lymph_nodes','inguinal_lymph_nodes','brachial_artery','dorsalis_pedis_artery',
+  /* 臓器 */
+  'trachea','esophagus','duodenum','gallbladder','rectum','uterus','dermis'
+];
+
+var LEVEL_EXPERT = [
+  /* 骨 */
+  'lacrimal_bone','vomer','inferior_nasal_concha','piriform_aperture','supraorbital_foramen','infraorbital_foramen','mental_foramen','squamous_suture','pterion',
+  'coronoid_process_mandible','occipital_condyle','fontanelle','anterior_cranial_fossa','middle_cranial_fossa','posterior_cranial_fossa','cribriform_plate','crista_galli',
+  'sella_turcica','optic_canal','superior_orbital_fissure','foramen_rotundum','foramen_ovale_skull','foramen_spinosum','foramen_lacerum','internal_acoustic_meatus',
+  'jugular_foramen','hypoglossal_canal','petrous_part','clivus','pedicle','lamina','superior_articular_process','inferior_articular_process','vertebral_foramen',
+  'sacral_promontory','metaphysis','osteon','endosteum','aiis','iliac_fossa','obturator_foramen','greater_sciatic_notch','pubic_arch','pelvic_inlet','sacral_foramina',
+  'surgical_neck','lesser_tubercle','deltoid_tuberosity','capitulum','trochlea_humerus','coronoid_process_ulna','radial_tuberosity','subscapular_fossa',
+  'lateral_border_scapula','superior_angle_scapula','triquetrum','pisiform','trapezium','trapezoid_bone','capitate','hamate','lesser_trochanter','linea_aspera',
+  'medial_epicondyle_femur','lateral_epicondyle_femur','intercondylar_fossa','tibial_plateau','medial_cuneiform','intermediate_cuneiform','lateral_cuneiform',
+  'sesamoid_bones_foot','greater_horn_hyoid','lesser_horn_hyoid',
+  /* 関節・靭帯 */
+  'stylohyoid_ligament','thyrohyoid_membrane','costovertebral_joint','fibrous_joint','cartilaginous_joint','syndesmosis','glenohumeral_ligaments','coracohumeral_ligament',
+  'tfcc','ischiofemoral_ligament','pubofemoral_ligament','ligament_of_head_of_femur','iliolumbar_ligament','infrapatellar_fat_pad','anterior_tibiofibular_ligament',
+  'spring_ligament','long_plantar_ligament','intertransverse_ligament','ptfl',
+  /* 筋 */
+  'geniohyoid','anterior_belly_digastric','posterior_belly_digastric','digastric_tendon','superior_belly_omohyoid','inferior_belly_omohyoid','hyoglossus','genioglossus',
+  'middle_pharyngeal_constrictor','procerus','nasalis','levator_labii_superioris','levator_anguli_oris','zygomaticus_minor','risorius','depressor_labii_inferioris','mentalis',
+  'medial_pterygoid','stylohyoid','sternothyroid','thyrohyoid','longus_capitis','rectus_capitis_posterior_major','rectus_capitis_posterior_minor',
+  'obliquus_capitis_superior','obliquus_capitis_inferior','suboccipital_triangle','pyramidalis','tendinous_intersections','psoas_minor','central_tendon','diaphragmatic_crura',
+  'serratus_posterior_superior','serratus_posterior_inferior','transversospinalis','interspinales','intertransversarii','rotatores','pubococcygeus','puborectalis',
+  'iliococcygeus','coccygeus','external_urethral_sphincter','perineal_body','deep_transverse_perineal','superficial_transverse_perineal','bulbospongiosus','ischiocavernosus',
+  'myofibril','sarcomere','actin','myosin','epimysium','perimysium','endomysium','extensor_digiti_minimi','extensor_indicis','flexor_digiti_minimi_brevis_hand',
+  'opponens_digiti_minimi','lumbricals_hand','dorsal_interossei_hand','palmar_interossei','palmaris_brevis','superior_gemellus','inferior_gemellus','obturator_externus',
+  'quadratus_femoris','fibularis_tertius','superior_extensor_retinaculum','plantaris','quadratus_plantae','lumbricals_foot','adductor_hallucis',
+  'flexor_digiti_minimi_brevis_foot','dorsal_interossei_foot','plantar_interossei','extensor_hallucis_brevis','anconeus',
+  /* 臓器 */
+  'fossa_ovalis','chordae_tendineae','papillary_muscles','auricle_heart','bundle_of_his','purkinje_fibers','nasopharynx','oropharynx','laryngopharynx','cricoid_cartilage',
+  'carina','lobar_bronchus','oblique_fissure','horizontal_fissure','cardiac_notch','gingiva','sublingual_gland','lower_esophageal_sphincter','cardia','fundus_of_stomach',
+  'pyloric_antrum','pyloric_sphincter','lesser_curvature','greater_curvature','gastric_folds','caudate_lobe','quadrate_lobe','falciform_ligament','porta_hepatis',
+  'cystic_duct','common_hepatic_duct','head_of_pancreas','body_of_pancreas','tail_of_pancreas','pancreatic_duct','major_duodenal_papilla','sphincter_of_oddi',
+  'ileocecal_valve','right_colic_flexure','left_colic_flexure','internal_anal_sphincter','taeniae_coli','haustra','lesser_omentum','renal_capsule','renal_column',
+  'renal_papilla','minor_calyx','major_calyx','renal_hilum','bowmans_capsule','renal_tubule','trigone','detrusor_muscle','internal_urethral_sphincter','fundus_of_uterus',
+  'perimetrium','fimbriae','ampulla_of_uterine_tube','ovarian_ligament','broad_ligament','ejaculatory_duct','bulbourethral_gland','seminal_vesicle','ciliary_body',
+  'ciliary_zonule','choroid','macula','fovea_centralis','optic_disc','vitreous_body','aqueous_humor','anterior_chamber','rods','cones','lacrimal_sac','nasolacrimal_duct',
+  'superior_rectus','inferior_rectus','medial_rectus','lateral_rectus','superior_oblique','inferior_oblique','levator_palpebrae_superioris','tympanic_cavity',
+  'oval_window','round_window','organ_of_corti','vestibule_ear','olfactory_epithelium','circumvallate_papillae','fungiform_papillae','filiform_papillae',
+  'foliate_papillae','stratum_basale','melanocyte','apocrine_sweat_gland','arrector_pili','nail_bed','anterior_pituitary','posterior_pituitary','adrenal_cortex',
+  'adrenal_medulla','pancreatic_islets',
+  /* 神経 */
+  'brocas_area','wernickes_area','primary_auditory_cortex','cerebellar_vermis','third_ventricle','cerebral_aqueduct','fourth_ventricle','fornix','mammillary_body',
+  'septum_pellucidum','caudate_nucleus','putamen','globus_pallidus','internal_capsule','choroid_plexus','substantia_nigra','optic_tract','trochlear_nerve',
+  'abducens_nerve','temporal_branch_facial','zygomatic_branch_facial','buccal_branch_facial','marginal_mandibular_branch','cervical_branch_facial',
+  'arachnoid_granulations','falx_cerebri','tentorium_cerebelli','enteric_nervous_system','axon_hillock','node_of_ranvier','schwann_cell','axon_terminal',
+  'lateral_horn','central_canal','cervical_enlargement','lumbar_enlargement','conus_medullaris','filum_terminale','posterior_interosseous_nerve','thoracodorsal_nerve',
+  'superior_cervical_ganglion','stellate_ganglion','cardiac_plexus','greater_splanchnic_nerve','celiac_ganglion','superior_mesenteric_ganglion','pelvic_splanchnic_nerves',
+  /* 血管・リンパ */
+  'intercostal_arteries','left_anterior_descending_artery','circumflex_artery','great_cardiac_vein','coronary_sinus','maxillary_artery','superior_sagittal_sinus',
+  'dural_venous_sinuses','basilar_artery','anterior_cerebral_artery','middle_cerebral_artery','posterior_cerebral_artery','anterior_communicating_artery',
+  'posterior_communicating_artery','common_hepatic_artery','splenic_artery','left_gastric_artery','superior_mesenteric_vein','splenic_vein','hepatic_veins',
+  'superficial_palmar_arch','deep_palmar_arch','deep_femoral_artery','fibular_artery','dorsal_venous_arch','right_lymphatic_duct','cisterna_chyli',
+  'pharyngeal_tonsil','peyers_patches','arteriole','venule','tunica_intima','tunica_media','tunica_externa','endothelium'
+];
+
+/* ---- src/phrases.js ---- */
+/* =====================================================================
+   施術の英語 — 施術の場面でクライアントに言うフレーズ
+   単語カードの範囲「施術の英語」で出題する（並び順＝新しく出る順）
+   {id, scene, en, ja, note}
+   ===================================================================== */
+var PHRASES = [
+/* はじめに */
+{id:'ph_welcome', scene:'はじめに', en:'Please have a seat. How are you feeling today?', ja:'どうぞお座りください。今日の調子はいかがですか？', note:'How are you feeling? は体調をたずねる基本の一言。'},
+{id:'ph_where_tight', scene:'はじめに', en:'Where do you feel tightness or discomfort?', ja:'どこに張りや違和感がありますか？', note:'tightness＝張り・こわばり。discomfort＝違和感・不快感。'},
+{id:'ph_health_info', scene:'はじめに', en:'Is there anything about your health I should know?', ja:'健康のことで、知っておいたほうがいいことはありますか？', note:'けが・手術・持病などを確かめるときの前置き。'},
+{id:'ph_any_questions', scene:'はじめに', en:'Do you have any questions before we start?', ja:'始める前に、何か質問はありますか？', note:''},
+{id:'ph_may_i_touch', scene:'はじめに', en:'May I place my hands on your back?', ja:'背中に手を当ててもいいですか？', note:'触れる前に同意をとる言い方。May I …? はていねいな形。'},
+/* 姿勢の案内 */
+{id:'ph_lie_face_up', scene:'姿勢の案内', en:'Please lie face up on the table.', ja:'台の上に仰向けになってください。', note:'face up＝仰向け（supine）。'},
+{id:'ph_lie_face_down', scene:'姿勢の案内', en:'Please lie face down, with your face in the face cradle.', ja:'うつ伏せになって、顔を顔置きに入れてください。', note:'face down＝うつ伏せ（prone）。face cradle は施術台の顔を入れる部分。'},
+{id:'ph_turn_side', scene:'姿勢の案内', en:'Please turn onto your left side.', ja:'左を下にして、横向きになってください。', note:'turn onto your … side＝〜側を下にして横向きに（side-lying）。'},
+{id:'ph_turn_over', scene:'姿勢の案内', en:'Now please turn over slowly.', ja:'では、ゆっくり寝返りをうってください。', note:'turn over＝寝返る。仰向けとうつ伏せの切り替えに。'},
+{id:'ph_comfortable', scene:'姿勢の案内', en:'Are you comfortable? Would you like a pillow?', ja:'楽な姿勢ですか？ 枕を使いますか？', note:''},
+/* 圧と痛み */
+{id:'ph_pressure_ok', scene:'圧と痛み', en:'Is this pressure okay for you?', ja:'この圧で大丈夫ですか？', note:'pressure＝圧。'},
+{id:'ph_too_strong', scene:'圧と痛み', en:'Let me know if the pressure is too strong.', ja:'圧が強すぎたら教えてください。', note:'Let me know if …＝〜なら教えてください。'},
+{id:'ph_more_less', scene:'圧と痛み', en:'Would you like more pressure or less?', ja:'圧はもっと強くしますか、弱くしますか？', note:''},
+{id:'ph_does_it_hurt', scene:'圧と痛み', en:'Does this hurt anywhere?', ja:'どこか痛みますか？', note:'hurt＝痛む。痛みそのものは pain。'},
+{id:'ph_pain_scale', scene:'圧と痛み', en:'On a scale of zero to ten, how strong is the pain?', ja:'0から10で言うと、痛みはどのくらいですか？', note:'痛みの強さを数字でたずねる定番の言い方。'},
+{id:'ph_stop_anytime', scene:'圧と痛み', en:'Tell me if you want me to stop at any time.', ja:'やめてほしいときは、いつでも言ってください。', note:'安心して受けてもらうための一言。'},
+/* 呼吸と力み */
+{id:'ph_breathe_in_out', scene:'呼吸と力み', en:'Take a deep breath in, and slowly breathe out.', ja:'深く息を吸って、ゆっくり吐いてください。', note:'breathe in＝吸う。breathe out＝吐く。'},
+{id:'ph_breathe_naturally', scene:'呼吸と力み', en:'Close your eyes and breathe naturally.', ja:'目を閉じて、自然に呼吸してください。', note:''},
+{id:'ph_relax_shoulders', scene:'呼吸と力み', en:'Let your shoulders relax and drop.', ja:'肩の力を抜いて、下ろしてください。', note:'relax＝力を抜く。drop＝下ろす（depression）。'},
+{id:'ph_let_me_move', scene:'呼吸と力み', en:"Let your arm go heavy. I'll move it for you.", ja:'腕の力を抜いて重くしてください。私が動かします。', note:'こちらが動かすときの声かけ。go heavy＝重くなる。'},
+/* 動きの案内 */
+{id:'ph_bend_knee', scene:'動きの案内', en:'Please bend your right knee.', ja:'右膝を曲げてください。', note:'bend＝曲げる（flexion）。'},
+{id:'ph_straighten_arm', scene:'動きの案内', en:'Now straighten your arm.', ja:'次は腕をまっすぐ伸ばしてください。', note:'straighten＝まっすぐ伸ばす（extension）。'},
+{id:'ph_turn_head', scene:'動きの案内', en:'Turn your head slowly to the left.', ja:'頭をゆっくり左に向けてください。', note:'turn＝向ける（rotation）。'},
+{id:'ph_push_against', scene:'動きの案内', en:'Gently push against my hand.', ja:'私の手をやさしく押し返してください。', note:'筋肉に力を入れてもらうときの言い方。'},
+/* 感覚の確認 */
+{id:'ph_warmth', scene:'感覚の確認', en:'You may feel some warmth or tingling.', ja:'温かさやピリピリした感じがあるかもしれません。', note:'tingling＝ピリピリ・ジンジンする感じ。'},
+{id:'ph_how_feel_now', scene:'感覚の確認', en:'How does that feel now?', ja:'今はどんな感じですか？', note:''},
+{id:'ph_feel_difference', scene:'感覚の確認', en:'Do you notice any difference?', ja:'何か違いを感じますか？', note:'notice＝気づく。施術の前後の変化をたずねる。'},
+/* 終わりに */
+{id:'ph_finished', scene:'終わりに', en:"We're all done. Take your time getting up.", ja:'これで終わりです。ゆっくり起き上がってください。', note:'Take your time＝急がなくていいですよ。'},
+{id:'ph_drink_water', scene:'終わりに', en:'Please drink some water and rest well today.', ja:'今日は水を飲んで、ゆっくり休んでください。', note:''},
+{id:'ph_next_session', scene:'終わりに', en:'Would you like to book your next session?', ja:'次回のご予約はいかがですか？', note:'book＝予約する。session＝施術1回分。'}
+];
+
 /* ---- src/app.js ---- */
 (function(){
 'use strict';
@@ -12107,6 +12787,20 @@ var PLATE = {}; PLATES.forEach(function(p){ PLATE[p.id] = p; p.pins = (p.pins ||
 var PIN = {};   // 単語ID → その単語が載っている図版IDの一覧
 PLATES.forEach(function(p){ p.pins.forEach(function(q){ (PIN[q[0]] = PIN[q[0]] || []).push(p.id); }); });
 
+/* ===== 学ぶレベル（基礎・標準・専門）と施術の英語 ===== */
+var LV = {}; TERMS.forEach(function(t){ LV[t.id] = 2; });
+LEVEL_EXPERT.forEach(function(id){ if(TERM[id]) LV[id] = 3; });
+LEVEL_BASIC.forEach(function(id){ if(TERM[id]) LV[id] = 1; });
+var BASIC_IDX = {}; LEVEL_BASIC.forEach(function(id, i){ BASIC_IDX[id] = i; });
+var TERM_IDX = {}; TERMS.forEach(function(t, i){ TERM_IDX[t.id] = i; });
+/* 新しいカードが出る順：基礎（決めた順）→ 標準 → 専門（どちらも登録順） */
+var STUDY_ORDER = TERMS.slice().sort(function(a, b){
+  return (LV[a.id] - LV[b.id]) || (LV[a.id] === 1 ? BASIC_IDX[a.id] - BASIC_IDX[b.id] : TERM_IDX[a.id] - TERM_IDX[b.id]);
+});
+var LEVEL_COUNT = {1:0, 2:0, 3:0}; TERMS.forEach(function(t){ LEVEL_COUNT[LV[t.id]]++; });
+var PHRASE = {}; PHRASES.forEach(function(p){ PHRASE[p.id] = p; });
+function inLevel(t){ return LV[t.id] <= store.level; }
+
 function platesOf(cat){ return PLATES.filter(function(p){ return p.cat === cat; }); }
 function plateHas(pid, id){ var p = PLATE[pid]; if(!p) return false; for(var i=0;i<p.pins.length;i++) if(p.pins[i][0] === id) return true; return false; }
 function homePlate(id){
@@ -12121,13 +12815,29 @@ function $(s){ return document.querySelector(s); }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } return a; }
 function kanaHTML(k){ return esc(k).replace(/\[(.+?)\]/g, '<b>$1</b>'); }
-function rangeLabel(k){ for(var i=0;i<RANGES.length;i++) if(RANGES[i][0]===k) return RANGES[i][1]; return RANGES[0][1]; }
+function isPlateRange(r){ return /^plate:/.test(r || ''); }
+function rangeLabel(k){
+  if(isPlateRange(k)){ var p = PLATE[k.slice(6)]; return p ? 'この図：'+CAT[p.cat].ja+'・'+p.name : 'この図'; }
+  if(k === 'phrase') return '施術の英語';
+  for(var i=0;i<RANGES.length;i++) if(RANGES[i][0]===k) return RANGES[i][1]; return RANGES[0][1];
+}
+function inRange(t, r){ if(r === 'all') return true; if(isPlateRange(r)) return plateHas(r.slice(6), t.id); return t.cat === r; }
 function modeName(id){ for(var i=0;i<MODES.length;i++) if(MODES[i].id===id) return MODES[i].name; return ''; }
-function rangeChips(act, cur){ return RANGES.map(function(r){ return '<button type="button" class="range" data-act="'+act+'" data-v="'+r[0]+'" aria-pressed="'+(cur===r[0])+'">'+r[1]+'</button>'; }).join(''); }
+function rangeChips(act, cur, withPhrase){
+  var list = RANGES.slice(); if(withPhrase) list.push(['phrase', '施術の英語']);
+  if(isPlateRange(cur)) list.unshift([cur, rangeLabel(cur)]);
+  return list.map(function(r){ return '<button type="button" class="range'+(r[0] === 'phrase' ? ' phrase' : '')+'" data-act="'+act+'" data-v="'+r[0]+'" aria-pressed="'+(cur===r[0])+'">'+esc(r[1])+'</button>'; }).join('');
+}
+function levelBarHTML(){
+  var cum = [LEVEL_COUNT[1], LEVEL_COUNT[1] + LEVEL_COUNT[2], TERMS.length];
+  return '<div class="lvbar"><p class="label">学ぶレベル</p><div class="seg" role="group" aria-label="学ぶレベル">'+
+    [[1,'基礎'],[2,'標準まで'],[3,'専門まで']].map(function(x, i){ return '<button type="button" data-act="level" data-v="'+x[0]+'" aria-pressed="'+(store.level === x[0])+'">'+x[1]+'<small>'+cum[i]+'語</small></button>'; }).join('')+
+    '</div></div>';
+}
 
 /* ===== 保存（この端末のブラウザ内） ===== */
 var KEY = 'karada-atlas-v1';
-function blank(){ return {cards:{}, stats:{}, day:{d:'', n:0, extra:0}, quiz:[]}; }
+function blank(){ return {cards:{}, stats:{}, day:{d:'', n:0, extra:0}, quiz:[], level:1}; }
 function load(){
   try { var raw = localStorage.getItem(KEY); if(raw){ var s = JSON.parse(raw); if(s && typeof s === 'object'){ var b = blank(); for(var k in b) if(s[k]) b[k] = s[k]; return b; } } } catch(e){}
   return blank();
@@ -12185,6 +12895,8 @@ function renderAtlas(){
   drawPlate($('#atlasSvg'), plate, {sel:S.sel, interactive:true, maxW:plateMaxW(), maxH:plateMaxH()});
   $('#plateView').textContent = plate.sub || '';
   $('#plateHint').textContent = plate.note || '';
+  $('#plateActs').innerHTML = '<button type="button" class="btn ghost sm" data-act="plearn">この図を学ぶ<small>カード</small></button>'+
+    '<button type="button" class="btn ghost sm" data-act="pquiz">この図でクイズ</button>';
   renderPanel();
   renderTermList();
   var act = document.querySelector('.plate-chip[aria-pressed="true"]');
@@ -12207,7 +12919,7 @@ function renderPanel(){
     '<div class="sec"><h3>例文</h3><div class="ex"><div style="min-width:0;flex:1"><p class="ex-en">'+esc(t.ex[0])+'</p><p class="ex-ja">'+esc(t.ex[1])+'</p></div>'+spkBtn(t.ex[0], true)+'</div></div>'+
     (t.tip ? '<p class="tip"><b>メモ</b>'+esc(t.tip)+'</p>' : '')+
     (on.length ? '<div class="sec"><h3>ほかの図</h3><div class="root-chips">'+on.map(function(pid){ var p = PLATE[pid]; return '<button type="button" class="plate-chip sm" data-act="goplate" data-p="'+pid+'">'+esc(CAT[p.cat].ja)+'：'+esc(p.name)+'</button>'; }).join('')+'</div></div>' : '')+
-    '<p class="status">単語カード：'+(c ? '段階 '+c.box+' / 5' : 'まだ学習していません')+'</p>';
+    '<p class="status">レベル：'+LEVEL_NAMES[LV[t.id]]+'　単語カード：'+(c ? '段階 '+c.box+' / 5' : 'まだ学習していません')+'</p>';
 }
 function renderTermList(){
   var p = PLATE[S.plate];
@@ -12275,23 +12987,26 @@ function buildQuiz(mode, range){
       items.push(it);
     }
   } else {
-    var pool = TERMS.filter(function(t){ return (range === 'all' || t.cat === range) && (mode !== 'map' || homePlate(t.id)); });
+    var plateR = isPlateRange(range);
+    /* 出題範囲：いまのレベルの単語＋学習中の単語（図版を選んだときはその図の単語すべて） */
+    var pool = TERMS.filter(function(t){ return inRange(t, range) && (plateR || inLevel(t) || store.cards[t.id]) && (mode !== 'map' || plateR || homePlate(t.id)); });
     var key = mode === 'en2ja' ? function(x){ return x.ja; } : function(x){ return x.en; };
     shuffle(pool).slice(0, N).forEach(function(t){
       var it = {kind:mode, term:t, answer:t.id};
       var prefer = [];
-      if(mode === 'map'){ it.plate = homePlate(t.id); prefer = PLATE[it.plate].pins.map(function(q){ return TERM[q[0]]; }); }
+      if(mode === 'map'){ it.plate = plateR ? range.slice(6) : homePlate(t.id); prefer = PLATE[it.plate].pins.map(function(q){ return TERM[q[0]]; }); }
       var ds = pickDistractors(t, prefer, pool, 3, key);
       it.options = shuffle([t].concat(ds)).map(function(x){ return {key:x.id, label:key(x)}; });
       items.push(it);
     });
   }
-  return {mode:mode, range:range, items:items, i:0, picked:null, score:0, wrong:[]};
+  return {mode:mode, range:range, items:items, i:0, picked:null, score:0, wrong:[], enq:0};
 }
 function renderQuiz(){
   var v = $('#v-quiz');
   if(!S.q){ v.innerHTML = quizSetupHTML(); return; }
   var q = S.q;
+  if(!q.items.length){ v.innerHTML = '<div class="narrow stack"><div class="done"><h3>出題できる単語がありません</h3><p class="muted" style="margin:0 0 14px;font-size:13.5px">範囲か学ぶレベルを変えてください。</p><button type="button" class="btn" data-act="qsetup">設定にもどる</button></div></div>'; return; }
   if(q.i >= q.items.length){ v.innerHTML = quizResultHTML(); return; }
   var it = q.items[q.i], answered = q.picked !== null, prompt = '';
   if(it.kind === 'en2ja') prompt = '<div class="ask">この英単語の日本語は？</div><div class="big latin">'+esc(it.term.en)+'</div>'+spkBtn(it.term.en);
@@ -12335,9 +13050,9 @@ function quizSetupHTML(){
     var d = new Date(h.t); return '<li>'+(d.getMonth()+1)+'/'+d.getDate()+'　'+esc(modeName(h.mode))+(h.mode !== 'roots' ? '・'+rangeLabel(h.range) : '')+'　'+h.score+' / '+h.n+'</li>';
   }).join('')+'</ul></div>' : '';
   return '<div class="narrow stack">'+
-    '<div><h2 class="sect">クイズ</h2><p class="lead" style="margin:0">10問ずつ出題します。まちがえた単語は、単語カードの復習に入ります。</p></div>'+
+    '<div><h2 class="sect">クイズ</h2><p class="lead" style="margin:0">学ぶレベルの単語と、学習中の単語から10問ずつ出題します。まちがえた単語は、単語カードの復習に入ります。</p></div>'+
     '<div><p class="label">出題のしかた</p><div class="modes">'+MODES.map(function(m){ return '<button type="button" class="mode" data-act="qmode" data-m="'+m.id+'" aria-pressed="'+(S.quizMode===m.id)+'"><b>'+m.name+'</b><span>'+m.desc+'</span></button>'; }).join('')+'</div></div>'+
-    (S.quizMode !== 'roots' ? '<div><p class="label">範囲</p><div class="ranges">'+rangeChips('qrange', S.quizRange)+'</div></div>' : '')+
+    (S.quizMode !== 'roots' ? levelBarHTML()+'<div><p class="label">範囲</p><div class="ranges">'+rangeChips('qrange', S.quizRange)+'</div></div>' : '')+
     '<div><button type="button" class="btn" data-act="qstart">10問はじめる</button></div>'+hist+'</div>';
 }
 function quizResultHTML(){
@@ -12351,9 +13066,9 @@ function quizResultHTML(){
     }).join('')+'</div></div>';
   }
   return '<div class="narrow stack"><div class="result"><p class="eyebrow">'+esc(modeName(q.mode))+(termMode ? '・'+rangeLabel(q.range) : '')+'</p><div class="score">'+q.score+'<small> / '+total+'</small></div><p style="margin:10px 0 0">'+msg+'</p>'+
-    (q.wrong.length && termMode ? '<p class="muted" style="font-size:13px;margin:6px 0 0">まちがえた単語は単語カードの復習に入りました。</p>' : '')+'</div>'+miss+
+    (q.enq && termMode ? '<p class="muted" style="font-size:13px;margin:6px 0 0">まちがえた単語は単語カードの復習に入りました。</p>' : '')+'</div>'+miss+
     '<div class="btn-row"><button type="button" class="btn" data-act="qstart">もう一度（同じ設定）</button><button type="button" class="btn ghost" data-act="qsetup">設定にもどる</button>'+
-    (q.wrong.length && termMode ? '<button type="button" class="btn ghost" data-act="tab" data-t="cards">カードで復習</button>' : '')+'</div></div>';
+    (q.enq && termMode ? '<button type="button" class="btn ghost" data-act="tab" data-t="cards">カードで復習</button>' : '')+'</div></div>';
 }
 function qpick(k){
   var q = S.q; if(!q || q.picked !== null) return;
@@ -12362,7 +13077,8 @@ function qpick(k){
   if(ok) q.score++; else q.wrong.push(it);
   if(it.kind === 'en2ja' || it.kind === 'ja2en' || it.kind === 'map'){
     var st = store.stats[it.term.id] || {c:0, w:0}; if(ok) st.c++; else st.w++; store.stats[it.term.id] = st;
-    if(!ok) store.cards[it.term.id] = {box:1, due:Date.now()};
+    /* まちがえた単語は復習へ：いまのレベルの単語・学習中の単語・選んだ図の単語だけ */
+    if(!ok && (inLevel(it.term) || store.cards[it.term.id] || isPlateRange(q.range))){ store.cards[it.term.id] = {box:1, due:Date.now()}; q.enq++; }
     save(); renderMeter();
   }
   renderQuiz();
@@ -12377,27 +13093,48 @@ function qnext(){
 /* ===== 単語カード ===== */
 function cardQueue(){
   rollDay();
-  var now = Date.now();
-  function inR(t){ return S.cardRange === 'all' || t.cat === S.cardRange; }
+  var now = Date.now(), phrase = S.cardRange === 'phrase', plateR = isPlateRange(S.cardRange);
+  var src = phrase ? PHRASES : STUDY_ORDER;
+  function inR(t){ return phrase || inRange(t, S.cardRange); }
   function due(t){ return store.cards[t.id].due; }
-  var dueList = TERMS.filter(function(t){ return inR(t) && store.cards[t.id] && due(t) <= now; });
+  var dueList = src.filter(function(t){ return inR(t) && store.cards[t.id] && due(t) <= now; });
   var early = dueList.filter(function(t){ return due(t) < S.session; }).sort(function(a, b){ return due(a) - due(b); });
   var late = dueList.filter(function(t){ return due(t) >= S.session; }).sort(function(a, b){ return due(a) - due(b); });
-  var unseen = TERMS.filter(function(t){ return inR(t) && !store.cards[t.id]; });
+  /* 新しい単語：いまのレベルの単語から順に（図を選んだときと施術の英語は全部） */
+  var unseen = src.filter(function(t){ return inR(t) && !store.cards[t.id] && (phrase || plateR || inLevel(t)); });
+  var aboveN = (phrase || plateR || store.level >= 3) ? 0 : src.filter(function(t){ return inR(t) && !store.cards[t.id] && !inLevel(t); }).length;
   var allow = Math.max(0, NEW_PER_DAY + store.day.extra - store.day.n);
   var fresh = unseen.slice(0, allow);
-  return {queue:early.concat(fresh, late), dueN:dueList.length, freshN:fresh.length, unseenN:unseen.length};
+  return {queue:early.concat(fresh, late), dueN:dueList.length, freshN:fresh.length, unseenN:unseen.length, aboveN:aboveN, phrase:phrase};
 }
 function renderCards(){
   var Q = cardQueue(), t = Q.queue[0];
   var head = '<h2 class="sect">単語カード</h2><p class="lead">覚えぐあいで次に出る日が変わります（1日後 → 3日後 → 1週間後 → 2週間後 → 1か月後）。新しい単語は1日'+NEW_PER_DAY+'枚まで。</p>'+
     '<div class="cardbar"><div class="seg" role="group" aria-label="表に出す面"><button type="button" data-act="cdir" data-d="en" aria-pressed="'+(S.cardDir==='en')+'">英 → 日</button><button type="button" data-act="cdir" data-d="ja" aria-pressed="'+(S.cardDir==='ja')+'">日 → 英</button></div>'+
     '<div class="counts"><div><b>'+Q.dueN+'</b>復習</div><div><b>'+Q.freshN+'</b>新しい単語</div></div></div>'+
-    '<div class="ranges" style="margin-bottom:12px">'+rangeChips('crange', S.cardRange)+'</div>';
-  var body;
+    (Q.phrase ? '' : levelBarHTML())+
+    '<div class="ranges" style="margin-bottom:12px">'+rangeChips('crange', S.cardRange, true)+'</div>';
+  var body, unit = Q.phrase ? 'フレーズ' : '単語';
   if(!t){
-    body = '<div class="done"><h3>今日の分はおわりました</h3><p class="muted" style="margin:0 0 14px;font-size:13.5px">'+(Q.unseenN ? 'この範囲には、まだ見ていない単語が'+Q.unseenN+'枚あります。' : 'この範囲の単語は、すべて学習を始めています。')+'</p>'+
-      (Q.unseenN ? '<button type="button" class="btn" data-act="cmore">新しい単語をあと'+Math.min(NEW_PER_DAY, Q.unseenN)+'枚</button>' : '')+'</div>';
+    var next = store.level < 3 ? store.level + 1 : 0;
+    body = '<div class="done"><h3>今日の分はおわりました</h3><p class="muted" style="margin:0 0 14px;font-size:13.5px">'+
+      (Q.unseenN ? 'この範囲には、まだ見ていない'+unit+'が'+Q.unseenN+'枚あります。' : (Q.aboveN ? 'この範囲の「'+LEVEL_NAMES[store.level]+'」の単語は、すべて学習を始めています。' : 'この範囲の'+unit+'は、すべて学習を始めています。'))+'</p>'+
+      (Q.unseenN ? '<button type="button" class="btn" data-act="cmore">新しい'+unit+'をあと'+Math.min(NEW_PER_DAY, Q.unseenN)+'枚</button>' : '')+
+      (!Q.unseenN && Q.aboveN && next ? '<button type="button" class="btn" data-act="level" data-v="'+next+'">学ぶレベルを「'+LEVEL_NAMES[next]+'まで」に広げる</button>' : '')+'</div>';
+  } else if(Q.phrase){
+    var pc = store.cards[t.id], pbox = pc ? pc.box : 0, pnb = Math.min(5, pbox + 1);
+    var pfront = S.cardDir === 'en' ? '<div class="fl-main latin phrase">'+esc(t.en)+'</div>'+spkBtn(t.en) : '<div class="fl-main phrase">'+esc(t.ja)+'</div>';
+    var pback = '<div class="fl-hint">タップで答えを表示</div>';
+    if(S.flipped){
+      pback = '<div class="fl-back">'+
+        (S.cardDir === 'en' ? '<div class="tp-ja" style="margin:0;font-size:18px">'+esc(t.ja)+'</div>'
+                            : '<div class="fb-term" style="margin:0"><span class="latin" style="font-size:21px;font-weight:600">'+esc(t.en)+'</span>'+spkBtn(t.en, true)+'</div>')+
+        (t.note ? '<p style="margin:8px 0 0">'+esc(t.note)+'</p>' : '')+'</div>';
+    }
+    body = '<div class="flash" role="button" tabindex="0" data-act="flip" aria-label="カードをめくる" style="--c:var(--accent)"><span class="fl-cat"><i></i>施術の英語 · '+esc(t.scene)+'</span><span class="fl-box">'+(pbox ? '段階 '+pbox : 'NEW')+'</span>'+pfront+pback+'</div>'+
+      (S.flipped ? '<div class="grades"><button type="button" class="grade again" data-act="grade" data-g="again"><b>もう一度</b><small>このあとすぐ</small></button>'+
+        '<button type="button" class="grade" data-act="grade" data-g="hard"><b>あいまい</b><small>明日</small></button>'+
+        '<button type="button" class="grade good" data-act="grade" data-g="good"><b>覚えた</b><small>'+(INTERVAL[pnb] === 1 ? '明日' : INTERVAL[pnb]+'日後')+'</small></button></div>' : '');
   } else {
     var c = store.cards[t.id], box = c ? c.box : 0, cat = CAT[t.cat], nb = Math.min(5, box + 1);
     var front = S.cardDir === 'en' ? '<div class="fl-main latin">'+esc(t.en)+'</div>'+spkBtn(t.en) : '<div class="fl-main">'+esc(t.ja)+'</div>';
@@ -12416,7 +13153,7 @@ function renderCards(){
         '<button type="button" class="grade good" data-act="grade" data-g="good"><b>覚えた</b><small>'+(INTERVAL[nb] === 1 ? '明日' : INTERVAL[nb]+'日後')+'</small></button></div>' : '');
   }
   var counts = [0,0,0,0,0,0];
-  TERMS.forEach(function(x){ var cc = store.cards[x.id]; counts[cc ? cc.box : 0]++; });
+  (Q.phrase ? PHRASES : TERMS).forEach(function(x){ var cc = store.cards[x.id]; counts[cc ? cc.box : 0]++; });
   var boxes = '<div class="boxes" aria-label="段階ごとの枚数">'+counts.map(function(k, i){ return '<div><b>'+k+'</b>'+(i ? '段階'+i : '未学習')+'</div>'; }).join('')+'</div>';
   $('#v-cards').innerHTML = '<div class="narrow">'+head+body+boxes+'</div>';
 }
@@ -12495,6 +13232,14 @@ document.addEventListener('click', function(e){
     case 'flip': flip(); break;
     case 'grade': grade(a.getAttribute('data-g')); break;
     case 'cmore': rollDay(); store.day.extra += NEW_PER_DAY; save(); renderCards(); break;
+    case 'level':
+      store.level = Math.max(1, Math.min(3, +a.getAttribute('data-v') || 1)); save();
+      if(S.tab === 'cards'){ S.flipped = false; renderCards(); } else if(S.tab === 'quiz') renderQuiz();
+      break;
+    case 'plearn': S.cardRange = 'plate:'+S.plate; setTab('cards'); break;
+    case 'pquiz':
+      S.quizMode = 'map'; S.quizRange = 'plate:'+S.plate; S.q = buildQuiz('map', S.quizRange);
+      setTab('quiz'); break;
   }
 });
 document.addEventListener('keydown', function(e){
